@@ -33,6 +33,16 @@ li{
 .redStar{
     color: red;
 }
+.blue{
+    color: blue;
+}
+#notice{
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgb(231, 231, 231);
+    font-weight: bold;
+}
 #showModel{
     border: none;
     height: 30px;
