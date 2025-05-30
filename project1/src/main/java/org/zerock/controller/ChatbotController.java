@@ -17,4 +17,10 @@ public class ChatbotController {
 	{
 		return "/chatbot/chatbot";
 	}
+	
+	@GetMapping("/question1")
+	public String question1()
+	{
+		return "/chatbot/question1";
+	}
 }
