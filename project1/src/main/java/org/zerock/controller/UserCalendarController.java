@@ -10,4 +10,4 @@ public class UserCalendarController {
     public String home() {
         return "/calendar/userCalendar";  // userCalendar.jsp로 이동
     }
-}  
+}    

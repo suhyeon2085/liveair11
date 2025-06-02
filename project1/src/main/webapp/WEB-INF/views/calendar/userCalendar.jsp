@@ -110,7 +110,7 @@
         // 예약 폼 전송 처리
         document.getElementById("reservationForm").addEventListener("submit", function (e) {
             e.preventDefault();
-
+  
             const data = {
                 date: this.date.value,
                 time: this.time.value,
