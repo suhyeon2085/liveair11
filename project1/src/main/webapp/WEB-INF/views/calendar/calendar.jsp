@@ -26,16 +26,33 @@
             var events = [];
             <c:forEach var="r" items="${reservations}">
                 events.push({
-                    title: '예약번호: ${r.num}, 고장증상: ${r.type}, 장소: ${r.loc}',
-                    start: '${r.date}'
+                    title: '예약번호: ${r.num}',
+                    start: '${r.date}',
+                    extendedProps: {
+                        loc: '${r.loc}',
+                        type: '${r.type}',
+                        
+                    }
                 });
             </c:forEach>
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 events: events,
+
                 eventDidMount: function (info) {
                     adjustFontSize(info.el);
+                },
+
+                eventClick: function (info) {
+                    info.jsEvent.preventDefault();
+
+                    // 예약 상세 정보 알림창
+                    alert(
+                        '예약번호: ' + info.event.title.replace('예약번호: ', '') + '\n' +
+                        '고장증상: ' + info.event.extendedProps.type + '\n' +
+                        '장소: ' + info.event.extendedProps.loc
+                    );
                 }
             });
 
@@ -46,21 +63,18 @@
                 const titleEl = eventEl.querySelector('.fc-event-title');
                 if (!titleEl) return;
 
-                let fontSize = 14; // 최대 폰트 크기
+                let fontSize = 14;
                 titleEl.style.fontSize = fontSize + 'px';
                 titleEl.style.whiteSpace = 'nowrap';
 
-                // 글자가 너무 길면 폰트 크기 줄이기
                 while (titleEl.scrollWidth > containerWidth && fontSize > 8) {
                     fontSize--;
                     titleEl.style.fontSize = fontSize + 'px';
                 }
 
-                // 글자가 너무 짧으면 폰트 크기 키우기 (최대 14px까지)
                 while (titleEl.scrollWidth < containerWidth && fontSize < 14) {
                     fontSize++;
                     titleEl.style.fontSize = fontSize + 'px';
-                    // 커지면서 오버플로우 발생하면 한 단계만 다시 줄임
                     if (titleEl.scrollWidth > containerWidth) {
                         fontSize--;
                         titleEl.style.fontSize = fontSize + 'px';
@@ -69,7 +83,6 @@
                 }
             }
 
-            // 창 크기 변경 시 모든 이벤트 폰트 크기 다시 조절
             window.addEventListener('resize', function () {
                 const eventEls = calendarEl.querySelectorAll('.fc-event');
                 eventEls.forEach(el => {
