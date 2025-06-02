@@ -16,7 +16,7 @@
             <span class="blue">!</span> 출장 서비스 예약은 <span class="blue">한 ID당 한 건씩</span>만 예약 가능합니다.
         </div>
         <!-- 제품/증상 정보 입력 -->
-        <form action="reserve" method="post">
+        <form action="/reserve" method="post">
             <div id="reserveWrap">
                 <div class="title">
                     <h2>1. 제품/증상 선택</h2>
@@ -25,7 +25,7 @@
                 <div class="row">
                     <span class="cate">제품 선택<span class="redStar">*</span></span>
                     <div class="content">
-                        <input type="hidden" name="date" value="">
+                        <input type="text" name="date" value="${date}">
                         <input type="hidden" id="sltModel" name="model" value="">
                         <p id="showModel">제품을 선택해주세요.</p>
                         <ul id="modelWrap">
@@ -88,15 +88,15 @@
                 </div>
                 <div class="row">
                     <span class="cate">이름<span class="redStar">*</span></span>
-                    <input class="content" type="text" id="name" name="name" value="">
+                    <input class="content" type="text" id="name" name="name" value="${user.name}" readonly>
                 </div>
                 <div class="row">
                     <span class="cate">휴대폰 번호<span class="redStar">*</span></span>
-                    <input class="content" type="tel" id="phone" name="phone" value="">
+                    <input class="content" type="tel" id="phone" name="phone" value="${user.phone}" readonly>
                 </div>
                 <div class="row">
                     <span class="cate">주소<span class="redStar">*</span></span>
-                    <input class="content" type="text" id="address" name="address" value="">
+                    <input class="content" type="text" id="address" name="address" value="${user.address}" readonly>
                 </div>
             </div>
 

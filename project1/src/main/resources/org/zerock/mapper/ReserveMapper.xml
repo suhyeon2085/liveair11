@@ -10,6 +10,10 @@
 
 	</select>
 	
+	<select id="getAllReservations" resultType="org.zerock.domain.ReservationDTO">
+    SELECT * FROM reservation
+	</select>
+	
 	<insert id="insert">
 		insert into reservation(model, type, detail, loc, date) values(#{model}, #{type}, #{detail}, #{loc}, #{date})
 	</insert>

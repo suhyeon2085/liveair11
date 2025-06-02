@@ -1,6 +1,9 @@
 package org.zerock.mapper;
 
 import org.zerock.domain.MemberDTO;
+
+import java.util.List;
+
 import org.zerock.domain.ReservationDTO;
 
 public interface ReserveMapper {
@@ -14,5 +17,8 @@ public interface ReserveMapper {
 	public int delete(int num);
 	
 	public MemberDTO user(String id);
+
+	public List<ReservationDTO> getAllReservations();
+	
 	 
 }
