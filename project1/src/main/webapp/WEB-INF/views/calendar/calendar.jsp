@@ -1,82 +1,73 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
-    <title>관리자용 달력</title>
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <title>달력</title>
     <style>
-        .fc-daygrid-event {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: block;
-        }
+        table { border-collapse: collapse; width: 100%; }
+        td { width: 14%; height: 80px; text-align: center; vertical-align: top; border: 1px solid #ccc; cursor: pointer; }
+        .today { background-color: #ffecb3; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h2 class="m-3">관리자용 달력</h2>
-    <div id="calendar" class="m-3"></div>
+    <h2>
+        <a href="calendar?year=${prevYear}&month=${prevMonth}">◀</a>
+        ${year}년 ${month}월
+        <a href="calendar?year=${nextYear}&month=${nextMonth}">▶</a>
+    </h2>
+
+    <table>
+        <tr>
+            <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+        </tr>
+        <c:forEach var="i" begin="0" end="${days.size() - 1}" varStatus="loop">
+            <c:if test="${loop.index % 7 == 0}"><tr></c:if>
+
+            <c:set var="day" value="${days[i]}" />
+            <c:choose>
+                <c:when test="${day != ''}">
+                    <c:choose>
+                        <c:when test="${day == todayDay}">
+                            <td class="today" onclick="openMemoModal(${day})">
+                                ${day}<br/>
+                                <span style="font-size:small;">${memoMap[day]}</span>
+                            </td>
+                        </c:when>
+                        <c:otherwise>
+                            <td onclick="openMemoModal(${day})">
+                                ${day}<br/>
+                                <span style="font-size:small;">${memoMap[day]}</span>
+                            </td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:when>
+                <c:otherwise>
+                    <td></td>
+                </c:otherwise>
+            </c:choose>
+
+            <c:if test="${loop.index % 7 == 6}"></tr></c:if>
+        </c:forEach>
+    </table>
+
+    <!-- 메모 입력 모달 -->
+    <div id="memoModal" style="display:none; position:fixed; top:30%; left:40%; background:white; border:1px solid gray; padding:20px;">
+        <form action="addMemo" method="post">
+            <input type="hidden" name="year" value="${year}" />
+            <input type="hidden" name="month" value="${month}" />
+            <input type="hidden" name="day" id="memoDay" />
+            <textarea name="memo" placeholder="메모 입력" rows="4" cols="30"></textarea><br/>
+            <button type="submit">저장</button>
+            <button type="button" onclick="document.getElementById('memoModal').style.display='none';">취소</button>
+        </form>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-
-            var events = [];
-            <c:forEach var="r" items="${reservations}">
-                events.push({
-                    title: '예약번호: ${r.num}, 고장증상: ${r.type}, 장소: ${r.loc}',
-                    start: '${r.date}'
-                });
-            </c:forEach>
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: events,
-                eventDidMount: function (info) {
-                    adjustFontSize(info.el);
-                }
-            });
-
-            calendar.render();
-
-            function adjustFontSize(eventEl) {
-                const containerWidth = eventEl.offsetWidth;
-                const titleEl = eventEl.querySelector('.fc-event-title');
-                if (!titleEl) return;
-
-                let fontSize = 14; // 최대 폰트 크기
-                titleEl.style.fontSize = fontSize + 'px';
-                titleEl.style.whiteSpace = 'nowrap';
-
-                // 글자가 너무 길면 폰트 크기 줄이기
-                while (titleEl.scrollWidth > containerWidth && fontSize > 8) {
-                    fontSize--;
-                    titleEl.style.fontSize = fontSize + 'px';
-                }
-
-                // 글자가 너무 짧으면 폰트 크기 키우기 (최대 14px까지)
-                while (titleEl.scrollWidth < containerWidth && fontSize < 14) {
-                    fontSize++;
-                    titleEl.style.fontSize = fontSize + 'px';
-                    // 커지면서 오버플로우 발생하면 한 단계만 다시 줄임
-                    if (titleEl.scrollWidth > containerWidth) {
-                        fontSize--;
-                        titleEl.style.fontSize = fontSize + 'px';
-                        break;
-                    }
-                }
-            }
-
-            // 창 크기 변경 시 모든 이벤트 폰트 크기 다시 조절
-            window.addEventListener('resize', function () {
-                const eventEls = calendarEl.querySelectorAll('.fc-event');
-                eventEls.forEach(el => {
-                    adjustFontSize(el);
-                });
-            });
-        });
+        function openMemoModal(day) {
+            document.getElementById('memoDay').value = day;
+            document.getElementById('memoModal').style.display = 'block';
+        }
     </script>
 </body>
 </html>
