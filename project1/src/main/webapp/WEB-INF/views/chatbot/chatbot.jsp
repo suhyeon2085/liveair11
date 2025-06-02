@@ -23,6 +23,7 @@
 			str = "<div class='user'>A/S 가격을 예상하고 싶어</div>";
 			chat.append(str);
 			question1();
+			chat.append("aa");
 			
 		})
 		$("#question2").on("click", function() {
