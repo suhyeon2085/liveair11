@@ -71,6 +71,9 @@ public class ReserveController {
 		return "redirect:/LiveAirMain";
 	}
 	
+
+	}
+	
 //	메인 페이지에 추가할 내용
 //	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 //
@@ -80,4 +83,4 @@ public class ReserveController {
 //	    </div>
 //	</c:if>
 	
-}
+

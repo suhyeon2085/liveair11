@@ -1,5 +1,7 @@
 package org.zerock.mapper;
 
+import java.util.List;
+
 import org.zerock.domain.ReservationDTO;
 
 public interface ReserveMapper {
@@ -11,5 +13,8 @@ public interface ReserveMapper {
 	public void insertSelectKey(ReservationDTO reserve);
 
 	public int delete(int num);
+
+	public List<ReservationDTO> getAllReservations();
+	
 	 
 }
