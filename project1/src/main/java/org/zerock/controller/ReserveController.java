@@ -1,6 +1,8 @@
 package org.zerock.controller;
 
-import java.sql.Date;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/reserve/*")
+//@RequestMapping("/reserve/*")
 @AllArgsConstructor
 public class ReserveController {
 	
@@ -33,18 +35,22 @@ public class ReserveController {
 	
 	// 날짜 선택 후 예약 페이지로 이동
 	@PostMapping("/userCalendar")
-	public String selectDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm") Date date,
-		                     @ModelAttribute("reservationDTO") ReservationDTO dto) {
+	public String selectDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Timestamp date,
+			                 @ModelAttribute("reservationDTO") ReservationDTO dto) {
 		dto.setDate(date); // DTO에 날짜 설정
-		return "redirect:/reserve";
+		return "redirect:/reserve/reserve?date=" + URLEncoder.encode(date.toString(), StandardCharsets.UTF_8);
 	}
 
 	// 예약 입력 페이지
 	@GetMapping("/reserve")
-	public String reservePage(@ModelAttribute("reservationDTO") ReservationDTO dto, Model model) {
-		model.addAttribute("date", dto.getDate()); // 날짜 뷰에 넘김
-		return "reserve"; // reserve.jsp
+	public String reservePage(@RequestParam("date") String dateStr, Model model) {
+		String formatted = dateStr.replace("T", " ") + ":00";
+	    Timestamp date = Timestamp.valueOf(formatted);
+		model.addAttribute("date", date); // 날짜 뷰에 넘김
+		model.addAttribute("user", service.user("aaaa"));
+		return "reserve/reserve"; // reserve.jsp
 	}
+		
 	
 	// 예약 제출 -> DB 저장
 	@PostMapping("/reserve")
@@ -76,7 +82,7 @@ public class ReserveController {
 //
 //	<c:if test="${not empty result}">
 //	    <div>
-//	        게시글이 성공적으로 삭제되었습니다.
+//	        예약이 성공적으로 삭제되었습니다.
 //	    </div>
 //	</c:if>
 	

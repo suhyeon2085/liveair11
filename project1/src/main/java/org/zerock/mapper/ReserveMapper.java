@@ -1,5 +1,6 @@
 package org.zerock.mapper;
 
+import org.zerock.domain.MemberDTO;
 import org.zerock.domain.ReservationDTO;
 
 public interface ReserveMapper {
@@ -11,5 +12,7 @@ public interface ReserveMapper {
 	public void insertSelectKey(ReservationDTO reserve);
 
 	public int delete(int num);
+	
+	public MemberDTO user(String id);
 	 
 }

@@ -1,6 +1,7 @@
 package org.zerock.service;
 
 import org.springframework.stereotype.Service;
+import org.zerock.domain.MemberDTO;
 import org.zerock.domain.ReservationDTO;
 import org.zerock.mapper.ReserveMapper;
 
@@ -30,4 +31,12 @@ public class ReserveServiceImpl implements ReserveService {
 	public boolean delete(int num) {		
 		return mapper.delete(num) == 1;
 	}
+
+	@Override
+	public MemberDTO user(String id) {
+
+		return mapper.user(id);
+	}
+	
+	
 }

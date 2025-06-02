@@ -1,5 +1,6 @@
 package org.zerock.service;
 
+import org.zerock.domain.MemberDTO;
 import org.zerock.domain.ReservationDTO;
 
 public interface ReserveService {
@@ -10,4 +11,5 @@ public interface ReserveService {
 
 	public boolean delete(int num);
 	
+	public MemberDTO user(String id);
 }

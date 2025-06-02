@@ -17,4 +17,8 @@
 	<delete id="delete">
 		delete from reservation where num = #{num}
 	</delete>
+	
+	<select id="user" resultType="org.zerock.domain.MemberDTO">
+		select * from member where id = "aaaa"
+	</select>
 </mapper>
