@@ -8,6 +8,6 @@ public class UserCalendarController {
 
     @RequestMapping("/userCalendar")
     public String home() {
-        return "/calendar/userCalendar";  // calendar.jsp로 이동
+        return "/calendar/userCalendar";  // userCalendar.jsp로 이동
     }
 }

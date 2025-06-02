@@ -123,7 +123,7 @@
 
             alert("예약 정보 제출됨!\n\n" + JSON.stringify(data, null, 2));
             bootstrap.Modal.getInstance(document.getElementById("reservationFormModal")).hide();
-
+  
             // TODO: Ajax로 서버에 예약 데이터 전송하기
         });
     </script>
