@@ -1,0 +1,160 @@
+@charset "UTF-8";
+body{
+    margin: 0%;
+}
+#wrap{
+    padding: 0 15%;
+    
+}
+li{
+    list-style-type: none;
+}
+.title{
+    border-bottom: 2px solid black;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+#reserveWrap{
+    margin-bottom: 120px;
+}
+.row{
+  display: flex;
+  align-items: flex-start;
+  margin: 0 20px 30px;
+}
+.cate{
+    width: 200px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.content{
+  flex: 1;
+}
+.redStar{
+    color: red;
+}
+.blue{
+    color: blue;
+}
+#notice{
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgb(231, 231, 231);
+    font-weight: bold;
+}
+#showModel{
+    border: none;
+    height: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 0%;
+    margin-bottom: 10px;
+}
+#modelWrap{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding-left: 0%;
+    margin: 0;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgb(231, 231, 231);
+}
+.model{
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 5px 10px;
+    background-color: white;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+    white-space: normal; /* 기본 줄바꿈 허용 */
+    overflow-wrap: break-word; /* 긴 단어가 있으면 자동 줄바꿈 */
+}
+.model:hover{
+    background-color: lightblue;
+    color: white;
+}
+.model.selected{
+    background-color: lightblue;
+    color: white;
+}
+#type{
+    font-size: 15px;
+    border: none;
+    border-bottom: 1px solid gray;
+    padding: 10px 0px;
+    flex: 0.5;
+}
+#detailWrap textarea{
+    width: 100%;
+    height: 100px;
+    resize: none;
+    padding: 10px;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+    white-space: normal; /* 기본 줄바꿈 허용 */
+    overflow-wrap: break-word; /* 긴 단어가 있으면 자동 줄바꿈 */
+}
+#bottomMsg{
+    display: flex;
+    justify-content: space-between;
+}
+#errMsg{
+    color: red;
+    font-size: 12px;
+}
+#locWrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+#userinfo input{
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+#name, #phone{
+    flex: 0.5;
+}
+#submitBtn{
+    display: flex;
+    justify-content: center;
+}
+input[type=submit]{
+    border-radius: 25px;
+    padding: 10px 15px;
+    font-weight: bold;
+    background-color: white;
+    font-size: 15px;
+    margin: 50px 0;
+}
+
+@media screen and (max-width: 1080px){
+    #locWrap{
+        display: block;
+    }
+    #locWrap li{
+        display: block;
+        margin-bottom: 3px;
+    }
+}
+@media screen and (max-width: 480px){
+    .row{
+        display: block;
+    }
+    .cate{
+        display: block;
+        margin-bottom: 10px;
+    }
+    #detailWrap textarea{
+        height: 300px;
+    }
+    #locWrap li{
+        margin-bottom: 5px;
+    }
+    input[type=submit]{
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+}
