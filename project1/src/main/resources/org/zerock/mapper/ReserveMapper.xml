@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.ReserveMapper">
+
+	<select id="read" resultType="org.zerock.domain.ReservationDTO">
+		select * from reservation where num = #{num} 
+	</select>
+	
+	<insert id="insert">
+		insert into reservation(model, type, detail, loc, date) values(#{model}, #{type}, #{detail}, #{loc}, #{date})
+	</insert>
+</mapper>
