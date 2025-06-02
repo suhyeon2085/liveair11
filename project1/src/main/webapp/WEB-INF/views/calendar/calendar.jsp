@@ -18,7 +18,7 @@
 <body>
     <h2 class="m-3">관리자용 달력</h2>
     <div id="calendar" class="m-3"></div>
-
+  
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
