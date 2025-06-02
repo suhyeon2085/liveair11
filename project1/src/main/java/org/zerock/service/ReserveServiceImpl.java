@@ -26,5 +26,8 @@ public class ReserveServiceImpl implements ReserveService {
 		mapper.insertSelectKey(reserve);
 	}
 
-	
+	@Override
+	public boolean delete(int num) {		
+		return mapper.delete(num) == 1;
+	}
 }

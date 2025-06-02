@@ -9,5 +9,7 @@ public interface ReserveMapper {
 	public void insert(ReservationDTO reserve);
 	
 	public void insertSelectKey(ReservationDTO reserve);
+
+	public int delete(int num);
 	 
 }

@@ -16,7 +16,7 @@
             <span class="blue">!</span> 출장 서비스 예약은 <span class="blue">한 ID당 한 건씩</span>만 예약 가능합니다.
         </div>
         <!-- 제품/증상 정보 입력 -->
-        <form action="" method="post">
+        <form action="reserve" method="post">
             <div id="reserveWrap">
                 <div class="title">
                     <h2>1. 제품/증상 선택</h2>

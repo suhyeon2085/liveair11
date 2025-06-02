@@ -7,5 +7,7 @@ public interface ReserveService {
 	public ReservationDTO read(int num);
 
 	public void insert(ReservationDTO reserve);
+
+	public boolean delete(int num);
 	
 }
