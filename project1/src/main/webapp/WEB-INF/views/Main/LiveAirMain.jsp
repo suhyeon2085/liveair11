@@ -151,7 +151,7 @@ header {
                 <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="로고">
             </a>
         </div>
-        <div id="back">
+        <div id="back"> 
         <a href="<%= request.getContextPath() %>/user.jsp" style="text-decoration:none;">
  		 <button type="button">일반</button>
 		</a>
