@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
+    @RequestMapping("/controller")
+    public String mainPage() {
+        return "LiveAirMain.jsp";  
+    }
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
