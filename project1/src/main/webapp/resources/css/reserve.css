@@ -117,6 +117,9 @@ li{
 #name, #phone{
     flex: 0.5;
 }
+#name, #phone, #address{
+    background-color: rgb(231, 231, 231);
+}
 #submitBtn{
     display: flex;
     justify-content: center;
