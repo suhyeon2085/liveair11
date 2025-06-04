@@ -22,19 +22,44 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
+            
+            
+            
+            //  loc 코드 → 설명 매핑
+            const locMap = {
+                A: '베란다 밖 난간',
+                B: '건물의 외벽 앵글',
+                C: '건물 밖 실외기실',
+                D: '옥상',
+                E: '실내 실외기실',
+                F: '베란다 내부',
+                G: '1층 또는 지면',
+                H: '2단 설치'
+            };
+            
+            
 
             var events = [];
+            
+            
+            
             <c:forEach var="r" items="${reservations}">
-                events.push({
-                    title: '예약번호: ${r.num}',
-                    start: '${r.date}',
-                    extendedProps: {
-                        loc: '${r.loc}',
-                        type: '${r.type}',
-                        
-                    }
-                });
-            </c:forEach>
+            events.push({
+                title: '${r.num} / ${r.type} / ${r.address}',
+                start: '${r.date}',
+                extendedProps: {
+                    name: '${r.name}',
+                    phone: '${r.phone}',
+                    address: '${r.address}',
+                    num: '${r.num}',
+                    model: '${r.model}',
+                    type: '${r.type}',
+                    detail: '${r.detail}',
+                    loc: '${r.loc}',
+                    date: '${r.date}'
+                }
+            });
+       		 </c:forEach>
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -47,11 +72,18 @@
                 eventClick: function (info) {
                     info.jsEvent.preventDefault();
 
-                    // 예약 상세 정보 알림창
+                    const p = info.event.extendedProps;
+
                     alert(
-                        '예약번호: ' + info.event.title.replace('예약번호: ', '') + '\n' +
-                        '고장증상: ' + info.event.extendedProps.type + '\n' +
-                        '장소: ' + info.event.extendedProps.loc
+                        '이름: ' + p.name + '\n' +
+                        '전화번호: ' + p.phone + '\n' +
+                        '주소: ' + p.address + '\n\n' +
+                        '번호: ' + p.num + '\n' +
+                        '기종: ' + p.model + '\n' +
+                        '증상: ' + p.type + '\n' +
+                        '상세증상: ' + p.detail + '\n' +
+                        '실외기 위치: ' + (locMap[p.loc] || p.loc) + '\n' +   // loc 코드 받아오기
+                        '시간: ' + p.date
                     );
                 }
             });

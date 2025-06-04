@@ -14,6 +14,15 @@
     SELECT * FROM reservation
 	</select>
 	
+	<!-- 06-04 -->
+	<select id="getAllReservationsWithMember" resultType="map">
+	SELECT R.num, R.model, R.type, R.detail, R.loc, R.date,
+	       M.name, M.phone, M.address
+	FROM reservation R
+	INNER JOIN member M ON R.id = M.id
+	</select>
+	
+	
 	<insert id="insert">
 		insert into reservation(model, type, detail, loc, date) values(#{model}, #{type}, #{detail}, #{loc}, #{date})
 	</insert>
