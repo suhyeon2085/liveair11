@@ -75,7 +75,6 @@
 					})
 				})
 				
-				/* 미완 */
 				$(".question3").on("click", function() {
 					createUserDiv(questionDic['Q3']);
 					classRemover();
