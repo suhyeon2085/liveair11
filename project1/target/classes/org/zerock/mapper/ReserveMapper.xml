@@ -5,20 +5,46 @@
 	<select id="read" resultType="org.zerock.domain.ReservationDTO">
 		select R.*, M.name, M.phone, M.address
 		from reservation R inner join member M
-		on R.num = M.num
+		on R.id = M.id
 		where R.num = #{num}
-
 	</select>
 	
 	<select id="getAllReservations" resultType="org.zerock.domain.ReservationDTO">
     SELECT * FROM reservation
 	</select>
 	
+	<!-- 06-04 -->
+	<select id="getAllReservationsWithMember" resultType="map">
+	SELECT R.num, R.model, R.type, R.detail, R.loc, R.date,
+	       M.name, M.phone, M.address
+	FROM reservation R
+	INNER JOIN member M ON R.id = M.id
+	</select>
+	
+	
 	<insert id="insert">
 		insert into reservation(model, type, detail, loc, date) values(#{model}, #{type}, #{detail}, #{loc}, #{date})
 	</insert>
 	
+	<update id="update">
+		update reservation
+		model = #{model},
+		type = #{type},
+		loc = #{loc},
+		date = #{date}
+		id = #{id}
+		where num = #{num}
+	</update>
+	
 	<delete id="delete">
 		delete from reservation where num = #{num}
 	</delete>
+	
+	<select id="user" resultType="org.zerock.domain.MemberDTO">
+		select * from member where id = "bbbb"
+	</select>
+	
+	<select id="findAllReservedDates" resultType="java.sql.Timestamp">
+    	select date from reservation
+	</select>
 </mapper>

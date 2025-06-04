@@ -23,7 +23,7 @@
 	
 	
 	<insert id="insert">
-		insert into reservation(model, type, detail, loc, date, id) values(#{model}, #{type}, #{detail}, #{loc}, #{date}, #{id})
+		insert into reservation(model, type, detail, loc, date) values(#{model}, #{type}, #{detail}, #{loc}, #{date})
 	</insert>
 	
 	<update id="update">
