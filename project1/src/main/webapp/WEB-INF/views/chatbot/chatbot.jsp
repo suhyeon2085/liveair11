@@ -27,7 +27,7 @@
 	$("document").ready(function() {
 		var chat = $("#chat");
 		let str = "";
-		/* 시작하자! 누르면 루프 */
+
 		$("#chatStart").on("click", function() {
 			createUserDiv("상담을 시작해줘");
 			var chatPlayer = 0;
