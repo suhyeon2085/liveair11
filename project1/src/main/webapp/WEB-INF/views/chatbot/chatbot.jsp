@@ -484,6 +484,5 @@
 	<div class="choice" id="chatStart">시작하자!</div>
 	
 </div>
-
 </body>
 </html>
