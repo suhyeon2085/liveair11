@@ -1,6 +1,7 @@
 package org.zerock.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,14 +18,17 @@ public class CalendarController {
 	    private ReserveService reserveService;
 	 
 	 @GetMapping("/calendar")
-	    public String showAdminCalendar(Model model) {
-	        List<ReservationDTO> reservations = reserveService.getAllReservations();
-	        model.addAttribute("reservations", reservations);
-	        return "/calendar/calendar"; // calendar.jap로 이동 
+		 public String adminCalendar(Model model) {
+			    List<Map<String, Object>> list = reserveService.getAllReservationsWithMember();
+			    model.addAttribute("reservations", list);
+	        return "/calendar/calendar"; // calendar.jap로 이동
 	    }
 	
 	    @RequestMapping("/userCalendar")
 	    public String userCalendar() {
 	        return "/calendar/userCalendar";  // userCalendar.jsp로 이동
     }
+    
+    
+    
 }    

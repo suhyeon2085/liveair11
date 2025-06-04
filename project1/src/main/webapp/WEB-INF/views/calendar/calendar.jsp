@@ -1,88 +1,65 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>달력</title>
+    <title>관리자용 달력</title>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <style>
-        table { border-collapse: collapse; width: 100%; }
-        td { width: 14%; height: 80px; text-align: center; vertical-align: top; border: 1px solid #ccc; cursor: pointer; }
-        .today { background-color: #ffecb3; font-weight: bold; }
+        .fc-daygrid-event {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
     </style>
 </head>
 <body>
-<<<<<<< HEAD
     <h2 class="m-3">관리자용 달력</h2>
     <div id="calendar" class="m-3"></div>
-  
-    <h2>
-        <a href="calendar?year=${prevYear}&month=${prevMonth}">◀</a>
-        ${year}년 ${month}월
-        <a href="calendar?year=${nextYear}&month=${nextMonth}">▶</a>
-    </h2>
 
-    <table> 
-        <tr>
-            <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
-        </tr>
-        <c:forEach var="i" begin="0" end="${days.size() - 1}" varStatus="loop">
-            <c:if test="${loop.index % 7 == 0}"><tr></c:if>
-
-            <c:set var="day" value="${days[i]}" />
-            <c:choose>
-                <c:when test="${day != ''}">
-                    <c:choose>
-                        <c:when test="${day == todayDay}">
-                            <td class="today" onclick="openMemoModal(${day})">
-                                ${day}<br/>
-                                <span style="font-size:small;">${memoMap[day]}</span>
-                            </td>
-                        </c:when>
-                        <c:otherwise>
-                            <td onclick="openMemoModal(${day})">
-                                ${day}<br/>
-                                <span style="font-size:small;">${memoMap[day]}</span>
-                            </td>
-                        </c:otherwise>
-                    </c:choose>
-                </c:when>
-                <c:otherwise>
-                    <td></td>
-                </c:otherwise>
-            </c:choose>
-
-            <c:if test="${loop.index % 7 == 6}"></tr></c:if>
-        </c:forEach>
-    </table>
-
-    <!-- 메모 입력  모달 -->
-    <div id="memoModal" style="display:none; position:fixed; top:30%; left:40%; background:white; border:1px solid gray; padding:20px;">
-        <form action="addMemo" method="post">
-            <input type="hidden" name="year" value="${year}" />
-            <input type="hidden" name="month" value="${month}" />
-            <input type="hidden" name="day" id="memoDay" />
-            <textarea name="memo" placeholder="메모 입력" rows="4" cols="30"></textarea><br/>
-            <button type="submit">저장</button>
-            <button type="button" onclick="document.getElementById('memoModal').style.display='none';">취소</button>
-        </form>
-    </div>
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
+            
+            
+            
+            //  loc 코드 → 설명 매핑
+            const locMap = {
+                A: '베란다 밖 난간',
+                B: '건물의 외벽 앵글',
+                C: '건물 밖 실외기실',
+                D: '옥상',
+                E: '실내 실외기실',
+                F: '베란다 내부',
+                G: '1층 또는 지면',
+                H: '2단 설치'
+            };
+            
+            
 
             var events = [];
+            
+            
+            
             <c:forEach var="r" items="${reservations}">
-                events.push({
-                    title: '예약번호: ${r.num}',
-                    start: '${r.date}',
-                    extendedProps: {
-                        loc: '${r.loc}',
-                        type: '${r.type}',
-                        
-                    }
-                });
-            </c:forEach>
+            events.push({
+                title: '${r.num} / ${r.type} / ${r.address}',
+                start: '${r.date}',
+                extendedProps: {
+                    name: '${r.name}',
+                    phone: '${r.phone}',
+                    address: '${r.address}',
+                    num: '${r.num}',
+                    model: '${r.model}',
+                    type: '${r.type}',
+                    detail: '${r.detail}',
+                    loc: '${r.loc}',
+                    date: '${r.date}'
+                }
+            });
+       		 </c:forEach>
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -95,11 +72,18 @@
                 eventClick: function (info) {
                     info.jsEvent.preventDefault();
 
-                    // 예약 상세 정보 알림창
+                    const p = info.event.extendedProps;
+
                     alert(
-                        '예약번호: ' + info.event.title.replace('예약번호: ', '') + '\n' +
-                        '고장증상: ' + info.event.extendedProps.type + '\n' +
-                        '장소: ' + info.event.extendedProps.loc
+                        '이름: ' + p.name + '\n' +
+                        '전화번호: ' + p.phone + '\n' +
+                        '주소: ' + p.address + '\n\n' +
+                        '번호: ' + p.num + '\n' +
+                        '기종: ' + p.model + '\n' +
+                        '증상: ' + p.type + '\n' +
+                        '상세증상: ' + p.detail + '\n' +
+                        '실외기 위치: ' + (locMap[p.loc] || p.loc) + '\n' +   // loc 코드 받아오기
+                        '시간: ' + p.date
                     );
                 }
             });
@@ -138,12 +122,6 @@
                 });
             });
         });
-
-        function openMemoModal(day) {
-            document.getElementById('memoDay').value = day;
-            document.getElementById('memoModal').style.display = 'block';
-        }
-
     </script>
 </body>
 </html>
