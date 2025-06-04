@@ -2,6 +2,7 @@ package org.zerock.service;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 import org.zerock.domain.MemberDTO;
 import org.zerock.domain.ReservationDTO;
@@ -34,27 +35,16 @@ public class ReserveServiceImpl implements ReserveService {
 		return mapper.delete(num) == 1;
 	}
 
-<<<<<<< HEAD
+
 	@Override
 	public MemberDTO user(String id) {
 
 		return mapper.user(id);
 	}
 	
-=======
-	@Override
-	public MemberDTO user(String id) {
 
-		return mapper.user(id);
-	}
-	
->>>>>>> refs/remotes/origin/master
 	public List<ReservationDTO> getAllReservations() {
 	    return mapper.getAllReservations();
 	}
-<<<<<<< HEAD
-	
-=======
-	
->>>>>>> refs/remotes/origin/master
+
 }
