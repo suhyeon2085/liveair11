@@ -20,14 +20,11 @@ public class CalendarController {
 	    public String showAdminCalendar(Model model) {
 	        List<ReservationDTO> reservations = reserveService.getAllReservations();
 	        model.addAttribute("reservations", reservations);
-	        return "/calendar/calendar"; // calendar.jap로 이동
+	        return "/calendar/calendar"; // calendar.jap로 이동 
 	    }
 	
 	    @RequestMapping("/userCalendar")
 	    public String userCalendar() {
 	        return "/calendar/userCalendar";  // userCalendar.jsp로 이동
     }
-    
-    
-    
 }    

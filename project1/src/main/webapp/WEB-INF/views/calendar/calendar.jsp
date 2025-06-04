@@ -55,7 +55,7 @@
         </c:forEach>
     </table>
 
-    <!-- 메모 입력 모달 -->
+    <!-- 메모 입력  모달 -->
     <div id="memoModal" style="display:none; position:fixed; top:30%; left:40%; background:white; border:1px solid gray; padding:20px;">
         <form action="addMemo" method="post">
             <input type="hidden" name="year" value="${year}" />
