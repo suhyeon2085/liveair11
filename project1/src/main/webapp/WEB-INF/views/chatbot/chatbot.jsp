@@ -479,16 +479,6 @@
 <body>
 <div id="chat">
 
-<<<<<<< HEAD
-<!-- 	<div class="client">어떤 도움이 필요하신가요?</div>
-	<div class="choice" id="question1">A/S 가격을 예상하고 싶어</div>
-	<div class="choice" id="question2">예약하고 싶어</div>
-	<div class="choice" id="question3">예약을 조회하고 싶어</div>
-	<div class="choice" id="question4">상담사 연결해줘</div>
-	<div class="choice" id="question5">상담을 종료할래</div> -->
-	
-=======
->>>>>>> refs/remotes/origin/master
 	<div class="client">챗봇 상담 페이지입니다</div>
 	<div class="client">상담을 시작할게요</div>
 	<div class="choice" id="chatStart">시작하자!</div>
