@@ -34,14 +34,27 @@ public class ReserveServiceImpl implements ReserveService {
 		return mapper.delete(num) == 1;
 	}
 
+<<<<<<< HEAD
 	@Override
 	public MemberDTO user(String id) {
 
 		return mapper.user(id);
 	}
 	
+=======
+	@Override
+	public MemberDTO user(String id) {
+
+		return mapper.user(id);
+	}
+	
+>>>>>>> refs/remotes/origin/master
 	public List<ReservationDTO> getAllReservations() {
 	    return mapper.getAllReservations();
 	}
+<<<<<<< HEAD
 	
+=======
+	
+>>>>>>> refs/remotes/origin/master
 }

@@ -77,7 +77,6 @@ public class ReserveController {
 		return "redirect:/LiveAirMain";
 	}
 	
-
 }
 	
 //	메인 페이지에 추가할 내용
