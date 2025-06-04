@@ -86,6 +86,7 @@
                 <div class="title">
                     <h2>2. 신청자 정보 확인</h2>
                 </div>
+                <input type="text" id="id" name="id" value="${user.id}">
                 <div class="row">
                     <span class="cate">이름<span class="redStar">*</span></span>
                     <input class="content" type="text" id="name" name="name" value="${user.name}" readonly>

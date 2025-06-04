@@ -1,5 +1,10 @@
 package org.zerock.mapper;
 
+
+import org.zerock.domain.MemberDTO;
+
+
+
 import org.zerock.domain.MemberDTO;
 
 import java.sql.Timestamp;
@@ -19,7 +24,9 @@ public interface ReserveMapper {
 
 	public int delete(int num);
 	
+
 	public MemberDTO user(String id);
+
 
 	public List<ReservationDTO> getAllReservations();
 	

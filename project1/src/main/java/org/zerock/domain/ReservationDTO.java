@@ -14,4 +14,5 @@ public class ReservationDTO {
 	private String detail;
 	private String loc;
 	private Timestamp date;
+	private String id;
 }
