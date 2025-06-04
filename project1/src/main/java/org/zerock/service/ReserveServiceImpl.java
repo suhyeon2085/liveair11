@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.zerock.domain.MemberDTO;
 import org.zerock.domain.ReservationDTO;
 import org.zerock.mapper.ReserveMapper;
 
@@ -34,9 +35,13 @@ public class ReserveServiceImpl implements ReserveService {
 	}
 
 	@Override
+	public MemberDTO user(String id) {
+
+		return mapper.user(id);
+	}
+	
 	public List<ReservationDTO> getAllReservations() {
 	    return mapper.getAllReservations();
 	}
 	
-
 }
