@@ -1,5 +1,6 @@
 package org.zerock.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,7 +27,12 @@ public class ReserveServiceImpl implements ReserveService {
 	@Override
 	public void insert(ReservationDTO reserve) {
 		mapper.insert(reserve);
-		mapper.insertSelectKey(reserve);
+		// mapper.insertSelectKey(reserve);
+	}
+	
+	@Override
+	public int update(ReservationDTO reserve) {
+		return mapper.update(reserve);
 	}
 
 	@Override
@@ -42,6 +48,11 @@ public class ReserveServiceImpl implements ReserveService {
 	
 	public List<ReservationDTO> getAllReservations() {
 	    return mapper.getAllReservations();
+	}
+
+	@Override
+	public List<Timestamp> findAllReservedDates() {
+		return mapper.findAllReservedDates();
 	}
 	
 }

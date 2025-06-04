@@ -2,6 +2,7 @@ package org.zerock.mapper;
 
 import org.zerock.domain.MemberDTO;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.zerock.domain.ReservationDTO;
@@ -12,7 +13,9 @@ public interface ReserveMapper {
 	
 	public void insert(ReservationDTO reserve);
 	
-	public void insertSelectKey(ReservationDTO reserve);
+	// public void insertSelectKey(ReservationDTO reserve);
+	
+	public int update(ReservationDTO reserve);
 
 	public int delete(int num);
 	
@@ -20,5 +23,6 @@ public interface ReserveMapper {
 
 	public List<ReservationDTO> getAllReservations();
 	
-	 
+	public List<Timestamp> findAllReservedDates();
+ 
 }
