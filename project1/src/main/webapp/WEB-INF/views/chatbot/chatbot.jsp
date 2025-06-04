@@ -479,7 +479,6 @@
 <body>
 <div id="chat">
 
-	
 	<div class="client">챗봇 상담 페이지입니다</div>
 	<div class="client">상담을 시작할게요</div>
 	<div class="choice" id="chatStart">시작하자!</div>
