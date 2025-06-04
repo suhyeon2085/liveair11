@@ -17,78 +17,89 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script>
+	var modelDic = { 'stand':'스탠드형 에어컨', 'wall':'벽걸이(창문) 에어컨', 'hmulti':'홈멀티 에어컨', 'system':'시스템(천장형/스탠드/벽걸이) 에어컨', 'aircon':'냉난방기', 'heater':'온풍기' };
+	var typeDic = { 'frost':'성에', 'dew':'이슬', 'gas':'가스 누설', 'noise':'소음', 'smell':'냄새', 'leak':'누수', 'etc':'기타' };
+	var locDic = { 'A':'베란다 밖 난간', 'B':'건물의 외벽 앵글', 'C':'건물 밖 실외기실', 'D':'옥상', 'E':'실내 실외기실', 'F':'베란다 내부', 'G':'1층 또는 지면', 'H':'2단 설치' };
+	var modelCostDic = { 'stand':'10000', 'wall':'20000', 'hmulti':'30000', 'system':'40000', 'aircon':'50000', 'heater':'60000' };
+	var typeCostDic = { 'frost':'1', 'dew':'2', 'gas':'3', 'noise':'4', 'smell':'5', 'leak':'6', 'etc':'7' };
+	var questionDic = { 'Q1':'A/S 가격을 예상하고 싶어', 'Q2':'예약하고 싶어', 'Q3':'예약을 조회하고 싶어', 'Q4':'상담사 연결해줘', 'Q5':'상담을 종료할래' };
 	
 	$("document").ready(function() {
 		var chat = $("#chat");
 		let str = "";
-
+		/* 시작하자! 누르면 루프 */
 		$("#chatStart").on("click", function() {
-			div1 = document.createElement("div");
-			var comment1 = document.createTextNode("상담을 시작해줘");
-			div1.appendChild(comment1);
-			div1.className = 'user';
-			document.getElementById("chat").appendChild(div1);
+			createUserDiv("상담을 시작해줘");
 			var chatPlayer = 0;
 
 			chatDisplay(chatPlayer);
 			chatPlayer++;
 			chatFlow();
 			scrollDown();
+			
+			/* 채팅이 계속 돌아가게 함 */
 			function chatFlow()
 			{
 				$(".question1").on("click", function() {
-					str = "<div class='user'>A/S 가격을 예상하고 싶어</div>";
-					chat.append(str);
+					createUserDiv(questionDic['Q1']);
 					viewModelSelect();
 	
 					$("#model").change(function() {
-						selectModel();
+						createUserDiv(modelDic[$("#model").val()]);
 						viewTypeSelect();
 						$("#type").change(function() {
-							selectType();
+							createUserDiv(typeDic[$("#type").val()]);
 							expectPriceResult();
 							classRemover();
-							chatDisplay(chatPlayer);
-							chatFlow();
-						})
+							chatDisplay(chatPlayer);							
+							chatFlow();						
+						})	
 					})				
 				})
 				$(".question2").on("click", function() {
-					str = "<div class='user'>예약하고 싶어</div>";
-					chat.append(str);	
-					insertReserveForm();
-					classRemover();
-					chatDisplay(chatPlayer);
-					chatFlow();
+					createUserDiv(questionDic['Q2']);
+					viewModelSelect();
+					$("#model").change(function() {
+						createUserDiv(modelDic[$("#model").val()]);
+						viewTypeSelect();
+						$("#type").change(function() {
+							createUserDiv(typeDic[$("#type").val()]);
+							insertDetail();
+							$("#detail").change(function() {
+								insertReserveForm();
+								classRemover();
+								chatDisplay(chatPlayer);							
+								chatFlow();				
+
+							})
+						})
+					})
 				})
+				
+				/* 미완 */
 				$(".question3").on("click", function() {
-					str = "<div class='user'>예약을 조회하고 싶어</div>";
-					str += "<div class='client'>temp</div>";
-					chat.append(str);		
+					createUserDiv(questionDic['Q3']);
 					classRemover();
-					chatDisplay(chatPlayer);
+					chatDisplay(chatPlayer);							
 					chatFlow();
 				})
+				
+				/* 미완 */
 				$(".question4").on("click", function() {
-					str = "<div class='user'>상담사 연결해줘</div>";
-					str += "<div class='client'>temp</div>";
-					chat.append(str);	
+					createUserDiv(questionDic['Q4']);
 					classRemover();
-					chatDisplay(chatPlayer);
+					chatDisplay(chatPlayer);							
 					chatFlow();
 				})
 				$(".question5").on("click", function() {
-					str = "<div class='user'>상담을 종료할래</div>";
-					str += "<div class='client'>상담이 종료되었습니다. 감사합니다.</div>";
+					createUserDiv(questionDic['Q5']);
+					createClientDiv("상담이 종료되었습니다.");
 					chatFlow = false;
-					chat.append(str);		
-				})
-				
+				})				
 			}
 		})
-				
 	})
-	
+	/* 이건 테스트만 하고 안씀 일단 참고용으로 놔둠 */
 	function loopChatbot()
 	{
 		var div1 = document.createElement("div");
@@ -99,63 +110,34 @@
 		document.getElementById("chat").appendChild(div1);
 	}
 	
+	/* 채팅 선택창을 만들어줌 */
 	function chatDisplay(chatPlayer) {
-		var div = document.createElement("div");
-		div.className = 'client';
+
 		if (chatPlayer == 0)
 		{
-			var comment = document.createTextNode("어떤 상담을 도와드릴까요?");	
+			createClientDiv("어떤 상담을 도와드릴까요?");	
 		} else {
-			var comment = document.createTextNode("다른 상담이 필요하신가요?");
+			createClientDiv("다른 상담이 필요하신가요?");
 		}
-		div.appendChild(comment);
-		document.getElementById("chat").appendChild(div);	
 		
-		var div1 = document.createElement("div");
-		div1.className = 'choice question1';
-		var comment1 = document.createTextNode("A/S 가격을 예상하고 싶어");
-		div1.appendChild(comment1);
+		var temp = 1;
+		for (var key in questionDic)
+		{
+			var div = document.createElement("div");
+			div.className = 'choice question' + temp;
+			var comment = document.createTextNode(questionDic[key]);
+			div.appendChild(comment);
+			document.getElementById("chat").appendChild(div);
+			temp++;
+		}
 		
-		document.getElementById("chat").appendChild(div1);
-		
-		var div2 = document.createElement("div");
-		div2.className = 'choice question2';
-		var comment2 = document.createTextNode("예약하고 싶어");
-		div2.appendChild(comment2);
-		
-		document.getElementById("chat").appendChild(div2);
-		
-		var div3 = document.createElement("div");
-		div3.className = 'choice question3';
-		var comment3 = document.createTextNode("예약을 조회하고 싶어");
-		div3.appendChild(comment3);
-		
-		document.getElementById("chat").appendChild(div3);
-		
-		var div4 = document.createElement("div");
-		div4.className = 'choice question4';
-		var comment4 = document.createTextNode("상담사 연결해줘");
-		div4.appendChild(comment4);
-		
-		document.getElementById("chat").appendChild(div4);
-		
-		var div5 = document.createElement("div");
-		div5.className = 'choice question5';
-		var comment5 = document.createTextNode("상담을 종료할래");
-		div5.appendChild(comment5);
-		
-		document.getElementById("chat").appendChild(div5);
 		scrollDown();
 	}
 	
+	/* 기종 선택 셀렉트 박스 생선 */
 	function viewModelSelect()
-	{
-		var div1 = document.createElement("div");
-		var comment1 = document.createTextNode("에어컨 기종을 선택해주세요");
-		div1.appendChild(comment1);
-
-		div1.className = 'client';
-		document.getElementById("chat").appendChild(div1);
+	{	
+		createClientDiv("에어컨 기종을 선택해주세요");
 		
 		var div2 = document.createElement("div");
 		div2.className = 'choice';
@@ -169,36 +151,14 @@
 		model.text = "[기종 선택]";
 		model.option = 'default';
 		modelSelect.appendChild(model);
-		
-		var model1 = document.createElement("option");
-		model1.value = "stand";
-		model1.text = "스탠드형 에어컨";
-		modelSelect.appendChild(model1);
-		
-		var model2 = document.createElement("option");
-		model2.value = "wall";
-		model2.text = "벽걸이(창문) 에어컨";
-		modelSelect.appendChild(model2);
-		
-		var model3 = document.createElement("option");
-		model3.value = "hmulti";
-		model3.text = "홈멀티 에어컨";
-		modelSelect.appendChild(model3);
-		
-		var model4 = document.createElement("option");
-		model4.value = "system";
-		model4.text = "시스템(천장형/스탠드/벽걸이) 에어컨";
-		modelSelect.appendChild(model4);
-		
-		var model5 = document.createElement("option");
-		model5.value = "aircon";
-		model5.text = "냉난방기";
-		modelSelect.appendChild(model5);
-		
-		var model6 = document.createElement("option");
-		model6.value = "heater";
-		model6.text = "온풍기";
-		modelSelect.appendChild(model6);
+				
+		for (var key in modelDic)
+		{
+			var model1 = document.createElement("option");
+			model1.value = key;
+			model1.text = modelDic[key];
+			modelSelect.appendChild(model1);
+		}
 		
 		document.getElementById("chat").appendChild(div2);
 		document.getElementById("answer").appendChild(modelSelect);
@@ -206,46 +166,10 @@
 
 	}
 	
-	function selectModel() {
-		var div1 = document.createElement("div");
-		div1.className = 'user';
-		var model = $("#model").val();
-		var modelText = "";
-		switch (model) {
-		case "stand":
-			modelText = "스탠드형 에어컨";
-			break;
-		case "wall":
-			modelText = "벽걸이(창문) 에어컨";
-			break;
-		case "hmulti":
-			modelText = "홈멀티 에어컨";
-			break;
-		case "system":
-			modelText = "시스템(천장형/스탠드/벽걸이) 에어컨";
-			break;
-		case "aircon":
-			modelText = "냉난방기";
-			break;
-		case "heater":
-			modelText = "온풍기";
-			break;
-
-		default:
-			break;
-		}
-		div1.appendChild(document.createTextNode(modelText));
-		document.getElementById("chat").appendChild(div1);
-		scrollDown();
-
-	}
-	
+	/* 고장증상(타입)을 선택하는 셀렉트박스 생성 */
 	function viewTypeSelect() {
-		var div1 = document.createElement("div");
-		div1.className = 'client';
-		var comment1 = document.createTextNode("증상을 선택해주세요");
-		div1.appendChild(comment1);
-		document.getElementById("chat").appendChild(div1);
+
+		createClientDiv("증상을 선택해주세요");
 		
 		var div2 = document.createElement("div");
 		div2.className = 'choice';
@@ -259,40 +183,13 @@
 		type.option = 'default';
 		typeSelect.appendChild(type);
 		
-		var type1 = document.createElement("option");
-		type1.value = "frost";
-		type1.text = "성에";
-		typeSelect.appendChild(type1);
-		
-		var type2 = document.createElement("option");
-		type2.value = "dew";
-		type2.text = "이슬";
-		typeSelect.appendChild(type2);
-		
-		var type3 = document.createElement("option");
-		type3.value = "gas";
-		type3.text = "가스 누설";
-		typeSelect.appendChild(type3);
-		
-		var type4 = document.createElement("option");
-		type4.value = "noise";
-		type4.text = "소음";
-		typeSelect.appendChild(type4);
-		
-		var type5 = document.createElement("option");
-		type5.value = "smell";
-		type5.text = "냄새";
-		typeSelect.appendChild(type5);
-		
-		var type6 = document.createElement("option");
-		type6.value = "leak";
-		type6.text = "누수";
-		typeSelect.appendChild(type6);
-		
-		var type7 = document.createElement("option");
-		type7.value = "etc";
-		type7.text = "기타";
-		typeSelect.appendChild(type7);
+		for (var key in typeDic)
+		{
+			var type1 = document.createElement("option");
+			type1.value = key;
+			type1.text = typeDic[key];
+			typeSelect.appendChild(type1);
+		}
 
 		div2.appendChild(typeSelect);
 		document.getElementById("chat").appendChild(div2);
@@ -300,97 +197,12 @@
 
 	}
 	
-	function selectType() {
-		var div1 = document.createElement("div");
-		div1.className = 'user';
-		var type = $("#type").val();
-		var typeText = "";
-		switch (type) {
-		case "frost":
-			typeText = "성에";
-			break;
-		case "dew":
-			typeText = "이슬";
-			break;
-		case "gas":
-			typeText = "가스 누설";
-			break;
-		case "noise":
-			typeText = "소음";
-			break;
-		case "smell":
-			typeText = "냄새";
-			break;
-		case "leak":
-			typeText = "누수";
-			break;
-		case "etc":
-			typeText = "기타";
-			break;
-
-		default:
-			break;
-		}
-		div1.appendChild(document.createTextNode(typeText));
-		document.getElementById("chat").appendChild(div1);
-		scrollDown();
-
-	}
-	
+	/* 선택한 기종과 고장증상에 따라 임의의 수리견적을 보여줌 */
 	function expectPriceResult() {
 		var model = 0;
 		var type = 0;
-		
-		var selectedModel = $("#model").val();
-		var selectedType = $("#type").val();
-		switch (selectedModel) {
-		case "stand":
-			model = 10000;
-			break;
-		case "wall":
-			model = 15000;
-			break;
-		case "hmulti":
-			model = 20000;
-			break;
-		case "system":
-			model = 25000;
-			break;
-		case "aircon":
-			model = 30000;
-			break;
-		case "heater":
-			model = 35000;
-			break;
-		default:
-			break;
-		}
-		switch (selectedType) {
-		case "frost":
-			type = 1;
-			break;
-		case "dew":
-			type = 2;
-			break;
-		case "gas":
-			type = 3;
-			break;
-		case "noise":
-			type = 4;
-			break;
-		case "smell":
-			type = 5;
-			break;
-		case "leak":
-			type = 6;
-			break;
-		case "etc":
-			type = 7;
-			break;
-		default:
-			break;
-		}
-		var result = model * type;
+	
+		var result = modelCostDic[$("#model").val()] * typeCostDic[$("#type").val()];
 		var div1 = document.createElement("div");
 		div1.className = "client";
 		var comment1 = document.createTextNode("예상 가격은" + result + "입니다");
@@ -400,67 +212,90 @@
 
 	}
 	
-	function insertReserveForm() {
-		var div = document.createElement("div");
-		div.className = 'choice';
+	/* AS예약 시 상세 증상을 입력함 */
+	function insertDetail() {
 		
-		var reserveForm = document.createElement("form");
-		reserveForm.action = "*";
-		reserveForm.method = "post";
+		createClientDiv("고장 증상 상세내용만 입력해주세요.");
 		
-		var modelSelect = document.createElement("select");
-		modelSelect.id = 'model';
-		
-		var model = document.createElement("option");
-		model.value = "";
-		model.text = "[기종 선택]";
-		model.option = 'default';
-		modelSelect.appendChild(model);
-		
-		var model1 = document.createElement("option");
-		model1.value = "stand";
-		model1.text = "스탠드형 에어컨";
-		modelSelect.appendChild(model1);
-		
-		var model2 = document.createElement("option");
-		model2.value = "wall";
-		model2.text = "벽걸이(창문) 에어컨";
-		modelSelect.appendChild(model2);
-		
-		var model3 = document.createElement("option");
-		model3.value = "hmulti";
-		model3.text = "홈멀티 에어컨";
-		modelSelect.appendChild(model3);
-		
-		var model4 = document.createElement("option");
-		model4.value = "system";
-		model4.text = "시스템(천장형/스탠드/벽걸이) 에어컨";
-		modelSelect.appendChild(model4);
-		
-		var model5 = document.createElement("option");
-		model5.value = "aircon";
-		model5.text = "냉난방기";
-		modelSelect.appendChild(model5);
-		
-		var model6 = document.createElement("option");
-		model6.value = "heater";
-		model6.text = "온풍기";
-		modelSelect.appendChild(model6);
-		
-		reserveForm.appendChild(modelSelect);
-		div.appendChild(reserveForm);
-		document.getElementById("chat").appendChild(div);
-
+		var div1 = document.createElement("div");
+		div1.className = 'user';
+		var detail = document.createElement("input");
+		detail.setAttribute("type", "text");
+		detail.id = "detail";
+		div1.appendChild(detail);
+		document.getElementById("chat").appendChild(div1);	
 	}
 	
+	function insertLocation() {
+		createClientDiv("실외기 설치 위치를 선택해주세요");
+	}
+	
+	/* 입력받은 내용(기종, 고장증상, 상세증상)을 보여줌(차후form으로 입력해서 db로 보낼 예정) */
+	function insertReserveForm() {
+		var model = modelDic[$("#model").val()];
+		var type = typeDic[$("#type").val()];
+		var detail = $("#detail").val();
+
+		var div = document.createElement("div");
+		div.className = 'client';
+		var comment = document.createTextNode("예약 내용을 확인해주세요");
+		div.appendChild(comment);
+		document.getElementById("chat").appendChild(div);
+		
+		var div1 = document.createElement("div");
+		div1.className = 'client';
+		var table = document.createElement("table");
+		
+		var modelRow = document.createElement("tr");
+		var modelLabel = document.createElement("td");
+		modelLabel.appendChild(document.createTextNode("제품 : "));
+		modelRow.appendChild(modelLabel);
+		var modelData = document.createElement("td");
+		modelData.appendChild(document.createTextNode(model));
+		modelRow.appendChild(modelData);
+		table.appendChild(modelRow);
+		
+		var typeRow = document.createElement("tr");
+		var typeLabel = document.createElement("td");
+		typeLabel.appendChild(document.createTextNode("증상 분류 : "));
+		typeRow.appendChild(typeLabel);
+		var typeData = document.createElement("td");
+		typeData.appendChild(document.createTextNode(type));
+		typeRow.appendChild(typeData);
+		table.appendChild(typeRow);
+		
+		var detailRow = document.createElement("tr");
+		var detailLabel = document.createElement("td");
+		detailLabel.appendChild(document.createTextNode("상세 증상 : "));
+		detailRow.appendChild(detailLabel);
+		var detailData = document.createElement("td");
+		detailData.appendChild(document.createTextNode(detail));
+		detailRow.appendChild(detailData);
+		table.appendChild(detailRow);
+
+		div1.appendChild(table);
+		document.getElementById("chat").appendChild(div1);
+			
+	}
+	
+	/* 채팅 반복 시 class와 id가 중복되지 않도록 상담이 끝난 내용의 클래스와 아이디를 삭제함 */
 	function classRemover() {
 		var temp = document.getElementsByClassName("choice");
 		for (var i = 0; i < temp.length; i++)
 		{
 			temp[i].classList.remove('question1', 'question2', 'question3', 'question4', 'question5');
 		}
+		var model = document.getElementById("model");
+		model.removeAttribute("id");
+		
+		var type = document.getElementById("type");
+		type.removeAttribute("id");
+		
+		var answer = document.getElementById("answer");
+		answer.removeAttribute("id");
 	}
 	
+	/* 자동 스크롤을 하고 싶은데 고민중... */
 	function scrollDown() {
 		const scrollByAmount = 500;
 		const interval = 10;
@@ -474,6 +309,23 @@
 		}
 		scrollStep();
 	}
+	
+	function createClientDiv(comment) {
+		var div = document.createElement("div");
+		div.className = 'client';
+		var temp = document.createTextNode(comment);
+		div.appendChild(temp);
+		document.getElementById("chat").appendChild(div);
+	}
+	
+	function createUserDiv(comment) {
+		var div = document.createElement("div");
+		div.className = 'user';
+		var temp = document.createTextNode(comment);
+		div.appendChild(temp);
+		document.getElementById("chat").appendChild(div);
+	}
+	
 </script>
 </head>
 <body>
