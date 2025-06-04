@@ -37,7 +37,6 @@
 			chatFlow();
 			scrollDown();
 			
-			/* 채팅이 계속 돌아가게 함 */
 			function chatFlow()
 			{
 				$(".question1").on("click", function() {
