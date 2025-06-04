@@ -9,6 +9,7 @@
 <title>chatbot 문의</title>
 <style type="text/css">
 	* { text-align: center; margin-bottom: 1%}
+	#chat {margin-bottom: 30%; }
 	div { border-radius: 20px; width: 40%; margin-left: auto; margin-right: auto;}
 	.choice { border-color: #53a3d9; border-style: solid; border-width: 1px; margin-left: 0; height: 50%; width: 50%; padding: 3%; }
 	.client { border: 1px solid black; margin-left: 0; height: 50%; width: 60%; padding: 3%;}
@@ -16,40 +17,87 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script>
+	var modelDic = { 'stand':'스탠드형 에어컨', 'wall':'벽걸이(창문) 에어컨', 'hmulti':'홈멀티 에어컨', 'system':'시스템(천장형/스탠드/벽걸이) 에어컨', 'aircon':'냉난방기', 'heater':'온풍기' };
+	var typeDic = { 'frost':'성에', 'dew':'이슬', 'gas':'가스 누설', 'noise':'소음', 'smell':'냄새', 'leak':'누수', 'etc':'기타' };
+	var locDic = { 'A':'베란다 밖 난간', 'B':'건물의 외벽 앵글', 'C':'건물 밖 실외기실', 'D':'옥상', 'E':'실내 실외기실', 'F':'베란다 내부', 'G':'1층 또는 지면', 'H':'2단 설치' };
+	var modelCostDic = { 'stand':'10000', 'wall':'20000', 'hmulti':'30000', 'system':'40000', 'aircon':'50000', 'heater':'60000' };
+	var typeCostDic = { 'frost':'1', 'dew':'2', 'gas':'3', 'noise':'4', 'smell':'5', 'leak':'6', 'etc':'7' };
+	var questionDic = { 'Q1':'A/S 가격을 예상하고 싶어', 'Q2':'예약하고 싶어', 'Q3':'예약을 조회하고 싶어', 'Q4':'상담사 연결해줘', 'Q5':'상담을 종료할래' };
+	
 	$("document").ready(function() {
 		var chat = $("#chat");
 		let str = "";
-		$("#question1").on("click", function() {
-			str = "<div class='user'>A/S 가격을 예상하고 싶어</div>";
-			chat.append(str);
-			question1();
-			chat.append("aa");
+
+		$("#chatStart").on("click", function() {
+			createUserDiv("상담을 시작해줘");
+			var chatPlayer = 0;
+
+			chatDisplay(chatPlayer);
+			chatPlayer++;
+			chatFlow();
+			scrollDown();
 			
-		})
-		$("#question2").on("click", function() {
-			str = "<div class='user'>예약하고 싶어</div>";
-			str += "<div class='client'>temp</div>";
-			chat.append(str);		
-		})
-		$("#question3").on("click", function() {
-			str = "<div class='user'>예약을 조회하고 싶어</div>";
-			str += "<div class='client'>temp</div>";
-			chat.append(str);		
-		})
-		$("#question4").on("click", function() {
-			str = "<div class='user'>상담사 연결해줘</div>";
-			str += "<div class='client'>temp</div>";
-			chat.append(str);		
-		})
-		$("#question5").on("click", function() {
-			str = "<div class='user'>상담을 종료할래</div>";
-			str += "<div class='client'>temp</div>";
-			chatFlow = false;
-			chat.append(str);		
-		})
-		
-	})
+			function chatFlow()
+			{
+				$(".question1").on("click", function() {
+					createUserDiv(questionDic['Q1']);
+					viewModelSelect();
 	
+					$("#model").change(function() {
+						createUserDiv(modelDic[$("#model").val()]);
+						viewTypeSelect();
+						$("#type").change(function() {
+							createUserDiv(typeDic[$("#type").val()]);
+							expectPriceResult();
+							classRemover();
+							chatDisplay(chatPlayer);							
+							chatFlow();						
+						})	
+					})				
+				})
+				$(".question2").on("click", function() {
+					createUserDiv(questionDic['Q2']);
+					viewModelSelect();
+					$("#model").change(function() {
+						createUserDiv(modelDic[$("#model").val()]);
+						viewTypeSelect();
+						$("#type").change(function() {
+							createUserDiv(typeDic[$("#type").val()]);
+							insertDetail();
+							$("#detail").change(function() {
+								insertReserveForm();
+								classRemover();
+								chatDisplay(chatPlayer);							
+								chatFlow();				
+
+							})
+						})
+					})
+				})
+				
+				$(".question3").on("click", function() {
+					createUserDiv(questionDic['Q3']);
+					classRemover();
+					chatDisplay(chatPlayer);							
+					chatFlow();
+				})
+				
+				/* 미완 */
+				$(".question4").on("click", function() {
+					createUserDiv(questionDic['Q4']);
+					classRemover();
+					chatDisplay(chatPlayer);							
+					chatFlow();
+				})
+				$(".question5").on("click", function() {
+					createUserDiv(questionDic['Q5']);
+					createClientDiv("상담이 종료되었습니다.");
+					chatFlow = false;
+				})				
+			}
+		})
+	})
+	/* 이건 테스트만 하고 안씀 일단 참고용으로 놔둠 */
 	function loopChatbot()
 	{
 		var div1 = document.createElement("div");
@@ -60,70 +108,231 @@
 		document.getElementById("chat").appendChild(div1);
 	}
 	
-	function question1()
-	{
-		var div1 = document.createElement("div");
-		var comment1 = document.createTextNode("에어컨 기종을 선택해주세요");
-		div1.appendChild(comment1);
+	/* 채팅 선택창을 만들어줌 */
+	function chatDisplay(chatPlayer) {
 
-		div1.className = 'client';
-		document.getElementById("chat").appendChild(div1);
+		if (chatPlayer == 0)
+		{
+			createClientDiv("어떤 상담을 도와드릴까요?");	
+		} else {
+			createClientDiv("다른 상담이 필요하신가요?");
+		}
+		
+		var temp = 1;
+		for (var key in questionDic)
+		{
+			var div = document.createElement("div");
+			div.className = 'choice question' + temp;
+			var comment = document.createTextNode(questionDic[key]);
+			div.appendChild(comment);
+			document.getElementById("chat").appendChild(div);
+			temp++;
+		}
+		
+		scrollDown();
+	}
+	
+	/* 기종 선택 셀렉트 박스 생선 */
+	function viewModelSelect()
+	{	
+		createClientDiv("에어컨 기종을 선택해주세요");
 		
 		var div2 = document.createElement("div");
 		div2.className = 'choice';
 		div2.id = 'answer';
 		
-		var expectPrice = document.createElement("form");
 		var modelSelect = document.createElement("select");
 		modelSelect.id = 'model';
 		
-		var model1 = document.createElement("option");
-		model1.value = "stand";
-		model1.text = "스탠드형 에어컨";
-		modelSelect.appendChild(model1);
-		
-		var model2 = document.createElement("option");
-		model2.value = "wall";
-		model2.text = "벽걸이(창문) 에어컨";
-		modelSelect.appendChild(model2);
-		
-		var model3 = document.createElement("option");
-		model3.value = "hmulti";
-		model3.text = "홈멀티 에어컨";
-		modelSelect.appendChild(model3);
-		
-		var model4 = document.createElement("option");
-		model4.value = "system";
-		model4.text = "시스템(천장형/스탠드/벽걸이) 에어컨";
-		modelSelect.appendChild(model4);
-		
-		var model5 = document.createElement("option");
-		model5.value = "system";
-		model5.text = "시스템(천장형/스탠드/벽걸이) 에어컨";
-		modelSelect.appendChild(model5);
-		
-		var model6 = document.createElement("option");
-		model6.value = "system";
-		model6.text = "시스템(천장형/스탠드/벽걸이) 에어컨";
-		modelSelect.appendChild(model6);
+		var model = document.createElement("option");
+		model.value = "";
+		model.text = "[기종 선택]";
+		model.option = 'default';
+		modelSelect.appendChild(model);
+				
+		for (var key in modelDic)
+		{
+			var model1 = document.createElement("option");
+			model1.value = key;
+			model1.text = modelDic[key];
+			modelSelect.appendChild(model1);
+		}
 		
 		document.getElementById("chat").appendChild(div2);
-		expectPrice.appendChild(modelSelect);
-		document.getElementById("answer").appendChild(expectPrice);
+		document.getElementById("answer").appendChild(modelSelect);
+		scrollDown();
 
 	}
+	
+	/* 고장증상(타입)을 선택하는 셀렉트박스 생성 */
+	function viewTypeSelect() {
+
+		createClientDiv("증상을 선택해주세요");
+		
+		var div2 = document.createElement("div");
+		div2.className = 'choice';
+		
+		var typeSelect = document.createElement("select");
+		typeSelect.id = 'type';
+		
+		var type = document.createElement("option");
+		type.value = "";
+		type.text = "[증상 선택]";
+		type.option = 'default';
+		typeSelect.appendChild(type);
+		
+		for (var key in typeDic)
+		{
+			var type1 = document.createElement("option");
+			type1.value = key;
+			type1.text = typeDic[key];
+			typeSelect.appendChild(type1);
+		}
+
+		div2.appendChild(typeSelect);
+		document.getElementById("chat").appendChild(div2);
+		scrollDown();
+
+	}
+	
+	/* 선택한 기종과 고장증상에 따라 임의의 수리견적을 보여줌 */
+	function expectPriceResult() {
+		var model = 0;
+		var type = 0;
+	
+		var result = modelCostDic[$("#model").val()] * typeCostDic[$("#type").val()];
+		var div1 = document.createElement("div");
+		div1.className = "client";
+		var comment1 = document.createTextNode("예상 가격은" + result + "입니다");
+		div1.appendChild(comment1);
+		document.getElementById("chat").appendChild(div1);
+		scrollDown();
+
+	}
+	
+	/* AS예약 시 상세 증상을 입력함 */
+	function insertDetail() {
+		
+		createClientDiv("고장 증상 상세내용만 입력해주세요.");
+		
+		var div1 = document.createElement("div");
+		div1.className = 'user';
+		var detail = document.createElement("input");
+		detail.setAttribute("type", "text");
+		detail.id = "detail";
+		div1.appendChild(detail);
+		document.getElementById("chat").appendChild(div1);	
+	}
+	
+	function insertLocation() {
+		createClientDiv("실외기 설치 위치를 선택해주세요");
+	}
+	
+	/* 입력받은 내용(기종, 고장증상, 상세증상)을 보여줌(차후form으로 입력해서 db로 보낼 예정) */
+	function insertReserveForm() {
+		var model = modelDic[$("#model").val()];
+		var type = typeDic[$("#type").val()];
+		var detail = $("#detail").val();
+
+		var div = document.createElement("div");
+		div.className = 'client';
+		var comment = document.createTextNode("예약 내용을 확인해주세요");
+		div.appendChild(comment);
+		document.getElementById("chat").appendChild(div);
+		
+		var div1 = document.createElement("div");
+		div1.className = 'client';
+		var table = document.createElement("table");
+		
+		var modelRow = document.createElement("tr");
+		var modelLabel = document.createElement("td");
+		modelLabel.appendChild(document.createTextNode("제품 : "));
+		modelRow.appendChild(modelLabel);
+		var modelData = document.createElement("td");
+		modelData.appendChild(document.createTextNode(model));
+		modelRow.appendChild(modelData);
+		table.appendChild(modelRow);
+		
+		var typeRow = document.createElement("tr");
+		var typeLabel = document.createElement("td");
+		typeLabel.appendChild(document.createTextNode("증상 분류 : "));
+		typeRow.appendChild(typeLabel);
+		var typeData = document.createElement("td");
+		typeData.appendChild(document.createTextNode(type));
+		typeRow.appendChild(typeData);
+		table.appendChild(typeRow);
+		
+		var detailRow = document.createElement("tr");
+		var detailLabel = document.createElement("td");
+		detailLabel.appendChild(document.createTextNode("상세 증상 : "));
+		detailRow.appendChild(detailLabel);
+		var detailData = document.createElement("td");
+		detailData.appendChild(document.createTextNode(detail));
+		detailRow.appendChild(detailData);
+		table.appendChild(detailRow);
+
+		div1.appendChild(table);
+		document.getElementById("chat").appendChild(div1);
+			
+	}
+	
+	/* 채팅 반복 시 class와 id가 중복되지 않도록 상담이 끝난 내용의 클래스와 아이디를 삭제함 */
+	function classRemover() {
+		var temp = document.getElementsByClassName("choice");
+		for (var i = 0; i < temp.length; i++)
+		{
+			temp[i].classList.remove('question1', 'question2', 'question3', 'question4', 'question5');
+		}
+		var model = document.getElementById("model");
+		model.removeAttribute("id");
+		
+		var type = document.getElementById("type");
+		type.removeAttribute("id");
+		
+		var answer = document.getElementById("answer");
+		answer.removeAttribute("id");
+	}
+	
+	/* 자동 스크롤을 하고 싶은데 고민중... */
+	function scrollDown() {
+		const scrollByAmount = 500;
+		const interval = 10;
+		
+		function scrollStep() {
+			window.scrollBy(0, scrollByAmount);
+			if (window.pageYOffset < document.body.scrollHeight - window.innerHeight) {
+		
+		    setTimeout(scrollStep, interval);
+			}
+		}
+		scrollStep();
+	}
+	
+	function createClientDiv(comment) {
+		var div = document.createElement("div");
+		div.className = 'client';
+		var temp = document.createTextNode(comment);
+		div.appendChild(temp);
+		document.getElementById("chat").appendChild(div);
+	}
+	
+	function createUserDiv(comment) {
+		var div = document.createElement("div");
+		div.className = 'user';
+		var temp = document.createTextNode(comment);
+		div.appendChild(temp);
+		document.getElementById("chat").appendChild(div);
+	}
+	
 </script>
 </head>
 <body>
 <div id="chat">
 
-	<div class="client">어떤 도움이 필요하신가요?</div>
-	<div class="choice" id="question1">A/S 가격을 예상하고 싶어</div>
-	<div class="choice" id="question2">예약하고 싶어</div>
-	<div class="choice" id="question3">예약을 조회하고 싶어</div>
-	<div class="choice" id="question4">상담사 연결해줘</div>
-	<div class="choice" id="question5">상담을 종료할래</div>
+	<div class="client">챗봇 상담 페이지입니다</div>
+	<div class="client">상담을 시작할게요</div>
+	<div class="choice" id="chatStart">시작하자!</div>
+	
 </div>
-
 </body>
 </html>
