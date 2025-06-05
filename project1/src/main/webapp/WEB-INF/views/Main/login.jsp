@@ -13,7 +13,7 @@
       width: 100%;
       background-color: antiquewhite;
       font-family: 'Noto Sans', sans-serif;
-    } 
+    }  
 
     #tkd {
       display: flex;

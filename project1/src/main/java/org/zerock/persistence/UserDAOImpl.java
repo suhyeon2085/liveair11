@@ -90,7 +90,7 @@ public class UserDAOImpl implements UserDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     admin = new MemberDTO();
-                    admin.setId(rs.getString("id"));
+                     admin.setId(rs.getString("id"));
                     admin.setPassword(rs.getString("password"));
                     // 필요시 추가 정보 set
                 } //안녕//

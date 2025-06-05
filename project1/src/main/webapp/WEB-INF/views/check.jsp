@@ -2,7 +2,7 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!-- 눌렀을때 로그인 여부 확인  --> 
+<!-- 눌렀을때 로그인 여부 확인  -->  
 <%
     String user = (String) session.getAttribute("user");
     if (user == null) {

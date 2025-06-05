@@ -56,7 +56,7 @@ public class UserService extends HttpServlet {
                     response.sendRedirect("LiveAirMain.jsp");
                     return;
                 }
-            }
+            } 
 
         } catch (SQLException e) {
             throw new ServletException("DB 오류 발생", e);

@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contextPath + '/resources/img/air2.jpg',
         contextPath + '/resources/img/air3.jpg'
     ];
-    
+     
     let currentIndex = 0;
  
     function updateSlide(index) {
