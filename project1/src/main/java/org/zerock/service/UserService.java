@@ -39,8 +39,8 @@ public class UserService extends HttpServlet {
         }
 
         
-       //my sql이랑 연동해서 찾기 
-        String sql = "SELECT 1 FROM member WHERE username = ? AND password = ?";
+       //my sql이랑 연동해서 id,pw 찾기 
+        String sql = "SELECT 1 FROM member WHERE id = ? AND password = ?";
 
         try (
             Connection conn = DriverManager.getConnection(URL, DB_id, DB_password);
