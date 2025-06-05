@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
+<head><!-- 안녕 -->
     <meta charset="UTF-8">
     <title>로그인</title>
     <style>

@@ -175,23 +175,27 @@
 
 
 <header id="header">
-    <div id="a">
+<div id="a">
         <div id="logo">
             <a href="<%= request.getContextPath() %>/LiveAirMain">
                 <img src="<%= request.getContextPath() %>/resources/img/logo.png" alt="로고">
             </a>
         </div>
         
-   <div id="back">
+
+  		 <!-- 아래 차레대로 문단마다의 의미 -->
+            <!-- 로그인 안 한 경우 -->
+            <!-- 관리자 로그인 -->
+    		<!-- 일반 사용자 로그인 -->
+<div id="back">
     <c:choose>
-        <!-- 로그인 안 한 경우 -->
+
         <c:when test="${empty sessionScope.user and empty sessionScope.admin}">
             <a href="${pageContext.request.contextPath}/user"><button type="button">일반</button></a>
             <a href="${pageContext.request.contextPath}/user"><button type="button">관리자</button></a>
             <a href="${pageContext.request.contextPath}/login"><button type="button">회원가입</button></a>
         </c:when>
 
-        <!-- 관리자 로그인 -->
         <c:when test="${sessionScope.admin eq true}">
             <p style="display:inline; font-weight:bold; color: red;">관리자님, 환영합니다!</p>
             <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
@@ -200,7 +204,6 @@
             </form>
         </c:when>
 
-        <!-- 일반 사용자 로그인 -->
         <c:otherwise>
             <p style="display:inline; font-weight:bold;">${sessionScope.user.id}님 환영합니다!</p>
             <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
@@ -211,8 +214,8 @@
     </c:choose>
 
 	</div>
-
 </div>
+
 
     <!-- 슬라이드 화살표 -->
     <div id="dlwjs" style="background-image: url('<%= request.getContextPath() %>/resources/img/left.png');"></div>

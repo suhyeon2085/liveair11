@@ -61,7 +61,7 @@ public class UserService extends HttpServlet {
         } catch (SQLException e) {
             throw new ServletException("DB 오류 발생", e);
         }
-
+//안녕 
         // 로그인 실패 시
         response.sendRedirect("login.jsp?error=true");
     }
