@@ -50,7 +50,7 @@ public class ReserveController {
 	}
 
 
-	// 예약 입력 페이지
+	// 날짜 선택 후 예약 입력 페이지
 	@GetMapping("/reserve")
 	public String reservePage(@RequestParam("date") String dateStr, Model model) {
 		String formatted = dateStr.replace("T", " ") + ":00";
@@ -70,11 +70,19 @@ public class ReserveController {
 
 	// 예약 조회
 	@GetMapping("/inquiry")
-	public void inquiry(@RequestParam("num") int num, Model model) {
+	public String inquiry(@RequestParam("num") int num, Model model) {
 		model.addAttribute("reserve", service.read(num));
+		return "redirect:/Main/inquiry";
 	}
 	
-	// 예약 수정	
+	// 예약 수정
+	@GetMapping("/modReserve")
+	public String modReserve(@RequestParam("num") int num, Model model) {
+		model.addAttribute("reserve", service.read(num));
+		model.addAttribute("member", service.member("bbbb"));
+		return "reserve/modReserve";
+	}
+	
 	@PostMapping("/update")
 	public String update(ReservationDTO dto, RedirectAttributes rttr) {
 		service.update(dto);
