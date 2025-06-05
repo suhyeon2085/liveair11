@@ -21,7 +21,7 @@ public interface ReserveService {
 	public boolean delete(int num);
 
 	
-	public MemberDTO user(String id);
+	public MemberDTO member(String id);
 
 	
 

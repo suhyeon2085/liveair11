@@ -23,6 +23,7 @@ public class CalendarController {
 			    model.addAttribute("reservations", list);
 	        return "/calendar/calendar"; // calendar.jap로 이동
 	    }
+	 
 	
 	    @RequestMapping("/userCalendar")
 	    public String userCalendar() {

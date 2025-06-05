@@ -12,9 +12,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+	
+	<div class="container mt-4">
+
     <h2 class="m-3">예약 달력</h2>
     <div id="calendar" class="m-3"></div>
 
+	</div>
+	
     <!-- ✅ 시간 선택 모달 -->
     <div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="timeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -33,7 +38,7 @@
     <!-- ✅ 예약 입력 폼 모달 -->
     <div class="modal fade" id="reservationFormModal" tabindex="-1" aria-labelledby="reservationFormLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form action="reserve" method="get" class="modal-content" id="reservationForm">
+            <form action="/reserve" method="get" class="modal-content" id="reservationForm">
                 <div class="modal-header">
                     <h5 class="modal-title" id="reservationFormLabel">예약 정보 입력</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>

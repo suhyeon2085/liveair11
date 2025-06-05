@@ -23,7 +23,7 @@ public interface ReserveMapper {
 	public int delete(int num);
 	
 
-	public MemberDTO user(String id);
+	public MemberDTO member(String id);
 
 
 	// 모든 예약 가져오기
