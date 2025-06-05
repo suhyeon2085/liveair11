@@ -1,238 +1,328 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html><!--  안녕하ㅣ세요  -->
+<html>
 <head>
 <meta charset="UTF-8">
 <title>LiveAirMain</title>
- <style>
-        body{
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        }
-        header{
-            background-size: auto;
-            background-image: url("에어컨.jpg");
-            height: 1000px;
-        }
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
 
-        #logo img {
-            width: 80px;  /* 로고 크기 조절 */
-            height: auto;
-            float: left;
-        }
-        /*일반 / 관리자 버튼*/
-        #back button{
-        font-size: 20px;
+    #header {
+        height: 600px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background-image 0.5s ease-in-out;
+        background-image: url('<%= request.getContextPath() %>/resources/img/air.jpg');
+    }
+
+    #logo img {
+        width: 80px;
+        height: auto;
+        float: left;
+    }
+
+    #a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        text-decoration: none;
+    }
+    
+    #back a {
+    text-decoration: none;  /* a 태그 밑줄 제거 */
+	}
+
+    #back a button {
+        font-size: 17px;
         font-weight: bold;
-        padding: 10px 20px;
-        color: rgb(0, 0, 0);
+        padding: 10px 10px;
+        margin: 0 5px;
+        color: black;
         border: none;
         border-radius: 10px;
-        cursor: pointer;  /*--마우스 올렸을대 커서 바뀜*/
-        font-family: 'pretendard', sans-serif;
-        display: inline-block;
-        margin: 0 auto; /* 가운데 정렬 */
+        cursor: pointer;
+        font-family: 'Pretendard', sans-serif;
+        background-color: #f0f0f0;
         transition: background-color 0.3s ease;
-        }
-        #back :hover{
-            text-decoration: underline;
-        }
-        #a{
-            justify-content: space-between;
-        }
-        /* 화살표 공통 스타일 */
-        #dlwjs, #ekdma {
-            position: absolute;
-            top: 32%;
-            transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
-            background-size: cover;
-            background-repeat: no-repeat;
-            cursor: pointer;
-        }
+    }
 
-        /* 왼쪽 화살표 */
-        #dlwjs {
-            left: 20px;
-            background-image: url("left.png");
-            background-color: rgb(255, 238, 224);
-            border-radius: 50%;
-        }
+    #back a button:hover {
+        background-color: #dcdcdc;
+    }
 
-        /* 오른쪽 화살표 */
-        #ekdma {
-            right: 20px;
-            background-image: url("right.png");
-            background-color: rgb(255, 238, 224);
-            border-radius: 50%;
-        }
+    #dlwjs, #ekdma {
+        position: absolute;
+        top: 32%;
+        width: 60px;
+        height: 60px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        background-color: rgb(255, 238, 224);
+        border-radius: 50%;
+    }
 
-        /*--로그인 div 전체*/
-        section{
-            height: 650px;
-            margin: 0%;
-        }
-        .pad{
-            padding-bottom: 70px;
-        }
+    #dlwjs { left: 20px; }
+    #ekdma { right: 20px; }
 
-    /*--로그인 글자*/
+    section {
+        height: 650px;
+        margin: 0;
+    }
+
+    .pad {
+        padding-bottom: 70px;
+    }
+
     #fh {
-    font-size: 45px;
-    font-weight: bold;
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-    padding: 40px;
-    font-family: 'Arial', sans-serif;
+        font-size: 45px;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        padding: 40px;
+        font-family: 'Arial', sans-serif;
     }
 
-    /*--버튼*/
     #qj {
-    font-size: 27px;
-    font-weight: bold;
-    padding: 10px 20px;
-    background-color: #000000; 
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;  /*--마우스 올렸을대 커서 바뀜*/
-    font-family: 'Arial', sans-serif;
-    display: block;
-    margin: 0 auto; /* 가운데 정렬 */
-    transition: background-color 0.3s ease;
+        font-size: 27px;
+        font-weight: bold;
+        padding: 10px 20px;
+        background-color: #000;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: 'Arial', sans-serif;
+        display: block;
+        margin: 0 auto;
+        transition: background-color 0.3s ease;
     }
 
-    /*출장 서비스/ 예약 조회 / 챗봇 공통 css*/
-.e {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-color: rgb(250, 250, 247);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 15px; /* 아이템 간 간격 */
-}
-    /*이미지만*/
-.e img {
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
-}
-    /*그것들을 정중안 배치하기*/
-#ehd {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 40px;
-}
+    .e {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: rgb(250, 250, 247);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-.item p {
-  margin-top: 8px;
-  font-size: 30px;
-  color: #333;
-  text-align: center;
-  font-weight: bold;
-  font-family: 'Arial', sans-serif;
-}
-        
-/*footer영역*/
-#c{
-    padding: 3%;
-    margin: 0%;
-    background-color: #e4e4e4;
-    font-size: 25px;
-}
+    .item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 15px;
+    }
+
+    .e img {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+    }
+
+    #ehd {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .item p {
+        margin-top: 8px;
+        font-size: 30px;
+        color: #333;
+        text-align: center;
+        font-weight: bold;
+        font-family: 'Arial', sans-serif;
+    }
+
+    #c {
+        padding: 3%;
+        background-color: #e4e4e4;
+        font-size: 25px;
+    }
+
+    #c ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
 </style>
 </head>
 <body>
-<!-- url 주소 일로 넣으면 됌 -->
-    <form>
-    <!--로고-->
-    <!--사진 및 공지 넣을 공간-->
-    <header>
-        <div style="display: flex;" id="a">
+<%
+    String user = (String) session.getAttribute("user");
+%>
 
+<!-- 예약 조회 페이지에서 취소버튼 누르면 메인으로 넘어와서 alret창 뜨게 해주는 코드 -->
+<c:if test="${param.cancel eq 'success'}">
+    <script>
+        alert("예약이 성공적으로 취소되었습니다.");
+    </script>
+</c:if>
+
+
+
+<header id="header">
+<div id="a">
         <div id="logo">
-            <a href="http://127.0.0.1:5500/home.html">
-            <img src="logo.png" > <!-- 로고 --></a>
+            <a href="<%= request.getContextPath() %>/LiveAirMain">
+                <img src="<%= request.getContextPath() %>/resources/img/logo.png" alt="로고">
+            </a>
         </div>
+        
 
-        <div id="back"><!--관리자 로그인 통합-->
-            <button type="button"> 일반 </button><!-- 관리자 페이지로 연결-->
-            <button type="button"> 관리자 </button><!-- 로그인 페이지로 연결 -->
-        </div>
-        </div>
+  		 <!-- 아래 차레대로 문단마다의 의미 -->
+            <!-- 로그인 안 한 경우 -->
+            <!-- 관리자 로그인 -->
+    		<!-- 일반 사용자 로그인 -->
+<div id="back">
+    <c:choose>
+
+        <c:when test="${empty sessionScope.user and empty sessionScope.admin}">
+            <a href="${pageContext.request.contextPath}/user"><button type="button">일반</button></a>
+            <a href="${pageContext.request.contextPath}/user"><button type="button">관리자</button></a>
+            <a href="${pageContext.request.contextPath}/login"><button type="button">회원가입</button></a>
+        </c:when>
+
+        <c:when test="${sessionScope.admin eq true}">
+            <p style="display:inline; font-weight:bold; color: red;">관리자님, 환영합니다!</p>
+            <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
+            <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
+                <button type="submit">로그아웃</button>
+            </form>
+        </c:when>
+
+        <c:otherwise>
+            <p style="display:inline; font-weight:bold;">${sessionScope.user.id}님 환영합니다!</p>
+            <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
+            <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
+                <button type="submit">로그아웃</button>
+            </form>
+        </c:otherwise>
+    </c:choose>
+
+	</div>
+</div>
 
 
-        <div> <!-- 사진 배경 위에 이전과 다음 버튼 자리 -->
-            <div id="dlwjs" style="width: 60px; height: 60px; background-image: url(left.png); background-size: cover;"></div>
-            <div id="ekdma" style="width: 60px; height: 60px; background-image: url(right.png); background-size: cover;" ></div>
-        </div>
+    <!-- 슬라이드 화살표 -->
+    <div id="dlwjs" style="background-image: url('<%= request.getContextPath() %>/resources/img/left.png');"></div>
+    <div id="ekdma" style="background-image: url('<%= request.getContextPath() %>/resources/img/right.png');"></div>
+</header>
 
-    </header>
+<c:if test="${sessionScope.admin == true}">
+    <div style="text-align:center; margin-top: 20px;">
+        <button onclick="changeHeaderImage()" style="font-size:18px; padding:10px 20px;">
+            배경 이미지 바꾸기
+        </button>
+    </div>
+</c:if>
 
 
-
-    <section> <!-- 로그인 전체 div -->
-    <div>
-
-        <div class="pad">
+<section>
+    <div class="pad">
         <p id="fh">로그인하시고 바로 예약해보세요</p>
-        <button type="button" id="qj">로그인</button>
-        </div>
-
-
-    <div id="ehd"><!-- 나중에 출장서비스 예약 페이지로 <a href="">-->
-         <div class="item">
+        <button type="button" id="qj" onclick="location.href='<%= request.getContextPath() %>/login.jsp'">로그인</button>
+    </div>
+	<div id="ehd">
+    <div class="item">
+        <a href="${pageContext.request.contextPath}/calendar" style="text-decoration:none; color:inherit;">
             <div class="e">
-            <img src="출장서비스예약.png" alt="출장예약" />
-        </div>
+                <img src="${pageContext.request.contextPath}/img/출장서비스예약.png" alt="출장 예약">
+            </div>
             <p>출장 서비스 예약</p>
-        </div>
-    <div class="item"><!-- 나중에 예약 조회 및 변경 예약 페이지로 <a href="">-->
-        <div class="e">
-            <img src="조회및변경.png" alt="예약조회" />
-        </div>
+        </a>
+    </div>
+    
+    <div class="item">
+        <a href="${pageContext.request.contextPath}/check" style="text-decoration:none; color:inherit;">
+            <div class="e">
+                <img src="${pageContext.request.contextPath}/img/조회및변경.png" alt="예약 조회">
+            </div>
             <p>예약 조회 및 변경</p>
+        </a>
     </div>
-        <div class="item"><!-- 나중에 챗봇 페이지로 <a href="">-->
-        <div class="e">
-            <img src="챗봇.png" alt="챗봇연결" />
-        </div>
-    <p>챗봇 연결하기</p>
-        </div>
-      </div>
+    
+    <div class="item">
+        <a href="${pageContext.request.contextPath}/chatboot" style="text-decoration:none; color:inherit;">
+            <div class="e">
+                <img src="${pageContext.request.contextPath}/img/챗봇.png" alt="챗봇">
+            </div>
+            <p>챗봇 연결하기</p>
+        </a>
     </div>
+</div>
 
-    </section>
+</section>
 
-    <!-- footer 영역
-    대표 번호 / 대표이메일 / 구매 서비스 분의 (전화번호) / 전화상담 시간 / 휴무 유무 안내 /
-    이름 / 사업자 등록번호 / 통신판매업신고번호 / 주소 
-  -->
+<footer id="c">
+    <ul>
+        <li>대표 번호 : 010-1111-1111 | 대표 이메일 : LiveAir@naver.com</li>
+        <li>구매 문의 : 010-1111-1112 | 전화 상담 시간 : 9:00-6:00</li>
+        <li>휴무 안내 : 공휴일 9:00-12:00 / 주말 휴무</li>
+    </ul>
+    <hr>
+    <ul>
+        <li>Live Air | 사업자 등록번호 : 123-45-67891 | 주소 : 울산광역시 남구 삼산중로100번길 26 케이엠빌딩</li>
+    </ul>
+</footer>
 
-    <footer id="c">
-        <ul style="list-style: none;">
-            <li>대표 번호 : 010-1111-1111&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;대표 이메일 : LiveAir@naver.com</li>
-            <li>구매 문의 : 010-1111-1112&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;전화 상담 시간 : 9:00-6:00</li>
-            <li>휴무 유무 안내 : 공휴일 9:00-12:00&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;주말 휴무 </li>
-        </ul>
-        <hr>
-        <ul style="list-style: none;">
-            <li> Live Air&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;사업자 등록번호 : 123-45-67891&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;주소 : 울산광역시 남구 삼산중로100번길 26 케이엠빌딩 </li>
-        </ul>
-    </footer>
-  </form>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const contextPath = '<%= request.getContextPath() %>';
+    const header = document.getElementById('header');
+    const leftBtn = document.getElementById('dlwjs');
+    const rightBtn = document.getElementById('ekdma');
+
+    const images = [
+        contextPath + '/resources/img/air.jpg',
+        contextPath + '/resources/img/air2.jpg',
+        contextPath + '/resources/img/air3.jpg'
+    ];
+     
+    let currentIndex = 0;
+ 
+    function updateSlide(index) {
+        header.style.backgroundImage = `url("${images[index]}")`;
+    }
+
+    updateSlide(currentIndex);
+
+    leftBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateSlide(currentIndex);
+    });
+
+    rightBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlide(currentIndex);
+    });
+
+});
+
+function changeHeaderImage() {
+    const header = document.getElementById('header');
+    const newImageUrl = prompt("새로운 이미지 경로를 입력하세요 (예: /resources/img/air2.jpg):");
+
+    if (newImageUrl) {
+        header.style.backgroundImage = `url('${newImageUrl}')`;
+    }
+}
+
+
+</script>
+
 </body>
 </html>

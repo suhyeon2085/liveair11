@@ -73,4 +73,36 @@ public class UserDAOImpl implements UserDAO {
 
         return user;
     }
+
+    
+    // 관리자 로그인 db 저장
+    @Override
+    public MemberDTO getAdminByUsernameAndPassword(String id, String password) {
+        String sql = "SELECT * FROM admin WHERE id = ? AND password = ?";
+        MemberDTO admin = null;
+
+        try (Connection conn = DriverManager.getConnection(URL, DB_USER, DB_PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, id);
+            pstmt.setString(2, password);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    admin = new MemberDTO();
+                     admin.setId(rs.getString("id"));
+                    admin.setPassword(rs.getString("password"));
+                    // 필요시 추가 정보 set
+                } //안녕//
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("관리자 로그인 처리 실패", e);
+        }
+
+        return admin;
+    }
+
+
 }
