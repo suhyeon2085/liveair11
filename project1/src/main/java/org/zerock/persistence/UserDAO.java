@@ -11,4 +11,7 @@ public interface UserDAO {
     // 관리자 로그인용 
     MemberDTO getAdminByUsernameAndPassword(String id, String password);
 
+    
+    //login 확인용
+    public MemberDTO loginCheck(String id, String password);
 } 
