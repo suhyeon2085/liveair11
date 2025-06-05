@@ -56,7 +56,7 @@ public class ReserveController {
 		String formatted = dateStr.replace("T", " ") + ":00";
 	    Timestamp date = Timestamp.valueOf(formatted);
 		model.addAttribute("date", date); // 날짜 뷰에 넘김
-		model.addAttribute("member", service.member("bbbb"));
+		model.addAttribute("member", service.member(""));
 		return "reserve/reserve"; // reserve.jsp
 	}
 		
@@ -65,21 +65,24 @@ public class ReserveController {
 	@PostMapping("/reserve")
 	public String reserve(ReservationDTO dto) {
 		service.insert(dto); // 예약 정보 저장
-		return "redirect:/Main/inquiry?num=" + dto.getNum(); // 저장 후 예약 조회 페이지로 이동
+		return "redirect:/check?num=" + dto.getNum(); // 저장 후 예약 조회 페이지로 이동
 	}
 
 	// 예약 조회
 	@GetMapping("/inquiry")
 	public String inquiry(@RequestParam("num") int num, Model model) {
 		model.addAttribute("reserve", service.read(num));
-		return "redirect:/Main/inquiry";
+		return "redirect:/check";
 	}
 	
 	// 예약 수정
 	@GetMapping("/modReserve")
-	public String modReserve(@RequestParam("num") int num, Model model) {
+	public String modReserve(@RequestParam("num") int num, @RequestParam("date") String dateStr, Model model) {
 		model.addAttribute("reserve", service.read(num));
-		model.addAttribute("member", service.member("bbbb"));
+		String formatted = dateStr.replace("T", " ") + ":00";
+	    Timestamp date = Timestamp.valueOf(formatted);
+		model.addAttribute("date", date);
+		model.addAttribute("member", service.member(""));
 		return "reserve/modReserve";
 	}
 	
@@ -87,7 +90,7 @@ public class ReserveController {
 	public String update(ReservationDTO dto, RedirectAttributes rttr) {
 		service.update(dto);
 		rttr.addAttribute("num", dto.getNum());
-		return "redirect:/Main/inquiry";	
+		return "redirect:/check";	
 	}
 	
 	// 예약 삭제
