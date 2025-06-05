@@ -52,10 +52,13 @@
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h2 class="mb-4">관리자 일정</h2>
-        <div id="calendar"></div>
-    </div>
+	    <div class="container mt-4">
+	    <div class="d-flex justify-content-between align-items-center mb-4">
+	        <h2>관리자 페이지</h2>
+	        <a href="mainImageEdit.jsp" class="btn btn-outline-primary">메인사진 수정</a>
+	    </div>
+	    <div id="calendar"></div>
+	</div>
 
     <!-- 예약 상세 모달 -->
 <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
