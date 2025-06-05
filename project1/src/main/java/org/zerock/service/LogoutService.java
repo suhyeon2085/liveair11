@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-// 안녕
+// 안녕//
 @WebServlet("/logout")
 public class LogoutService extends HttpServlet{
 // 로그아웃 버튼을 누를시 메인페이지로 바뀌는되는 서블릿 	

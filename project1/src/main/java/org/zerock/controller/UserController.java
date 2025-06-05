@@ -23,7 +23,7 @@ public class UserController {
 		return "redirect:/login.jsp";
 	};
 	
-	//안녕
+	//안녕//
 	//로그인 저장된 것 확인하는 컨트롤
 	@PostMapping("/user") //로그인 페이지에 있는 form태그 가져오는 것
 	public String login(@RequestParam("id") String id,

@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     
     let currentIndex = 0;
-
+ 
     function updateSlide(index) {
         header.style.backgroundImage = `url("${images[index]}")`;
     }

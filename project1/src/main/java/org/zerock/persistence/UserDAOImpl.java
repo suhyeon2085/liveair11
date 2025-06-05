@@ -93,7 +93,7 @@ public class UserDAOImpl implements UserDAO {
                     admin.setId(rs.getString("id"));
                     admin.setPassword(rs.getString("password"));
                     // 필요시 추가 정보 set
-                } //안녕
+                } //안녕//
             }
 
         } catch (SQLException e) {
