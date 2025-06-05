@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>관리자용 달력</title>
+    <title>관리자 일정</title>
     <!-- FullCalendar & Bootstrap -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
@@ -32,7 +32,20 @@
             padding-bottom: 0.5rem;
         }
         
-        
+        .modal-header {
+    		border-bottom: 1px solid #dee2e6;
+		}
+
+		.modal-body h6 {
+		    font-weight: bold;
+		    border-left: 4px solid #0d6efd;
+		    padding-left: 8px;
+		    margin-top: 1rem;
+		}
+
+		.modal-footer {
+		    border-top: 1px solid #dee2e6;
+		}
         
         
         
@@ -40,34 +53,51 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h2 class="mb-4">관리자용 달력</h2>
+        <h2 class="mb-4">관리자 일정</h2>
         <div id="calendar"></div>
     </div>
 
     <!-- 예약 상세 모달 -->
-    <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered custom-modal-width">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="reservationModalLabel">예약 상세 정보</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+<div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-width">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="reservationModalLabel">예약 상세 정보</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
+            </div>
+            <div class="modal-body">
+	            <!-- 예약 정보 -->
+	                <h6 class="text-primary mb-3"> 예약 정보</h6>
+	                <div class="row mb-3">
+	                    <div class="col-md-6"><strong>예약번호:</strong> <span id="modalNum"></span></div>
+	                    <div class="col-md-6"><strong>시간:</strong> <span id="modalDate"></span></div>
+	                </div>
+            
+                <!-- 고객 정보 -->
+                <h6 class="text-primary mb-3"> 고객 정보</h6>
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>이름:</strong> <span id="modalName"></span></div>
+                    <div class="col-md-6"><strong>전화번호:</strong> <span id="modalPhone"></span></div>
+                    <div class="col-md-12 mt-2"><strong>주소:</strong> <span id="modalAddress"></span></div>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6"><strong>번호:</strong> <span id="modalNum"></span></div>
-                        <div class="col-6"><strong>시간:</strong> <span id="modalDate"></span></div>
-                        <div class="col-6"><strong>이름:</strong> <span id="modalName"></span></div>
-                        <div class="col-6"><strong>전화번호:</strong> <span id="modalPhone"></span></div>
-                        <div class="col-12"><strong>주소:</strong> <span id="modalAddress"></span></div>
-                        <div class="col-6"><strong>기종:</strong> <span id="modalModel"></span></div>
-                        <div class="col-6"><strong>실외기 위치:</strong> <span id="modalLoc"></span></div>
-                        <div class="col-6"><strong>증상:</strong> <span id="modalType"></span></div>
-                        <div class="col-12"><strong>상세증상:</strong> <span id="modalDetail"></span></div>
-                    </div>
+
+                
+
+                <!-- 제품 정보 -->
+                <h6 class="text-primary mb-3"> 제품 및 증상</h6>
+                <div class="row">
+                    <div class="col-md-6"><strong>기종:</strong> <span id="modalModel"></span></div>
+                    <div class="col-md-6"><strong>실외기 위치:</strong> <span id="modalLoc"></span></div>
+                    <div class="col-md-6"><strong>증상:</strong> <span id="modalType"></span></div>
+                    <div class="col-md-12 mt-2"><strong>상세증상:</strong> <span id="modalDetail"></span></div>
                 </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Script -->
     <script>
@@ -131,6 +161,8 @@
                     const modal = new bootstrap.Modal(document.getElementById('reservationModal'));
                     modal.show();
                 }
+                
+                
             });
 
             calendar.render();
