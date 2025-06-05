@@ -43,9 +43,9 @@ public class ReserveServiceImpl implements ReserveService {
 
 
 	@Override
-	public MemberDTO user(String id) {
+	public MemberDTO member(String id) {
 
-		return mapper.user(id);
+		return mapper.member(id);
 	}
 	
 

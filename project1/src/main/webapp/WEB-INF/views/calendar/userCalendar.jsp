@@ -33,7 +33,7 @@
     <!-- ✅ 예약 입력 폼 모달 -->
     <div class="modal fade" id="reservationFormModal" tabindex="-1" aria-labelledby="reservationFormLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form action="reserve" method="get" class="modal-content" id="reservationForm">
+            <form action="/reserve" method="get" class="modal-content" id="reservationForm">
                 <div class="modal-header">
                     <h5 class="modal-title" id="reservationFormLabel">예약 정보 입력</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>

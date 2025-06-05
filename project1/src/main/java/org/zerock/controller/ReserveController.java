@@ -36,13 +36,6 @@ public class ReserveController {
 		return new ReservationDTO();
 	}
 	
-	// 날짜 선택 후 예약 페이지로 이동
-	@PostMapping("/userCalendar")
-	public String selectDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Timestamp date,
-			                 @ModelAttribute("reservationDTO") ReservationDTO dto) {
-		dto.setDate(date); // DTO에 날짜 설정
-		return "redirect:/reserve/reserve?date=" + URLEncoder.encode(date.toString(), StandardCharsets.UTF_8);
-	}
 	
 	// 이미 다른 사용자가 선택한 날짜 선택X
 	@GetMapping(value = "/reserved-datetimes", produces = "application/json")
@@ -63,7 +56,7 @@ public class ReserveController {
 		String formatted = dateStr.replace("T", " ") + ":00";
 	    Timestamp date = Timestamp.valueOf(formatted);
 		model.addAttribute("date", date); // 날짜 뷰에 넘김
-		model.addAttribute("user", service.user("bbbb"));
+		model.addAttribute("member", service.member("bbbb"));
 		return "reserve/reserve"; // reserve.jsp
 	}
 		
@@ -81,13 +74,7 @@ public class ReserveController {
 		model.addAttribute("reserve", service.read(num));
 	}
 	
-	// 예약 수정
-	@GetMapping("/modify")
-	public String modify(@RequestParam("num") int num, Model model) {
-		model.addAttribute("reserve", service.read(num));
-		return "/calendar/userCalendar";  // userCalendar.jsp로 이동
-	}
-	
+	// 예약 수정	
 	@PostMapping("/update")
 	public String update(ReservationDTO dto, RedirectAttributes rttr) {
 		service.update(dto);

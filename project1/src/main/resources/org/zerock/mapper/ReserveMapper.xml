@@ -23,7 +23,7 @@
 	
 	
 	<insert id="insert">
-		insert into reservation(model, type, detail, loc, date) values(#{model}, #{type}, #{detail}, #{loc}, #{date})
+		insert into reservation(model, type, detail, loc, date, id) values(#{model}, #{type}, #{detail}, #{loc}, #{date}, #{id})
 	</insert>
 	
 	<update id="update">
@@ -32,7 +32,6 @@
 		type = #{type},
 		loc = #{loc},
 		date = #{date}
-		id = #{id}
 		where num = #{num}
 	</update>
 	
@@ -40,7 +39,7 @@
 		delete from reservation where num = #{num}
 	</delete>
 	
-	<select id="user" resultType="org.zerock.domain.MemberDTO">
+	<select id="member" resultType="org.zerock.domain.MemberDTO">
 		select * from member where id = "bbbb"
 	</select>
 	
