@@ -8,12 +8,30 @@
 <meta charset="UTF-8">
 <title>chatbot 문의</title>
 <style type="text/css">
-	* { text-align: center; margin-bottom: 1%}
-	#chat {margin-bottom: 30%; }
-	div { border-radius: 20px; width: 40%; margin-left: auto; margin-right: auto;}
-	.choice { border-color: #53a3d9; border-style: solid; border-width: 1px; margin-left: 0; height: 50%; width: 50%; padding: 3%; }
-	.client { border: 1px solid black; margin-left: 0; height: 50%; width: 60%; padding: 3%;}
-	.user { background-color: #53a3d9; margin-right: 0; height: 50%; width: 50%; padding: 3%;}
+	* { text-align: center; margin-bottom: 1%; height : 100%; }
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: 'Pretendard', sans-serif;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background-color: #f9f9f9;
+	}
+	#chat { padding : 30px;
+		background-color: #ffffff;
+	    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+	    border-radius: 10px;
+	    height : 100%;
+	}
+	div { border-radius: 20px; width: 40%; margin-left: auto; margin-right: auto; height: 20px;}
+	.choice { border-color: #53a3d9; border-style: solid; border-width: 1px; margin-left: 0; width: 50%; padding: 3%; }
+	.client { border: 1px solid black; margin-left: 0; width: 60%; padding: 3%;}
+	.user { background-color: #53a3d9; margin-right: 0; width: 50%; padding: 3%;}
+	
+	@keyframes box-ani {
+		from 
+	}
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script>
@@ -108,30 +126,19 @@
 				})
 				$(".question2").on("click", function() {
 					createUserDiv(questionDic['Q2']);
-					viewModelSelect();
-					$("#model").change(function() {
-						createUserDiv(modelDic[$("#model").val()]);
-						viewTypeSelect();
-						$("#type").change(function() {
-							createUserDiv(typeDic[$("#type").val()]);
-							insertDetail();
-							$("#detail").change(function() {
-								viewLocSelect();
-								$("#loc").change(function() {
-									createUserDiv(locDic[$("#loc").val()]);
-									viewDateSelect();
-									/* classRemover();
-									chatDisplay(chatPlayer);							
-									chatFlow();		 */		
+					createClientDiv("해당 서비스는 로그인이 필요합니다");
+					movePage("예약페이지로 이동", "/toReserve");
+					classRemover();
+					chatDisplay(chatPlayer);							
+					chatFlow();
 
-								})
-							})
-						})
-					})
 				})
 				
 				$(".question3").on("click", function() {
 					createUserDiv(questionDic['Q3']);
+					createClientDiv("해당 서비스는 로그인이 필요합니다");
+					movePage("조회페이지로 이동", "/check");
+					
 					classRemover();
 					chatDisplay(chatPlayer);							
 					chatFlow();
@@ -140,9 +147,7 @@
 				/* 미완 */
 				$(".question4").on("click", function() {
 					createUserDiv(questionDic['Q4']);
-					classRemover();
-					chatDisplay(chatPlayer);							
-					chatFlow();
+					CSConnect();
 				})
 				$(".question5").on("click", function() {
 					createUserDiv(questionDic['Q5']);
@@ -151,6 +156,7 @@
 				})				
 			}
 		})
+
 	})
 	/* 이건 테스트만 하고 안씀 일단 참고용으로 놔둠 */
 	function loopChatbot()
@@ -265,113 +271,17 @@
 
 	}
 	
-	/* AS예약 시 상세 증상을 입력함 */
-	function insertDetail() {
-		
-		createClientDiv("고장 증상 상세내용만 입력해주세요.");
-		
-		var div1 = document.createElement("div");
-		div1.className = 'user';
-		var detail = document.createElement("input");
-		detail.setAttribute("type", "text");
-		detail.id = "detail";
-		div1.appendChild(detail);
-		document.getElementById("chat").appendChild(div1);	
-	}
-	
-	function viewLocSelect() {
-		createClientDiv("실외기 설치 위치를 선택해주세요");
-		
-		var div2 = document.createElement("div");
-		div2.className = 'choice';
-		
-		var locSelect = document.createElement("select");
-		locSelect.id = 'loc';
-		
-		var loc = document.createElement("option");
-		loc.value = "";
-		loc.text = "[실외기 위치 선택]";
-		loc.option = 'default';
-		locSelect.appendChild(loc);
-		
-		for (var key in locDic)
-		{
-			var loc1 = document.createElement("option");
-			loc1.value = key;
-			loc1.text = locDic[key];
-			locSelect.appendChild(loc1);
-		}
+	function movePage(comment, url) {
 
-		div2.appendChild(locSelect);
-		document.getElementById("chat").appendChild(div2);
-	}
-	
-	function viewDateSelect() {
-		createClientDiv("예약 시간을 선택해주세요");
-		
-		var timeTable = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
-		
-		var date = new Date();
-		var month = date.getMonth() + 1;
-		var day = date.getDate() + 1;
-
-		//< 버튼: if day == 어ㅏ고
-		
-		
+		var link = document.createElement("a");
+		link.setAttribute("href", url);
 		var div = document.createElement("div");
-		div.className = 'client';
-		div.appendChild(document.createTextNode(month + '월 ' + day + '일'));
-		document.getElementById("chat").appendChild(div);	
-		
-		for (var i in timeTable)
-		{
-			var div1 = document.createElement("div");
-			div1.className = 'choice';
-			div1.appendChild(document.createTextNode(timeTable[i]));
-			document.getElementById("chat").appendChild(div1);
-			
-		}
-		
-	}
-	
-	/* 입력받은 내용(기종, 고장증상, 상세증상)을 보여줌(차후form으로 입력해서 db로 보낼 예정) */
-	function confirmReserveForm() {
-		
-		var labelDic =
-		{
-			'기종 : '	:modelDic[$("#model").val()],
-			'증상 : ':typeDic[$("#type").val()],
-			'상세 증상 : ':$("#detail").val(),
-			'실외기 위치 : ':locDic[$("#loc").val()]
-		}
+		div.className = 'choice';
+		var text = document.createTextNode(comment);
+		div.appendChild(text);
+		link.appendChild(div);
+		document.getElementById("chat").appendChild(link);
 
-		var div = document.createElement("div");
-		div.className = 'client';
-		var comment = document.createTextNode("예약 내용을 확인해주세요");
-		div.appendChild(comment);
-		document.getElementById("chat").appendChild(div);
-		
-		var div1 = document.createElement("div");
-		div1.className = 'client';
-		var table = document.createElement("table");
-		
-		for (var key in labelDic)
-		{
-			var row = document.createElement("tr");
-			var label = document.createElement("td");
-			label.appendChild(document.createTextNode(key));
-			row.appendChild(label);
-			
-			var item = document.createElement("td");
-			item.appendChild(document.createTextNode(labelDic[key]));
-			row.appendChild(item);
-			
-			table.appendChild(row);
-		}
-
-		div1.appendChild(table);
-		document.getElementById("chat").appendChild(div1);
-			
 	}
 	
 	/* 채팅 반복 시 class와 id가 중복되지 않도록 상담이 끝난 내용의 클래스와 아이디를 삭제함 */
@@ -381,14 +291,12 @@
 		{
 			temp[i].classList.remove('question1', 'question2', 'question3', 'question4', 'question5');
 		}
-		var model = document.getElementById("model");
-		model.removeAttribute("id");
-		
-		var type = document.getElementById("type");
-		type.removeAttribute("id");
-		
-		var answer = document.getElementById("answer");
-		answer.removeAttribute("id");
+	}
+	
+	function CSConnect() {
+		//상담원이 어디있다고 연결을 하죠 황당
+		createClientDiv("상담원과 연결중입니다.");
+		createClientDiv("잠시만 기다려주세요.");		
 	}
 	
 	/* 자동 스크롤을 하고 싶은데 고민중... */
@@ -429,7 +337,7 @@
 
 	<div class="client">챗봇 상담 페이지입니다</div>
 	<div class="client">상담을 시작할게요</div>
-	<div class="choice" id="chatStart">시작하자!</div>
+	<div class="choice" id="chatStart">상담을 시작해줘</div>
 
 </div>
 </body>

@@ -191,7 +191,7 @@
 
     <div id="a">
         <div id="logo">
-            <a href="<%= request.getContextPath() %>/LiveAirMain">
+            <a href="<%= request.getContextPath() %>/">
                 <img src="<%= request.getContextPath() %>/resources/img/logo.png" alt="로고">
             </a>
         </div>
