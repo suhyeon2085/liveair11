@@ -12,7 +12,7 @@ import org.zerock.domain.ReservationDTO;
 
 public interface ReserveMapper {
 
-	public ReservationDTO read(int num);
+	public ReservationDTO read(String id);
 	
 	public void insert(ReservationDTO reserve);
 	

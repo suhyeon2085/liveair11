@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.domain.MemberDTO;
 import org.zerock.domain.ReservationDTO;
 import org.zerock.mapper.ReserveMapper;
@@ -20,9 +21,9 @@ public class ReserveServiceImpl implements ReserveService {
 	private ReserveMapper mapper;
 	
 	@Override
-	public ReservationDTO read(int num) {
+	public ReservationDTO read(String id) {
 		
-		return mapper.read(num);
+		return mapper.read(id);
 	}
 
 	@Override
@@ -33,6 +34,7 @@ public class ReserveServiceImpl implements ReserveService {
 	
 	@Override
 	public int update(ReservationDTO reserve) {
+
 		return mapper.update(reserve);
 	}
 
@@ -64,6 +66,8 @@ public class ReserveServiceImpl implements ReserveService {
 	public List<Map<String, Object>> getAllReservationsWithMember() {
 	    return mapper.getAllReservationsWithMember();
 	}
+
+
 
 
 }

@@ -6,7 +6,7 @@
 		select R.*, M.name, M.phone, M.address
 		from reservation R inner join member M
 		on R.id = M.id
-		where R.num = #{num}
+		where R.id = #{id}
 	</select>
 	
 	<select id="getAllReservations" resultType="org.zerock.domain.ReservationDTO">
@@ -27,12 +27,7 @@
 	</insert>
 	
 	<update id="update">
-		update reservation
-		model = #{model},
-		type = #{type},
-		loc = #{loc},
-		date = #{date}
-		where num = #{num}
+		update reservation set model = #{model}, type = #{type}, loc = #{loc}, date = #{date} where num = #{num}
 	</update>
 	
 	<delete id="delete">

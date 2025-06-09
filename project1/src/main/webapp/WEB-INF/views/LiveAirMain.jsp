@@ -1,3 +1,4 @@
+<%@page import="org.zerock.domain.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -161,9 +162,6 @@
 </style>
 </head>
 <body>
-<%
-    String user = (String) session.getAttribute("user");
-%>
 
 <!-- 예약 조회 페이지에서 취소버튼 누르면 메인으로 넘어와서 alret창 뜨게 해주는 코드 -->
 <c:if test="${param.cancel eq 'success'}">
@@ -191,9 +189,9 @@
     <c:choose>
 
         <c:when test="${empty sessionScope.user and empty sessionScope.admin}">
-            <a href="${pageContext.request.contextPath}/user"><button type="button">일반</button></a>
-            <a href="${pageContext.request.contextPath}/user"><button type="button">관리자</button></a>
-            <a href="${pageContext.request.contextPath}/login"><button type="button">회원가입</button></a>
+            <a href="${pageContext.request.contextPath}/login"><button type="button">일반</button></a>
+            <a href="${pageContext.request.contextPath}/login"><button type="button">관리자</button></a>
+            <a href="${pageContext.request.contextPath}/join"><button type="button">회원가입</button></a>
         </c:when>
 
         <c:when test="${sessionScope.admin eq true}">
@@ -234,11 +232,11 @@
 <section>
     <div class="pad">
         <p id="fh">로그인하시고 바로 예약해보세요</p>
-        <button type="button" id="qj" onclick="location.href='<%= request.getContextPath() %>/login.jsp'">로그인</button>
+        <button type="button" id="qj" onclick="location.href='<%= request.getContextPath() %>/login'">로그인</button>
     </div>
 	<div id="ehd">
     <div class="item">
-        <a href="${pageContext.request.contextPath}/calendar" style="text-decoration:none; color:inherit;">
+        <a href="${pageContext.request.contextPath}/userCalendar" style="text-decoration:none; color:inherit;">
             <div class="e">
                 <img src="${pageContext.request.contextPath}/img/출장서비스예약.png" alt="출장 예약">
             </div>
@@ -256,7 +254,7 @@
     </div>
     
     <div class="item">
-        <a href="${pageContext.request.contextPath}/chatboot" style="text-decoration:none; color:inherit;">
+        <a href="${pageContext.request.contextPath}/chatbot" style="text-decoration:none; color:inherit;">
             <div class="e">
                 <img src="${pageContext.request.contextPath}/img/챗봇.png" alt="챗봇">
             </div>

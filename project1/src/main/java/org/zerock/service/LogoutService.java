@@ -13,7 +13,7 @@ public class LogoutService extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		request.getSession().invalidate();
 		
-		response.sendRedirect(request.getContextPath() + "/LiveAirMain.jsp");
+		response.sendRedirect(request.getContextPath() + "/");
 	}
 
 }

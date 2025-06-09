@@ -2,13 +2,25 @@ package org.zerock.persistence;
 
 import java.sql.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.zerock.domain.MemberDTO;
+import org.zerock.domain.ReservationDTO;
+import org.zerock.mapper.ReserveMapper;
+import org.zerock.mapper.UserMapper;
+import org.zerock.service.ReserveServiceImpl;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 	
 
 // DB 연결
 @Repository
+@Service
+@AllArgsConstructor
+@Log4j
 public class UserDAOImpl implements UserDAO {
 
+	UserMapper userMapper;
 
     private static final String URL = "jdbc:mysql://localhost:3306/your_database?useSSL=false&serverTimezone=UTC";
     private static final String DB_USER = "your_user";
@@ -105,4 +117,29 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
+    public MemberDTO loginCheck(String id, String password)
+    {
+    	MemberDTO dto = userMapper.loginCheck(id, password);
+
+    	return dto;
+    }
+    
+    public ReservationDTO reserveCheck(String id)
+    {
+    	 ReservationDTO dto = userMapper.reserveCheck(id);
+    	 
+    	 return dto;
+    }
+    
+    public int join(MemberDTO dto)
+    {
+    	int result = 0;
+    	try {
+			result = userMapper.join(dto);
+			
+			return result;
+		} catch (Exception e) {
+			return 0;
+		}
+    }
 }

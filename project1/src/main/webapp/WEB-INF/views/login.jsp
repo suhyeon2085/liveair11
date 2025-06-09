@@ -103,7 +103,7 @@
     </script>
 </head>
 <body>
-    <form action="user" method="post">
+    <form action="/main" method="post">
         <div id="main">
             <div id="log">
                 <p id="p">◀ 로그인</p>

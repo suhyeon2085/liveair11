@@ -17,12 +17,63 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script>
-	var modelDic = { 'stand':'스탠드형 에어컨', 'wall':'벽걸이(창문) 에어컨', 'hmulti':'홈멀티 에어컨', 'system':'시스템(천장형/스탠드/벽걸이) 에어컨', 'aircon':'냉난방기', 'heater':'온풍기' };
-	var typeDic = { 'frost':'성에', 'dew':'이슬', 'gas':'가스 누설', 'noise':'소음', 'smell':'냄새', 'leak':'누수', 'etc':'기타' };
-	var locDic = { 'A':'베란다 밖 난간', 'B':'건물의 외벽 앵글', 'C':'건물 밖 실외기실', 'D':'옥상', 'E':'실내 실외기실', 'F':'베란다 내부', 'G':'1층 또는 지면', 'H':'2단 설치' };
-	var modelCostDic = { 'stand':'10000', 'wall':'20000', 'hmulti':'30000', 'system':'40000', 'aircon':'50000', 'heater':'60000' };
-	var typeCostDic = { 'frost':'1', 'dew':'2', 'gas':'3', 'noise':'4', 'smell':'5', 'leak':'6', 'etc':'7' };
-	var questionDic = { 'Q1':'A/S 가격을 예상하고 싶어', 'Q2':'예약하고 싶어', 'Q3':'예약을 조회하고 싶어', 'Q4':'상담사 연결해줘', 'Q5':'상담을 종료할래' };
+	var modelDic = 
+	{ 
+		'stand':'스탠드형 에어컨', 
+		'wall':'벽걸이(창문) 에어컨', 
+		'hmulti':'홈멀티 에어컨', 
+		'system':'시스템(천장형/스탠드/벽걸이) 에어컨', 
+		'aircon':'냉난방기', 
+		'heater':'온풍기' 
+	};
+	var typeDic = 
+	{ 
+		'frost':'성에', 
+		'dew':'이슬', 
+		'gas':'가스 누설', 
+		'noise':'소음', 
+		'smell':'냄새', 
+		'leak':'누수', 
+		'etc':'기타' 
+	};
+	var locDic = 
+	{ 
+		'A':'베란다 밖 난간', 
+		'B':'건물의 외벽 앵글', 
+		'C':'건물 밖 실외기실', 
+		'D':'옥상', 
+		'E':'실내 실외기실', 
+		'F':'베란다 내부', 
+		'G':'1층 또는 지면', 
+		'H':'2단 설치' 
+	};
+	var modelCostDic = 
+	{ 
+		'stand':'10000', 
+		'wall':'20000', 
+		'hmulti':'30000', 
+		'system':'40000', 
+		'aircon':'50000', 
+		'heater':'60000' 
+	};
+	var typeCostDic = 
+	{ 
+		'frost':'1', 
+		'dew':'2', 
+		'gas':'3', 
+		'noise':'4', 
+		'smell':'5', 
+		'leak':'6', 
+		'etc':'7' 
+	};
+	var questionDic = 
+	{ 
+		'Q1':'A/S 가격을 예상하고 싶어', 
+		'Q2':'예약하고 싶어', 
+		'Q3':'예약을 조회하고 싶어', 
+		'Q4':'상담사 연결해줘', 
+		'Q5':'상담을 종료할래' 
+	};
 	
 	$("document").ready(function() {
 		var chat = $("#chat");
@@ -65,11 +116,15 @@
 							createUserDiv(typeDic[$("#type").val()]);
 							insertDetail();
 							$("#detail").change(function() {
-								insertReserveForm();
-								classRemover();
-								chatDisplay(chatPlayer);							
-								chatFlow();				
+								viewLocSelect();
+								$("#loc").change(function() {
+									createUserDiv(locDic[$("#loc").val()]);
+									viewDateSelect();
+									/* classRemover();
+									chatDisplay(chatPlayer);							
+									chatFlow();		 */		
 
+								})
 							})
 						})
 					})
@@ -224,15 +279,71 @@
 		document.getElementById("chat").appendChild(div1);	
 	}
 	
-	function insertLocation() {
+	function viewLocSelect() {
 		createClientDiv("실외기 설치 위치를 선택해주세요");
+		
+		var div2 = document.createElement("div");
+		div2.className = 'choice';
+		
+		var locSelect = document.createElement("select");
+		locSelect.id = 'loc';
+		
+		var loc = document.createElement("option");
+		loc.value = "";
+		loc.text = "[실외기 위치 선택]";
+		loc.option = 'default';
+		locSelect.appendChild(loc);
+		
+		for (var key in locDic)
+		{
+			var loc1 = document.createElement("option");
+			loc1.value = key;
+			loc1.text = locDic[key];
+			locSelect.appendChild(loc1);
+		}
+
+		div2.appendChild(locSelect);
+		document.getElementById("chat").appendChild(div2);
+	}
+	
+	function viewDateSelect() {
+		createClientDiv("예약 시간을 선택해주세요");
+		
+		var timeTable = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+		
+		var date = new Date();
+		var month = date.getMonth() + 1;
+		var day = date.getDate() + 1;
+
+		//< 버튼: if day == 어ㅏ고
+		
+		
+		var div = document.createElement("div");
+		div.className = 'client';
+		div.appendChild(document.createTextNode(month + '월 ' + day + '일'));
+		document.getElementById("chat").appendChild(div);	
+		
+		for (var i in timeTable)
+		{
+			var div1 = document.createElement("div");
+			div1.className = 'choice';
+			div1.appendChild(document.createTextNode(timeTable[i]));
+			document.getElementById("chat").appendChild(div1);
+			
+		}
+		
 	}
 	
 	/* 입력받은 내용(기종, 고장증상, 상세증상)을 보여줌(차후form으로 입력해서 db로 보낼 예정) */
-	function insertReserveForm() {
-		var model = modelDic[$("#model").val()];
-		var type = typeDic[$("#type").val()];
-		var detail = $("#detail").val();
+	function confirmReserveForm() {
+		
+		var labelDic =
+		{
+			'기종 : '	:modelDic[$("#model").val()],
+			'증상 : ':typeDic[$("#type").val()],
+			'상세 증상 : ':$("#detail").val(),
+			'실외기 위치 : ':locDic[$("#loc").val()]
+		}
 
 		var div = document.createElement("div");
 		div.className = 'client';
@@ -244,32 +355,19 @@
 		div1.className = 'client';
 		var table = document.createElement("table");
 		
-		var modelRow = document.createElement("tr");
-		var modelLabel = document.createElement("td");
-		modelLabel.appendChild(document.createTextNode("제품 : "));
-		modelRow.appendChild(modelLabel);
-		var modelData = document.createElement("td");
-		modelData.appendChild(document.createTextNode(model));
-		modelRow.appendChild(modelData);
-		table.appendChild(modelRow);
-		
-		var typeRow = document.createElement("tr");
-		var typeLabel = document.createElement("td");
-		typeLabel.appendChild(document.createTextNode("증상 분류 : "));
-		typeRow.appendChild(typeLabel);
-		var typeData = document.createElement("td");
-		typeData.appendChild(document.createTextNode(type));
-		typeRow.appendChild(typeData);
-		table.appendChild(typeRow);
-		
-		var detailRow = document.createElement("tr");
-		var detailLabel = document.createElement("td");
-		detailLabel.appendChild(document.createTextNode("상세 증상 : "));
-		detailRow.appendChild(detailLabel);
-		var detailData = document.createElement("td");
-		detailData.appendChild(document.createTextNode(detail));
-		detailRow.appendChild(detailData);
-		table.appendChild(detailRow);
+		for (var key in labelDic)
+		{
+			var row = document.createElement("tr");
+			var label = document.createElement("td");
+			label.appendChild(document.createTextNode(key));
+			row.appendChild(label);
+			
+			var item = document.createElement("td");
+			item.appendChild(document.createTextNode(labelDic[key]));
+			row.appendChild(item);
+			
+			table.appendChild(row);
+		}
 
 		div1.appendChild(table);
 		document.getElementById("chat").appendChild(div1);
@@ -332,7 +430,7 @@
 	<div class="client">챗봇 상담 페이지입니다</div>
 	<div class="client">상담을 시작할게요</div>
 	<div class="choice" id="chatStart">시작하자!</div>
-	
+
 </div>
 </body>
 </html>
