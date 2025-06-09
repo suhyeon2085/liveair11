@@ -55,7 +55,7 @@
 	    <div class="container mt-4">
 	    <div class="d-flex justify-content-between align-items-center mb-4">
 	        <h2>관리자 페이지</h2>
-	        <a href="${pageContext.request.contextPath}/views/calendar/mainImageEdit.jsp" class="btn btn-outline-primary">메인사진 수정</a>
+	        <a href="${pageContext.request.contextPath}/calendar/main" class="btn btn-outline-primary">메인사진 수정</a>
 	    </div>
 	    <div id="calendar"></div>
 	</div>
