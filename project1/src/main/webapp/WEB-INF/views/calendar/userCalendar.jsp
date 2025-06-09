@@ -17,6 +17,9 @@
 	<div class="container mt-4">
 
     <h2 class="m-3">예약 달력</h2>
+    <p>
+     예약 시간 선택을 위해서 날짜를 클릭해 주세요!
+    </p>
     <!-- 
     <p>
     	<c:if test="${reserve != null && reserve.num != null}">
@@ -65,6 +68,10 @@
         </div>
     </div>
 
+	<c:if test="${not empty error}">
+    	<script>alert('${error}');</script>
+	</c:if>
+	
 <script>
 	//선택 가능한 시간대 목록
 	const times = [

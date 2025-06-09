@@ -129,9 +129,15 @@
         });
 
         // 입력문자수에 따른 글자 개수 출력
-        $("textarea").keyup(function(){
-            let textLength = $(this).val().length;
-            $("#letters").html(textLength);
+        $("textarea").on("input", function () {
+            let text = $(this).val();
+            let textLength = text.length;
+
+            // 300자 초과 시 자동 자르기
+            if (textLength > 300) {
+                $(this).val(text.substring(0, 300));
+                textLength = 300;
+            }
             
             // 글자수에 따른 errMsg
             if(textLength < 11){
@@ -141,6 +147,31 @@
             }
         })
 
+     // 폼 제출 시 유효성 검사
+        $("form").on("submit", function (e) {
+            let model = $("#sltModel").val();
+            let loc = $("input[name='loc']:checked").val();
+            let detail = $("#detail").val().trim();
+            let textLength = detail.length;
+
+            if (!model) {
+                alert("제품을 선택해주세요.");
+                e.preventDefault();
+                return;
+            }
+
+            if (!loc) {
+                alert("실외기 위치를 선택해주세요.");
+                e.preventDefault();
+                return;
+            }
+
+            if (textLength < 10) {
+                alert("상세 증상을 10자 이상 입력해주세요.");
+                e.preventDefault();
+                return;
+            }
+        });
     })
 </script>
 </body>

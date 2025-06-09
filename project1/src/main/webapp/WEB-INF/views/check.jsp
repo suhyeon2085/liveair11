@@ -115,13 +115,21 @@
     </tr>
     </table>
 
-   <form action="/delete" method="post" style="display: inline;">
+   <!-- <form action="/delete" method="post" style="display: inline;">
     <button type="submit">취소하기</button>
 </form>
 
    <form action="/modReserve" method="post" style="display: inline;">
     <button type="submit">예약 변경</button>
-</form>
+</form> -->
+
+<a href="/delete"">
+  <button type="button">예약 취소</button>
+</a>
+
+<a href="/userCalendar">
+  <button type="button">예약 변경</button>
+</a>
 
     <a href="/">
     <button type="button">메인으로 돌아가기</button></a>

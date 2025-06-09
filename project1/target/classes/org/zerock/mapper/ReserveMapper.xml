@@ -35,7 +35,7 @@
 	</delete>
 	
 	<select id="member" resultType="org.zerock.domain.MemberDTO">
-		select * from member where id = "bbbb"
+		select * from member where id = "{id}"
 	</select>
 	
 	<select id="findAllReservedDates" resultType="java.sql.Timestamp">
