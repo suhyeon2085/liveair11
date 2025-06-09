@@ -1,6 +1,7 @@
 package org.zerock.persistence;
 
 import org.zerock.domain.MemberDTO;
+import org.zerock.domain.ReservationDTO;
 
 public interface UserDAO {
 
@@ -14,4 +15,9 @@ public interface UserDAO {
     
     //login 확인용
     public MemberDTO loginCheck(String id, String password);
+    
+    //메인페이지에서 바로 조회페이지로 이동
+    public ReservationDTO reserveCheck(String id);
+    
+    public int join(MemberDTO dto);
 } 

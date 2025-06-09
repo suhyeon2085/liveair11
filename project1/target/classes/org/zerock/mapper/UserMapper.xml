@@ -6,5 +6,12 @@
 		select * from member where id = #{id} and password = #{password}
 	</select>
 
+	<select id="reserveCheck" resultType="org.zerock.domain.ReservationDTO">
+		select * from reservation where id = #{id}
+	</select>
+	
+	<insert id="join">
+		insert member values(#{id}, #{password}, #{name}, #{phone}, #{address})
+	</insert>
 
 </mapper>

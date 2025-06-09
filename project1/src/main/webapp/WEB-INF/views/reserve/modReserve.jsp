@@ -26,7 +26,7 @@
                 <div class="row">
                     <span class="cate">제품 선택<span class="redStar">*</span></span>
                     <div class="content">
-                        <input type="text" name="date" value="${date}">
+                        <input type="text" name="date" value="${reserve.date}">
                         <input type="hidden" id="sltModel" name="model" value="${reserve.model}">
                         <p id="showModel">제품을 선택해주세요.</p>
                         <ul id="modelWrap">
@@ -56,7 +56,7 @@
                 <div class="row">
                     <span class="cate">상세 증상<span class="redStar">*</span></span>
                     <div class="content" id="detailWrap">
-                        <textarea name="detail" id="detail" placeholder="고장 증상 상세내용만 입력해주세요.">"${reserve.detail}"</textarea>
+                        <textarea name="detail" id="detail" placeholder="고장 증상 상세내용만 입력해주세요.">${reserve.detail}</textarea>
                         <br>
                         <div id="bottomMsg">
                             <span id="errMsg"></span>

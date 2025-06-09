@@ -4,6 +4,7 @@ import java.sql.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.MemberDTO;
+import org.zerock.domain.ReservationDTO;
 import org.zerock.mapper.ReserveMapper;
 import org.zerock.mapper.UserMapper;
 import org.zerock.service.ReserveServiceImpl;
@@ -118,9 +119,27 @@ public class UserDAOImpl implements UserDAO {
 
     public MemberDTO loginCheck(String id, String password)
     {
-    	System.out.println("id : " + id);
     	MemberDTO dto = userMapper.loginCheck(id, password);
-    	System.out.println(dto.getId() + " ///////" + dto.getPassword());
+
     	return dto;
+    }
+    
+    public ReservationDTO reserveCheck(String id)
+    {
+    	 ReservationDTO dto = userMapper.reserveCheck(id);
+    	 
+    	 return dto;
+    }
+    
+    public int join(MemberDTO dto)
+    {
+    	int result = 0;
+    	try {
+			result = userMapper.join(dto);
+			
+			return result;
+		} catch (Exception e) {
+			return 0;
+		}
     }
 }

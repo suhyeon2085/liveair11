@@ -1,20 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@page import="org.zerock.domain.MemberDTO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<!-- 눌렀을때 로그인 여부 확인  -->  
-<%
-    String user = (String) session.getAttribute("user");
-    if (user == null) {
-%>
-    <script type="text/javascript">
-        alert("로그인하고 이용해주십시오");
-        location.href = "/LiveAirMain"; 
-    </script>
-<%
-        return;
-    }
-%>
 
 <!-- 안녕 -->
 <!DOCTYPE html>
@@ -112,10 +99,10 @@
     <table>
     <tr>
         <td>id</td>
-        <td>${reserve.name}</td>
+        <td>${reserve.id}</td>
     </tr>
     <tr>
-        <td>제품명ǰ</td>
+        <td>제품명</td>
         <td>${reserve.model}</td>
     </tr>
     <tr>
@@ -128,12 +115,15 @@
     </tr>
     </table>
 
-   <form action="/reserve/delete" method="post" style="display: inline;">
-    <input type="hidden" name="num" value="${reserve.num}" />
+   <form action="/delete" method="post" style="display: inline;">
     <button type="submit">취소하기</button>
 </form>
 
-    <a href="http://127.0.0.1:5500/2%EB%A9%94%EC%9D%B8%ED%99%88.html">
+   <form action="/modReserve" method="post" style="display: inline;">
+    <button type="submit">예약 변경</button>
+</form>
+
+    <a href="/">
     <button type="button">메인으로 돌아가기</button></a>
     </div>
 

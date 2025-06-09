@@ -1,15 +1,19 @@
 package org.zerock.controller;
 
 
+import java.io.Console;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.zerock.domain.MemberDTO;
+import org.zerock.domain.ReservationDTO;
 import org.zerock.persistence.UserDAO;
 
 import lombok.AllArgsConstructor;
@@ -19,10 +23,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @AllArgsConstructor
 public class UserController {
-	//변경사항
-	//main페이지 매핑 userController로 변경
-	//login 리네이밍(이전 user) 및 매핑변경
-	//join 리네이밍(이전 login) 및 매핑변경
 	
 	//아이디와 비밀번호 저장 DAO 가져오기 
 	private UserDAO userDAO;
@@ -42,14 +42,37 @@ public class UserController {
 	
 	//login버튼 누르면 이쪽으로 와서 계정 검증 후 dto를 가지고 있음
 	@PostMapping("/main")
-	public String loginProcess(@RequestParam("id") String id, @RequestParam("password") String pw, Model model)
+	public String loginProcess(@RequestParam("id") String id, @RequestParam("password") String pw, HttpSession session)
 	{
-		log.info("어저고 아이디 " + id + "비번" + pw);
-		MemberDTO temp = userDAO.loginCheck(id, pw);
-		log.info("어저고 아이디 " + temp.getId());
-		model.addAttribute("user", temp);
+		MemberDTO user = userDAO.loginCheck(id, pw);
+		session.setAttribute("user", user);
 
 		return "/LiveAirMain";
 	}
 	
+	//메인화면에서 바로 조회화면으로 이동
+	@GetMapping("/check")
+	public void reserveCheck(HttpSession session, Model model)
+	{
+		MemberDTO dto = (MemberDTO) session.getAttribute("user");
+		ReservationDTO reserve = userDAO.reserveCheck(dto.getId());
+		
+		model.addAttribute("reserve", reserve);
+	}
+
+	@PostMapping("/joinToLogin")
+	public String joinToLogin(MemberDTO dto)
+	{
+		int result = 0;
+		result = userDAO.join(dto);
+		
+		if (result == 1)
+		{
+			return "/login";
+		}
+		else {
+			return "/join";
+		}
+
+	}
 }

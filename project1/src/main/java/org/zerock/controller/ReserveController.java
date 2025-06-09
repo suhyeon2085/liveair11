@@ -6,6 +6,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.MemberDTO;
 import org.zerock.domain.ReservationDTO;
 import org.zerock.service.ReserveService;
 
@@ -34,8 +37,7 @@ public class ReserveController {
 	@ModelAttribute("reservationDTO")
 	public ReservationDTO reservationDTO() {
 		return new ReservationDTO();
-	}
-	
+	}	
 	
 	// 이미 다른 사용자가 선택한 날짜 선택X
 	@GetMapping(value = "/reserved-datetimes", produces = "application/json")
@@ -49,48 +51,42 @@ public class ReserveController {
 	                   .collect(Collectors.toList());
 	}
 
-
 	// 날짜 선택 후 예약 입력 페이지
 	@GetMapping("/reserve")
-	public String reservePage(@RequestParam("date") String dateStr, Model model) {
+	public String reservePage(@RequestParam("date") String dateStr, Model model, HttpSession session) {
 		String formatted = dateStr.replace("T", " ") + ":00";
 	    Timestamp date = Timestamp.valueOf(formatted);
+	    MemberDTO user = (MemberDTO) session.getAttribute("user");
+	    
 		model.addAttribute("date", date); // 날짜 뷰에 넘김
-		model.addAttribute("member", service.member(""));
-		return "reserve/reserve"; // reserve.jsp
-	}
+		model.addAttribute("member", user);
 		
+		return "reserve/reserve"; // reserve.jsp
+	}	
 	
-	// 예약 제출 -> DB 저장
+	// 예약 제출 후 조회 페이지로 이동
 	@PostMapping("/reserve")
 	public String reserve(ReservationDTO dto) {
 		service.insert(dto); // 예약 정보 저장
-		return "redirect:/check?num=" + dto.getNum(); // 저장 후 예약 조회 페이지로 이동
-	}
-
-	// 예약 조회
-	@GetMapping("/inquiry")
-	public String inquiry(@RequestParam("num") int num, Model model) {
-		model.addAttribute("reserve", service.read(num));
 		return "redirect:/check";
 	}
-	
+
 	// 예약 수정
-	@GetMapping("/modReserve")
-	public String modReserve(@RequestParam("num") int num, @RequestParam("date") String dateStr, Model model) {
-		model.addAttribute("reserve", service.read(num));
-		String formatted = dateStr.replace("T", " ") + ":00";
-	    Timestamp date = Timestamp.valueOf(formatted);
-		model.addAttribute("date", date);
-		model.addAttribute("member", service.member(""));
+	@PostMapping("/modReserve")
+	public String modReserve(HttpSession session, Model model) {
+		MemberDTO dto = (MemberDTO) session.getAttribute("user");
+		ReservationDTO reserve = service.read(dto.getId());
+		
+		model.addAttribute("reserve", reserve);
+		model.addAttribute("member", dto);
 		return "reserve/modReserve";
 	}
 	
 	@PostMapping("/update")
-	public String update(ReservationDTO dto, RedirectAttributes rttr) {
-		service.update(dto);
-		rttr.addAttribute("num", dto.getNum());
-		return "redirect:/check";	
+	public String update(ReservationDTO dto) {
+		int temp =  service.update(dto);
+		
+		return "/check";	
 	}
 	
 	// 예약 삭제
@@ -99,7 +95,7 @@ public class ReserveController {
 		if(service.delete(num)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		return "redirect:/Main/LiveAirMain";
+		return "/LiveAirMain";
 	}
 	
 }

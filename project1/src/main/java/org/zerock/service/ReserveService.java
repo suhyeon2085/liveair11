@@ -12,7 +12,7 @@ import java.util.Map;
 
 public interface ReserveService {
 
-	public ReservationDTO read(int num);
+	public ReservationDTO read(String id);
 
 	public void insert(ReservationDTO reserve);
 	
