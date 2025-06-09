@@ -98,55 +98,63 @@
  
     <table>
     <tr>
-        <td>id</td>
-        <td>${reserve.id}</td>
+        <td>이름</td>
+        <td>${member.name}</td>
     </tr>
-    <tr>
-        <td>날짜</td>
-        <td>${reserve.date}</td>
+      <tr>
+        <td>전화번호</td>
+        <td>${member.phone}</td>
     </tr>
     <tr>
         <td>제품명</td>
         <td>${reserve.model}</td>
     </tr>
-    <tr>
+    <tr> 
         <td>증상</td>
         <td>${reserve.type}</td>
     </tr>
     <tr>
-        <td>상세증상</td>
-        <td>${reserve.detail}</td>
+        <td>날짜</td>
+        <td>${reserve.date}</td>
     </tr>
-    <tr>
-        <td>실외기 위치</td>
-        <td>${reserve.loc}</td>
+        <tr>
+        <td>주소</td>
+        <td>${member.address}</td>
     </tr>
-    
     </table>
 
-    <form action="/delete" method="post" onsubmit="return confirm('정말 취소하시겠습니까?')">
-	    <input type="hidden" name="num" value="${reserve.num}" />
-	    <button type="submit">예약 취소</button>
-	</form>
+   <!-- <form action="/delete" method="post" style="display: inline;">
+    <button type="submit">취소하기</button>
+</form>
 
-<!-- 
    <form action="/modReserve" method="post" style="display: inline;">
     <button type="submit">예약 변경</button>
 </form> -->
 
-<!-- <a href="/delete">
+<a href="/delete"">
   <button type="button">예약 취소</button>
-</a> -->
-
-<a href="/userCalendar">
-  <button type="button">예약 변경</button>
 </a>
 
-    <a href="/">
-    <button type="button">메인으로 돌아가기</button></a>
-    </div>
+<a href="/userCalendar">
+  <button type="button" onclick="remove()">예약 변경</button>
+</a>
+
+<a href="/">
+<button type="button">메인으로 돌아가기</button></a>
+</div>
 
 </div>
 
+<script>
+function remove(){
+	if{
+		
+	}
+	else{
+		
+	}
+	
+}
+</script>
 </body>
 </html>
