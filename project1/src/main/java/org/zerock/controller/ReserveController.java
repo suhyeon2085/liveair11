@@ -3,11 +3,14 @@ package org.zerock.controller;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,16 +69,37 @@ public class ReserveController {
 	
 	// 예약 제출 후 조회 페이지로 이동
 	@PostMapping("/reserve")
-	public String reserve(ReservationDTO dto) {
-		service.insert(dto); // 예약 정보 저장
-		return "redirect:/check";
+	public String insert(ReservationDTO dto, RedirectAttributes rttr) {
+		try {
+	        service.insert(dto); // 예약 저장 시 중복되면 예외 발생
+	        rttr.addAttribute("num", dto.getNum());
+	        return "redirect:/check";
+	    } catch (DuplicateKeyException e) {
+	        // 중복 키 처리
+	    	rttr.addFlashAttribute("error", "이미 예약된 시간입니다. 다시 선택해 주세요.");
+	        rttr.addFlashAttribute("reserve", dto);
+	        return "redirect:/userCalendar";
+	    } catch (DataIntegrityViolationException e) {
+	    	// 다른 무결성 위반 처리
+	        rttr.addFlashAttribute("error", "예약에 실패했습니다.");
+	        rttr.addFlashAttribute("reserve", dto);
+	        return "/LiveAirMain";
+	    }
 	}
 
+
 	// 예약 수정
-	@PostMapping("/modReserve")
-	public String modReserve(HttpSession session, Model model) {
+	@GetMapping("/modReserve")
+	public String modReserve(@RequestParam(required = false)
+    						@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
+    						HttpSession session, Model model) {
 		MemberDTO dto = (MemberDTO) session.getAttribute("user");
 		ReservationDTO reserve = service.read(dto.getId());
+		
+		 // 사용자가 선택한 새로운 날짜가 있다면 기존 예약 DTO에 반영
+	    if (date != null) {
+	        reserve.setDate(Timestamp.valueOf(date));
+	    }
 		
 		model.addAttribute("reserve", reserve);
 		model.addAttribute("member", dto);
@@ -83,17 +107,30 @@ public class ReserveController {
 	}
 	
 	@PostMapping("/update")
-	public String update(ReservationDTO dto) {
-		int temp =  service.update(dto);
-		
-		return "/check";	
+	public String update(ReservationDTO dto, RedirectAttributes rttr) {
+	    try {
+	        service.update(dto); // 수정 시에도 중복되면 예외 발생
+	        rttr.addAttribute("num", dto.getNum());
+	        return "redirect:/check";
+	    } catch (DuplicateKeyException e) {
+	        // 중복 키 처리
+	    	rttr.addFlashAttribute("error", "이미 예약된 시간입니다. 다시 선택해 주세요.");
+	        rttr.addFlashAttribute("reserve", dto);
+	        return "redirect:/userCalendar";
+	    } catch (DataIntegrityViolationException e) {
+	    	// 다른 무결성 위반 처리
+	        rttr.addFlashAttribute("error", "예약에 실패했습니다.");
+	        rttr.addFlashAttribute("reserve", dto);
+	        return "/LiveAirMain";
+	    }
 	}
+
 	
 	// 예약 삭제
 	@PostMapping("/delete")
 	public String delete(@RequestParam("num") int num, RedirectAttributes rttr) {
 		if(service.delete(num)) {
-			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("result", "예약이 삭제되었습니다.");
 		}
 		return "/LiveAirMain";
 	}

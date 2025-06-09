@@ -4,157 +4,177 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>LiveAirMain</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-    }
+    <meta charset="UTF-8">
+    <title>LiveAirMain</title>
 
-    #header {
-        height: 600px;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        transition: background-image 0.5s ease-in-out;
-        background-image: url('<%= request.getContextPath() %>/resources/img/air.jpg');
-    }
+    <!-- Slick Carousel CSS & jQuery -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-    #logo img {
-        width: 80px;
-        height: auto;
-        float: left;
-    }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
 
-    #a {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        text-decoration: none;
-    }
+        #header {
+            position: relative;
+        }
+        
+        
+        
 
-    #back a button {
-        font-size: 17px;
-        font-weight: bold;
-        padding: 10px 10px;
-        margin: 0 5px;
-        color: black;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-family: 'Pretendard', sans-serif;
-        background-color: #f0f0f0;
-        transition: background-color 0.3s ease;
-    }
+     .single-item img {
+    width: 100%;
+    height: 600px;
+    object-fit: contain;
+    object-position: center;
+    background-color: #FFFFFF;
+}
 
-    #back a button:hover {
-        background-color: #dcdcdc;
-    }
+        #a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            z-index: 20;
+        }
 
-    #dlwjs, #ekdma {
-        position: absolute;
-        top: 32%;
-        width: 60px;
-        height: 60px;
-        background-size: cover;
-        background-repeat: no-repeat;
-        cursor: pointer;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 50%;
-        z-index: 10;
-    }
+        #logo img {
+            width: 80px;
+            height: auto;
+        }
 
-    #dlwjs { left: 20px; }
-    #ekdma { right: 20px; }
+        #back a button {
+            font-size: 17px;
+            font-weight: bold;
+            padding: 10px 10px;
+            margin: 0 5px;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s ease;
+        }
 
-    section {
-        height: 650px;
-        margin: 0;
-    }
+        #back a button:hover {
+            background-color: #dcdcdc;
+        }
 
-    .pad {
-        padding-bottom: 70px;
-    }
+        #dlwjs, #ekdma {
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            z-index: 10;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
 
-    #fh {
-        font-size: 45px;
-        font-weight: bold;
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
-        padding: 40px;
-        font-family: 'Arial', sans-serif;
-    }
+        #dlwjs { left: 20px; background-image: url('<%= request.getContextPath() %>/resources/img/left.png'); }
+        #ekdma { right: 20px; background-image: url('<%= request.getContextPath() %>/resources/img/right.png'); }
 
-    #qj {
-        font-size: 27px;
-        font-weight: bold;
-        padding: 10px 20px;
-        background-color: #000;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-family: 'Arial', sans-serif;
-        display: block;
-        margin: 0 auto;
-        transition: background-color 0.3s ease;
-    }
+        section {
+            height: 650px;
+            margin: 0;
+        }
 
-    .e {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background-color: rgb(250, 250, 247);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        .pad {
+            padding-bottom: 70px;
+        }
 
-    .item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0 15px;
-    }
+        #fh {
+            font-size: 45px;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 40px;
+            font-family: 'Arial', sans-serif;
+        }
 
-    .e img {
-        width: 70px;
-        height: 70px;
-        object-fit: contain;
-    }
+        #qj {
+            font-size: 27px;
+            font-weight: bold;
+            padding: 10px 20px;
+            background-color: #000;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            display: block;
+            margin: 0 auto;
+            transition: background-color 0.3s ease;
+        }
 
-    #ehd {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        margin-top: 40px;
-    }
+        #qj:hover {
+            background-color: #333;
+        }
 
-    .item p {
-        margin-top: 8px;
-        font-size: 30px;
-        color: #333;
-        text-align: center;
-        font-weight: bold;
-        font-family: 'Arial', sans-serif;
-    }
+        .e {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: rgb(250, 250, 247);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    #c {
-        padding: 3%;
-        background-color: #e4e4e4;
-        font-size: 25px;
-    }
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 15px;
+        }
 
-    #c ul {
-        list-style: none;
-        padding-left: 0;
-    }
-</style>
+        .e img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        #ehd {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .item p {
+            margin-top: 8px;
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #c {
+            padding: 3%;
+            background-color: #e4e4e4;
+            font-size: 25px;
+        }
+
+        #c ul {
+            list-style: none;
+            padding-left: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -163,6 +183,12 @@
 </c:if>
 
 <header id="header">
+    <div class="single-item">
+        <div><img src="<%= request.getContextPath() %>/resources/img/air1.jpg" alt="슬라이드1"></div>
+        <div><img src="<%= request.getContextPath() %>/resources/img/air2.jpg" alt="슬라이드2"></div>
+        <div><img src="<%= request.getContextPath() %>/resources/img/air3.jpg" alt="슬라이드3"></div>
+    </div>
+
     <div id="a">
         <div id="logo">
             <a href="<%= request.getContextPath() %>/LiveAirMain">
@@ -185,7 +211,7 @@
                     </form>
                 </c:when>
                 <c:otherwise>
-                    <p style="display:inline; font-weight:bold;">${sessionScope.user.id}님 환영합니다!</p>
+                    <p style="display:inline; font-weight:bold;">${sessionScope.user.name}님 환영합니다!</p>
                     <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
                     <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
                         <button type="submit">로그아웃</button>
@@ -195,9 +221,9 @@
         </div>
     </div>
 
-    <!-- 슬라이드 화살표 -->
-    <div id="dlwjs" style="background-image: url('<%= request.getContextPath() %>/resources/img/left.png');"></div>
-    <div id="ekdma" style="background-image: url('<%= request.getContextPath() %>/resources/img/right.png');"></div>
+    <!-- 화살표 버튼 위치는 여기로 옮기기 -->
+    <div id="dlwjs"></div>
+    <div id="ekdma"></div>
 </header>
 
 <section>
@@ -248,49 +274,16 @@
     </ul>
 </footer>
 
-
-
-
-
-
-
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const contextPath = '<%= request.getContextPath() %>';
-    const header = document.getElementById('header');
-    const leftBtn = document.getElementById('dlwjs');
-    const rightBtn = document.getElementById('ekdma');
-
-    const images = [
-        contextPath + '/resources/img/air.jpg',
-        contextPath + '/resources/img/air2.jpg',
-        contextPath + '/resources/img/air3.jpg'
-    ];
-
-    let currentIndex = 0;
-
-    function updateSlide(index) {
-        header.style.backgroundImage = `url("${images[index]}")`;
-    }
-
-    updateSlide(currentIndex);
-
-    leftBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateSlide(currentIndex);
+    $(document).ready(function(){
+        $('.single-item').slick({
+            autoplay: true,
+            autoplaySpeed: 3000,  // 3초마다 자동 넘김
+            arrows: true,
+            prevArrow: $('#dlwjs'),
+            nextArrow: $('#ekdma')
+        });
     });
-
-    rightBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateSlide(currentIndex);
-    });
-
-    // 자동 전환 (5초마다)
-    setInterval(() => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateSlide(currentIndex);
-    }, 5000);
-});
 </script>
 
 </body>

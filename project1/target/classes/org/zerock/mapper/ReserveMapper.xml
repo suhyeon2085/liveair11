@@ -27,7 +27,7 @@
 	</insert>
 	
 	<update id="update">
-		update reservation set model = #{model}, type = #{type}, loc = #{loc}, date = #{date} where num = #{num}
+		update reservation set model = #{model}, type = #{type}, detail = #{detail}, loc = #{loc}, date = #{date} where num = #{num}
 	</update>
 	
 	<delete id="delete">
@@ -35,7 +35,7 @@
 	</delete>
 	
 	<select id="member" resultType="org.zerock.domain.MemberDTO">
-		select * from member where id = "bbbb"
+		select * from member where id = "{id}"
 	</select>
 	
 	<select id="findAllReservedDates" resultType="java.sql.Timestamp">
