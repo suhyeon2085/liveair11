@@ -17,4 +17,4 @@ public interface SliderImageService {
 	void deleteSliderImage(Long id);
 	void updateSliderImage(SliderImageDTO dto);
 	SliderImageDTO getSliderImageById(Long id);
-}
+}  

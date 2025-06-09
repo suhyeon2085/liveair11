@@ -51,4 +51,4 @@ public class SliderImageServiceImpl implements SliderImageService {
 		// TODO Auto-generated method stub
 		
 	}
-}
+}   
