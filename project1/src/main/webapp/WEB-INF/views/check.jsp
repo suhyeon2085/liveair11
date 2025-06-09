@@ -10,151 +10,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>에약조회 및 삭제</title>
+<link rel="stylesheet" type="text/css" href="resources/css/check.css">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Pretendard', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: #f9f9f9;
-    }
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-    p {
-      color: rgb(0, 156, 217);
-      font-size: 40px;
-      margin-bottom: 40px;
-      font-weight: bold;
-    }
+<div id="chkWrap">
+<div id="chkContainer">
 
-    table {
-      border-collapse: collapse;
-      margin-bottom: 50px;
-      background-color: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+    <p id="chkTitle">| 예약 조회하기</p>
 
-    table td {
-      border: 1px solid rgb(255, 255, 255);
-      padding: 30px 50px;
-      font-size: 25px;
-      text-align: left;
-      min-width: 250px;
-      position: relative;
-    }
-
-    table td:first-child {
-      border-left: 4px solid rgb(65, 172, 215); 
-      font-weight: bold;
-      background-color: #f0f0f0;
-    }
-
-    button {
-      padding: 20px 25px;
-      margin: 0 5px;
-      font-size: 20px;
-      background-color: rgb(65, 172, 215);
-      color: rgb(255, 255, 255);
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background-color: white;
-      color: rgb(65, 172, 215);
-      border: 1px solid rgb(65, 172, 215);
-
-    }
-    .button-container{
-      display: flex;
-      justify-content: center;
-      gap: 10px; 
-    }
-
-  #a {
-    width: 1000px;   
-    height: 650px;
-    max-width: 1000px;  
-    padding: 50px;           
-    background-color: #ffffff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    border-radius: 10px;
-  }
-
-    </style>
-</head>
-<body>
-
-<div id="a">
-
-    <p>예약 조회 하기</p>
-
- 
+	<h3>사용자 정보</h3>
+	
+	
     <table>
     <tr>
-        <td>이름</td>
-        <td>${member.name}</td>
+        <th>예약자명</th>
+        <td>${user.name}</td>
     </tr>
       <tr>
-        <td>전화번호</td>
-        <td>${member.phone}</td>
+        <th>전화번호</th>
+        <td id="phone">${user.phone}</td>
     </tr>
     <tr>
-        <td>제품명</td>
-        <td>${reserve.model}</td>
-    </tr>
-    <tr> 
-        <td>증상</td>
-        <td>${reserve.type}</td>
-    </tr>
-    <tr>
-        <td>날짜</td>
-        <td>${reserve.date}</td>
-    </tr>
-        <tr>
-        <td>주소</td>
-        <td>${member.address}</td>
+        <th>주소</th>
+        <td>${user.address}</td>
     </tr>
     </table>
+    
+    <h3>출장 서비스 예약 정보</h3>
+    <table id=infoTable>
+	<tr>
+        <th>예약 날짜</th>
+        <td id="datetime">${reserve.date}</td>
+    </tr>
+    <tr>
+        <th>제품명</th>
+        <td id="model">${reserve.model}</td>
+    </tr>
+    <tr>
+        <th>증상</th>
+        <td id="type">${reserve.type}</td>
+    </tr>
+    <tr>
+        <th>상세증상</th>
+        <td id="detail">${reserve.detail}</td>
+    </tr>
+    <tr>
+        <th>실외기 위치</th>
+        <td id="loc">${reserve.loc}</td>
+    </tr>
+    
+    </table>
 
-   <!-- <form action="/delete" method="post" style="display: inline;">
-    <button type="submit">취소하기</button>
-</form>
+	<div class="button-container">
+		<a href="/userCalendar">
+		  <button class="chkBtn" type="button">예약 변경</button>
+		</a>
+		
+		<form action="/delete" method="post" onsubmit="return confirm('정말 취소하시겠습니까?')">
+		    <input type="hidden" name="num" value="${reserve.num}" />
+		    <button class="chkBtn" type="submit">예약 취소</button>
+		</form>
+		
+		<a href="/">
+		<button class="chkBtn" type="button">메인으로 돌아가기</button></a>
+	</div>
 
-   <form action="/modReserve" method="post" style="display: inline;">
-    <button type="submit">예약 변경</button>
-</form> -->
-
-<a href="/delete"">
-  <button type="button">예약 취소</button>
-</a>
-
-<a href="/userCalendar">
-  <button type="button" onclick="remove()">예약 변경</button>
-</a>
-
-<a href="/">
-<button type="button">메인으로 돌아가기</button></a>
 </div>
-
 </div>
-
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 <script>
-function remove(){
-	if{
-		
-	}
-	else{
-		
-	}
+	document.addEventListener("DOMContentLoaded", function () {
+		// 전화번호 형식
+	    const phoneElement = document.getElementById("phone");
+	    const phoneRaw = phoneElement.textContent.trim();
+	    if (phoneRaw.length === 11) {
+	        phoneElement.textContent = phoneRaw.slice(0, 3) + '-' + phoneRaw.slice(3, 7) + '-' + phoneRaw.slice(7);
+	    }
+
+	    // 날짜 형식
+	    const datetimeElement = document.getElementById("datetime");
+	    const datetimeRaw = datetimeElement.textContent.trim().substring(0, 19); // "2025-06-11 17:00:00"
+	    const [date, time] = datetimeRaw.split(" ");
+	    const [year, month, day] = date.split("-");
+	    let [hour, minute] = time.split(":");
+
+	    hour = parseInt(hour);
+	    const ampm = hour < 12 ? "오전" : "오후";
+	    const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+
+	    const formatted = year + '년 ' + month + '월 ' + day + '일 ' + ampm + ' ' + hour12 + '시';
+	    datetimeElement.textContent = formatted;
+	    
+	    // 제품명 한글 변환
+	    const modelMap = {
+	    		stand: "스탠드 에어컨",
+	    		wall: "벽걸이(창문) 에어컨",
+	    		hmulti: "홈멀티 에어컨",
+	    		system: "시스템(천장형/스탠드/벽걸이) 에어컨",
+	    		aircon: "냉난방기",
+	    		heater: "온풍기"
+	    }
+	    
+	    const modelElement = document.getElementById("model");
+	    const modelCode = modelElement.textContent.trim();
+	    const modelName = modelMap[modelCode] || "알 수 없음";
+
+	    modelElement.textContent = modelName;
+	    
+	    // 증상 한글 변환
+	    const typeMap = {
+	    		frost: "성에",
+	    		dew: "이슬",
+	    		gas: "가스 누설",
+	    		noise: "소음",
+	    		smell: "냄새",
+	    		leak: "누수",
+	    		etc: "기타"
+	    }
+	    
+	    const typeElement = document.getElementById("type");
+	    const typeCode = typeElement.textContent.trim();
+	    const typeName = typeMap[typeCode] || "알 수 없음";
+
+	    typeElement.textContent = typeName;
+	    
+	    // 실외기 위치 한글 변환
+	    const locMap = {
+                A: '베란다 밖 난간',
+                B: '건물의 외벽 앵글',
+                C: '건물 밖 실외기실',
+                D: '옥상',
+                E: '실내 실외기실',
+                F: '베란다 내부',
+                G: '1층 또는 지면',
+                H: '2단 설치'
+            };
+	    
+	    const locElement = document.getElementById("loc");
+	    const locCode = locElement.textContent.trim(); // 예: "A"
+	    const locName = locMap[locCode] || "알 수 없음";
+
+	    locElement.textContent = locName;
+	    
+	});
 	
-}
 </script>
 </body>
 </html>

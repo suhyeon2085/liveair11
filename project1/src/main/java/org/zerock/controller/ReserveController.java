@@ -130,20 +130,10 @@ public class ReserveController {
 	@PostMapping("/delete")
 	public String delete(@RequestParam("num") int num, RedirectAttributes rttr) {
 		if(service.delete(num)) {
-			rttr.addFlashAttribute("result", "예약이 삭제되었습니다.");
+			rttr.addFlashAttribute("result", "success");
 		}
 		return "/LiveAirMain";
 	}
 	
 }
-	
-//	메인 페이지에 추가할 내용
-//	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-//
-//	<c:if test="${not empty result}">
-//	    <div>
-//	        예약이 성공적으로 삭제되었습니다.
-//	    </div>
-//	</c:if>
-	
 

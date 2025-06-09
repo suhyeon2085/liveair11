@@ -8,8 +8,7 @@
     <title>출장 서비스 예약</title>
     <link rel="stylesheet" type="text/css" href="resources/css/reserve.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-<body>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
     <div id="wrap">
