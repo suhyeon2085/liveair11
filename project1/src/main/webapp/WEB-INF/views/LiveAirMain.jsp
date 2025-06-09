@@ -1,4 +1,3 @@
-<%@page import="org.zerock.domain.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -37,10 +36,6 @@
         padding: 20px;
         text-decoration: none;
     }
-    
-    #back a {
-    text-decoration: none;  /* a 태그 밑줄 제거 */
-	}
 
     #back a button {
         font-size: 17px;
@@ -68,8 +63,9 @@
         background-size: cover;
         background-repeat: no-repeat;
         cursor: pointer;
-        background-color: rgb(255, 238, 224);
+        background-color: rgba(255, 255, 255, 0.8);
         border-radius: 50%;
+        z-index: 10;
     }
 
     #dlwjs { left: 20px; }
@@ -158,111 +154,86 @@
         list-style: none;
         padding-left: 0;
     }
-
 </style>
 </head>
 <body>
 
-<!-- 예약 조회 페이지에서 취소버튼 누르면 메인으로 넘어와서 alret창 뜨게 해주는 코드 -->
 <c:if test="${param.cancel eq 'success'}">
-    <script>
-        alert("예약이 성공적으로 취소되었습니다.");
-    </script>
+    <script>alert("예약이 성공적으로 취소되었습니다.");</script>
 </c:if>
 
-
-
 <header id="header">
-<div id="a">
+    <div id="a">
         <div id="logo">
             <a href="<%= request.getContextPath() %>/LiveAirMain">
                 <img src="<%= request.getContextPath() %>/resources/img/logo.png" alt="로고">
             </a>
         </div>
-        
 
-  		 <!-- 아래 차레대로 문단마다의 의미 -->
-            <!-- 로그인 안 한 경우 -->
-            <!-- 관리자 로그인 -->
-    		<!-- 일반 사용자 로그인 -->
-<div id="back">
-    <c:choose>
-
-        <c:when test="${empty sessionScope.user and empty sessionScope.admin}">
-            <a href="${pageContext.request.contextPath}/login"><button type="button">일반</button></a>
-            <a href="${pageContext.request.contextPath}/login"><button type="button">관리자</button></a>
-            <a href="${pageContext.request.contextPath}/join"><button type="button">회원가입</button></a>
-        </c:when>
-
-        <c:when test="${sessionScope.admin eq true}">
-            <p style="display:inline; font-weight:bold; color: red;">관리자님, 환영합니다!</p>
-            <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
-            <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
-                <button type="submit">로그아웃</button>
-            </form>
-        </c:when>
-
-        <c:otherwise>
-            <p style="display:inline; font-weight:bold;">${sessionScope.user.id}님 환영합니다!</p>
-            <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
-            <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
-                <button type="submit">로그아웃</button>
-            </form>
-        </c:otherwise>
-    </c:choose>
-
-	</div>
-</div>
-
+        <div id="back">
+            <c:choose>
+                <c:when test="${empty sessionScope.user and empty sessionScope.admin}">
+                    <a href="${pageContext.request.contextPath}/login"><button type="button">일반</button></a>
+                    <a href="${pageContext.request.contextPath}/login"><button type="button">관리자</button></a>
+                    <a href="${pageContext.request.contextPath}/join"><button type="button">회원가입</button></a>
+                </c:when>
+                <c:when test="${sessionScope.admin eq true}">
+                    <p style="display:inline; font-weight:bold; color: red;">관리자님, 환영합니다!</p>
+                    <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
+                    <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
+                        <button type="submit">로그아웃</button>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <p style="display:inline; font-weight:bold;">${sessionScope.user.id}님 환영합니다!</p>
+                    <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
+                    <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
+                        <button type="submit">로그아웃</button>
+                    </form>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
 
     <!-- 슬라이드 화살표 -->
     <div id="dlwjs" style="background-image: url('<%= request.getContextPath() %>/resources/img/left.png');"></div>
     <div id="ekdma" style="background-image: url('<%= request.getContextPath() %>/resources/img/right.png');"></div>
 </header>
 
-<c:if test="${sessionScope.admin == true}">
-    <div style="text-align:center; margin-top: 20px;">
-        <button onclick="changeHeaderImage()" style="font-size:18px; padding:10px 20px;">
-            배경 이미지 바꾸기
-        </button>
-    </div>
-</c:if>
-
-
 <section>
     <div class="pad">
         <p id="fh">로그인하시고 바로 예약해보세요</p>
         <button type="button" id="qj" onclick="location.href='<%= request.getContextPath() %>/login'">로그인</button>
     </div>
-	<div id="ehd">
-    <div class="item">
-        <a href="${pageContext.request.contextPath}/userCalendar" style="text-decoration:none; color:inherit;">
-            <div class="e">
-                <img src="${pageContext.request.contextPath}/img/출장서비스예약.png" alt="출장 예약">
-            </div>
-            <p>출장 서비스 예약</p>
-        </a>
-    </div>
-    
-    <div class="item">
-        <a href="${pageContext.request.contextPath}/check" style="text-decoration:none; color:inherit;">
-            <div class="e">
-                <img src="${pageContext.request.contextPath}/img/조회및변경.png" alt="예약 조회">
-            </div>
-            <p>예약 조회 및 변경</p>
-        </a>
-    </div>
-    
-    <div class="item">
-        <a href="${pageContext.request.contextPath}/chatbot" style="text-decoration:none; color:inherit;">
-            <div class="e">
-                <img src="${pageContext.request.contextPath}/img/챗봇.png" alt="챗봇">
-            </div>
-            <p>챗봇 연결하기</p>
-        </a>
-    </div>
-</div>
 
+    <div id="ehd">
+        <div class="item">
+            <a href="${pageContext.request.contextPath}/userCalendar" style="text-decoration:none; color:inherit;">
+                <div class="e">
+                    <img src="${pageContext.request.contextPath}/img/출장서비스예약.png" alt="출장 예약">
+                </div>
+                <p>출장 서비스 예약</p>
+            </a>
+        </div>
+
+        <div class="item">
+            <a href="${pageContext.request.contextPath}/check" style="text-decoration:none; color:inherit;">
+                <div class="e">
+                    <img src="${pageContext.request.contextPath}/img/조회및변경.png" alt="예약 조회">
+                </div>
+                <p>예약 조회 및 변경</p>
+            </a>
+        </div>
+
+        <div class="item">
+            <a href="${pageContext.request.contextPath}/chatbot" style="text-decoration:none; color:inherit;">
+                <div class="e">
+                    <img src="${pageContext.request.contextPath}/img/챗봇.png" alt="챗봇">
+                </div>
+                <p>챗봇 연결하기</p>
+            </a>
+        </div>
+    </div>
 </section>
 
 <footer id="c">
@@ -277,6 +248,12 @@
     </ul>
 </footer>
 
+
+
+
+
+
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const contextPath = '<%= request.getContextPath() %>';
@@ -289,9 +266,9 @@ document.addEventListener('DOMContentLoaded', () => {
         contextPath + '/resources/img/air2.jpg',
         contextPath + '/resources/img/air3.jpg'
     ];
-     
+
     let currentIndex = 0;
- 
+
     function updateSlide(index) {
         header.style.backgroundImage = `url("${images[index]}")`;
     }
@@ -308,18 +285,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSlide(currentIndex);
     });
 
+    // 자동 전환 (5초마다)
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlide(currentIndex);
+    }, 5000);
 });
-
-function changeHeaderImage() {
-    const header = document.getElementById('header');
-    const newImageUrl = prompt("새로운 이미지 경로를 입력하세요 (예: /resources/img/air2.jpg):");
-
-    if (newImageUrl) {
-        header.style.backgroundImage = `url('${newImageUrl}')`;
-    }
-}
-
-
 </script>
 
 </body>
