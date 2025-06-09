@@ -2,7 +2,10 @@ package org.zerock.controller;
 
 
 import java.io.Console;
+import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +55,34 @@ public class UserController {
 	
 	//메인화면에서 바로 조회화면으로 이동
 	@GetMapping("/check")
-	public void reserveCheck(HttpSession session, Model model)
-	{
-		MemberDTO dto = (MemberDTO) session.getAttribute("user");
-		ReservationDTO reserve = userDAO.reserveCheck(dto.getId());
-		
-		model.addAttribute("reserve", reserve);
+	public String reserveCheck(HttpSession session, HttpServletResponse response, Model model) 
+	        throws IOException {
+
+	    try {
+	        MemberDTO dto = (MemberDTO) session.getAttribute("user");
+
+	        if (dto == null) {
+	            throw new Exception("로그인 필요");
+	        }
+
+	        // 예약 정보 가져오기
+	        ReservationDTO reserve = userDAO.reserveCheck(dto.getId());
+
+	        // ✅ Model에 두 개의 객체를 담기
+	        model.addAttribute("reserve", reserve);
+	        model.addAttribute("member", dto);  // 회원 정보도 같이 전달
+
+	        return "check"; 
+
+	    } catch (Exception e) {
+	        response.setContentType("text/html; charset=UTF-8");
+	        PrintWriter out = response.getWriter();
+	        out.println("<script>alert('로그인 후 이용해주세요.'); location.href='/login';</script>");
+	        out.flush();
+	        return null;
+	    }
 	}
+
 
 	@PostMapping("/joinToLogin")
 	public String joinToLogin(MemberDTO dto)

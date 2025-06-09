@@ -203,7 +203,7 @@
         </c:when>
 
         <c:otherwise>
-            <p style="display:inline; font-weight:bold;">${sessionScope.user.id}님 환영합니다!</p>
+            <p style="display:inline; font-weight:bold;">${sessionScope.user.name}님 환영합니다!</p>
             <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
             <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
                 <button type="submit">로그아웃</button>
