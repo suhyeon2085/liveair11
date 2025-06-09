@@ -27,7 +27,7 @@
 	</insert>
 	
 	<update id="update">
-		update reservation set model = #{model}, type = #{type}, loc = #{loc}, date = #{date} where num = #{num}
+		update reservation set model = #{model}, type = #{type}, detail = #{detail}, loc = #{loc}, date = #{date} where num = #{num}
 	</update>
 	
 	<delete id="delete">

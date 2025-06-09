@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,7 +71,7 @@ public class ReserveController {
 	@PostMapping("/reserve")
 	public String insert(ReservationDTO dto, RedirectAttributes rttr) {
 		try {
-	        service.update(dto); // 예약 저장 시 중복되면 예외 발생
+	        service.insert(dto); // 예약 저장 시 중복되면 예외 발생
 	        rttr.addAttribute("num", dto.getNum());
 	        return "redirect:/check";
 	    } catch (DuplicateKeyException e) {
@@ -89,9 +90,16 @@ public class ReserveController {
 
 	// 예약 수정
 	@GetMapping("/modReserve")
-	public String modReserve(HttpSession session, Model model) {
+	public String modReserve(@RequestParam(required = false)
+    						@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
+    						HttpSession session, Model model) {
 		MemberDTO dto = (MemberDTO) session.getAttribute("user");
 		ReservationDTO reserve = service.read(dto.getId());
+		
+		 // 사용자가 선택한 새로운 날짜가 있다면 기존 예약 DTO에 반영
+	    if (date != null) {
+	        reserve.setDate(Timestamp.valueOf(date));
+	    }
 		
 		model.addAttribute("reserve", reserve);
 		model.addAttribute("member", dto);
@@ -122,7 +130,7 @@ public class ReserveController {
 	@PostMapping("/delete")
 	public String delete(@RequestParam("num") int num, RedirectAttributes rttr) {
 		if(service.delete(num)) {
-			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("result", "예약이 삭제되었습니다.");
 		}
 		return "/LiveAirMain";
 	}

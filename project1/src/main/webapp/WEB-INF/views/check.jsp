@@ -102,6 +102,10 @@
         <td>${reserve.id}</td>
     </tr>
     <tr>
+        <td>날짜</td>
+        <td>${reserve.date}</td>
+    </tr>
+    <tr>
         <td>제품명</td>
         <td>${reserve.model}</td>
     </tr>
@@ -110,22 +114,29 @@
         <td>${reserve.type}</td>
     </tr>
     <tr>
-        <td>날짜</td>
-        <td>${reserve.date}</td>
+        <td>상세증상</td>
+        <td>${reserve.detail}</td>
     </tr>
+    <tr>
+        <td>실외기 위치</td>
+        <td>${reserve.loc}</td>
+    </tr>
+    
     </table>
 
-   <!-- <form action="/delete" method="post" style="display: inline;">
-    <button type="submit">취소하기</button>
-</form>
+    <form action="/delete" method="post" onsubmit="return confirm('정말 취소하시겠습니까?')">
+	    <input type="hidden" name="num" value="${reserve.num}" />
+	    <button type="submit">예약 취소</button>
+	</form>
 
+<!-- 
    <form action="/modReserve" method="post" style="display: inline;">
     <button type="submit">예약 변경</button>
 </form> -->
 
-<a href="/delete"">
+<!-- <a href="/delete">
   <button type="button">예약 취소</button>
-</a>
+</a> -->
 
 <a href="/userCalendar">
   <button type="button">예약 변경</button>

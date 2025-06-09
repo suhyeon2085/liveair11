@@ -10,6 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+
     <div id="wrap">
         <h1>출장 서비스 예약</h1>
         <div id="notice">
@@ -107,6 +109,7 @@
             </div>
         </form>
     </div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 <script>
     $(document).ready(function(){
