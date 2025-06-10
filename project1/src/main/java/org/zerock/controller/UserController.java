@@ -50,19 +50,17 @@ public class UserController {
 	
 	//login버튼 누르면 이쪽으로 와서 계정 검증 후 dto를 가지고 있음
 	@PostMapping("/main")
-	public String loginProcess(@RequestParam("id") String id, 
-	                           @RequestParam("password") String pw, 
-	                           HttpSession session) {
-	    
+	public String loginProcess(@RequestParam("id") String id, @RequestParam("password") String pw, HttpSession session) {
 	    MemberDTO user = userDAO.loginCheck(id, pw);
-	    
-	    if (user != null) {
-	        session.setAttribute("user", user);
-	        return "redirect:/";  // 메인 페이지로 리디렉트
-	    } else {
-	        return "redirect:/login?error=true";  // 로그인 실패 시 다시 로그인 페이지로
+
+	    if (user == null) {
+	        return "redirect:/login?error=true";
 	    }
+
+	    session.setAttribute("user", user);
+	    return "redirect:/";
 	}
+
 	
 	//메인화면에서 바로 조회화면으로 이동
 	@GetMapping("/check")

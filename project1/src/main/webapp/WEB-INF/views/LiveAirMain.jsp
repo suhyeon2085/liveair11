@@ -55,13 +55,16 @@
 
 
 <section>
+
 <!-- 로그인이 완료됐다면 div pad는 없어지기  -->
-<c:if test="${!isLogin}">
+<c:if test="${empty sessionScope.user}">
     <div class="pad">
         <p id="fh">로그인하시고 바로 예약해보세요</p>
         <button type="button" id="qj" onclick="location.href='<%= request.getContextPath() %>/login'">로그인</button>
     </div>
 </c:if>
+
+
     <div id="ehd">
         <div class="item">
             <a href="${pageContext.request.contextPath}/userCalendar" style="text-decoration:none; color:inherit;">
