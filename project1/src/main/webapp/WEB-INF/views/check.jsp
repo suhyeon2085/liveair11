@@ -10,8 +10,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>에약조회 및 삭제</title>
-<link rel="stylesheet" type="text/css" href="resources/css/check.css">
-
+	<link rel="stylesheet" type="text/css" href="resources/css/check.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/header.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/footer.css">
+</head>
+<body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <div id="chkWrap">

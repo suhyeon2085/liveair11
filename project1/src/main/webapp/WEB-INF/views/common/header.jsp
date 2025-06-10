@@ -1,64 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<style>
-	#header {
-		padding: 0 15%;
-		box-shadow: 0 10px 10px lightgrey;
-		margin-bottom: 50px;
-	}
-    #logo img {
-        width: 80px;
-        height: auto;
-        float: left;
-    }
-   #a {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        text-decoration: none;
-    }
-    
-    #back a {
-    text-decoration: none;  /* a 태그 밑줄 제거 */
-   }
 
-    #back a button {
-        font-size: 17px;
-        font-weight: bold;
-        padding: 10px 10px;
-        margin: 0 5px;
-        color: black;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-family: 'Pretendard', sans-serif;
-        background-color: #f0f0f0;
-        transition: background-color 0.3s ease;
-    }
 
-    #back a button:hover {
-        background-color: #dcdcdc;
-    }
-	
-	#c {
-        padding: 3%;
-        background-color: #e4e4e4;
-        font-size: 15px;
-    }
-
-    #c ul {
-        list-style: none;
-        padding-left: 0;
-    }
-</style>
-</head>
-<body>
 <header id="header">
-	<div id="a">
+	<div id="LogoWrap">
 	        <div id="logo">
-	            <a href="<%= request.getContextPath() %>/LiveAirMain">
+	            <a href="<%= request.getContextPath() %>/">
 	                <img src="<%= request.getContextPath() %>/resources/img/logo.png" alt="로고">
 	            </a>
 	        </div>
@@ -81,7 +29,7 @@
 	            <p style="display:inline; font-weight:bold; color: red;">관리자님, 환영합니다!</p>
 	            <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
 	            <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
-	                <button type="submit">로그아웃</button>
+	                <button class="logoutBTN" type="submit">로그아웃</button>
 	            </form>
 	        </c:when>
 	
@@ -89,7 +37,7 @@
 	            <p style="display:inline; font-weight:bold;">${sessionScope.user.id}님 환영합니다!</p>
 	            <img src="${pageContext.request.contextPath}/resources/img/logout.png" style="width: 40px; vertical-align: middle;">
 	            <form action="${pageContext.request.contextPath}/logout" method="get" style="display:inline;">
-	                <button type="submit">로그아웃</button>
+	                <button class="logoutBTN" type="submit">로그아웃</button>
 	            </form>
 	        </c:otherwise>
 	    </c:choose>
