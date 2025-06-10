@@ -11,7 +11,7 @@
 	</select>
 	
 	<insert id="join">
-		insert member values(#{id}, #{password}, #{name}, #{phone}, #{address})
+		insert member values(#{id}, #{password}, #{name}, #{address}, #{phone}, 0)
 	</insert>
 
 </mapper>
