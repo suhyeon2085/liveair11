@@ -57,7 +57,7 @@
         <div class="modal-dialog">
             <form method="get" class="modal-content" id="reservationForm">
             	<c:if test="${reserve != null && reserve.num != null}">
-            		<input type="text" id="num" name="num" value="${reserve.num}">
+            		<input type="hidden" id="num" name="num" value="${reserve.num}">
             	</c:if>
                 <div class="modal-header">
                     <h5 class="modal-title" id="reservationFormLabel">예약 정보 입력</h5>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="modal-body">
                     <p><strong>선택된 시간:</strong> <span id="selectedDateTime"></span></p>
-                    <input type="text" id="inputDate" name="date" value=""/>
+                    <input type="hidden" id="inputDate" name="date" value=""/>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">예약하기</button>

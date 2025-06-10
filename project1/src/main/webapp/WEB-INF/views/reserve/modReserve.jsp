@@ -22,7 +22,7 @@
         <!-- 제품/증상 정보 입력 -->
         <form action="/update" method="post">
             <div id="reserveWrap">
-            <input type="number" name="num" value="${reserve.num}">
+            <input type="hidden" name="num" value="${reserve.num}">
                 <div class="title">
                     <h2>1. 제품/증상 선택</h2>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="row">
                     <span class="cate">제품 선택<span class="redStar">*</span></span>
                     <div class="content">
-                        <input type="text" name="date" value="${reserve.date}">
+                        <input type="hidden" name="date" value="${reserve.date}">
                         <input type="hidden" id="sltModel" name="model" value="${reserve.model}">
                         <p id="showModel">제품을 선택해주세요.</p>
                         <ul id="modelWrap">
@@ -91,7 +91,7 @@
                 <div class="title">
                     <h2>2. 신청자 정보 확인</h2>
                 </div>
-                <input type="text" id="id" name="id" value="${member.id}">
+                <input type="hidden" id="id" name="id" value="${member.id}">
                 <div class="row">
                     <span class="cate">이름<span class="redStar">*</span></span>
                     <input class="content" type="text" id="name" name="name" value="${member.name}" readonly>

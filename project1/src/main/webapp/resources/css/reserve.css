@@ -35,13 +35,13 @@ li{
     color: red;
 }
 .blue{
-    color: blue;
+    color: rgb(65, 172, 215);
 }
 #notice{
     border: 1px solid gray;
     border-radius: 20px;
     padding: 20px;
-    background-color: rgb(231, 231, 231);
+    background-color: #f9f9f9;
     font-weight: bold;
 }
 #showModel{
@@ -62,7 +62,7 @@ li{
     border: 1px solid gray;
     border-radius: 20px;
     padding: 20px;
-    background-color: rgb(231, 231, 231);
+    background-color: #f9f9f9;
 }
 .model{
     border: 1px solid gray;
@@ -74,11 +74,11 @@ li{
     overflow-wrap: break-word; /* 긴 단어가 있으면 자동 줄바꿈 */
 }
 .model:hover{
-    background-color: lightblue;
+    background-color: rgb(65, 172, 215);
     color: white;
 }
 .model.selected{
-    background-color: lightblue;
+    background-color: rgb(65, 172, 215);
     color: white;
 }
 #type{
