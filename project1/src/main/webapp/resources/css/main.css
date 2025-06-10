@@ -1,0 +1,190 @@
+@charset "UTF-8";
+body {
+            margin: 0;
+            padding: 0;
+    
+        }
+#banner {
+    position: relative;
+}
+.single-item img {
+    width: 100%;
+    height: 500px;
+    object-fit: contain;
+    object-position: center;
+    background-color: #FFFFFF;
+}
+#dlwjs, #ekdma {
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: rgba(249, 249, 249, 0.8);
+            border-radius: 50%;
+            z-index: 10;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+section {
+    height: 650px;
+    margin: 0;
+}
+.pad {
+    padding-bottom: 70px;
+}
+#fh {
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+    padding: 40px;
+    font-family: 'Arial', sans-serif;
+}
+
+#qj {
+    font-size: 27px;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.3s ease;
+    }
+
+#qj:hover {
+    background-color: #333;
+}
+
+
+
+#ehd {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* 수직 정렬 추가 */
+    margin: 0 15px;
+    height: 250px; /* 원하는 높이로 조정 */
+}
+
+.e {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: rgb(250, 250, 247);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.e img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+.item p {
+    margin-top: 12px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.2;
+}
+@media screen and (max-width: 1080px){
+	.single-item img {
+    	height: auto;
+	}
+	#fh {
+	    font-size: 35px;
+	}
+	#qj {
+	    font-size: 20px;
+	    font-weight: bold;
+	    padding: 10px 15px;
+	    border-radius: 15px;
+	}
+	#ehd {
+            gap: 20px;
+        }
+	
+}
+@media screen and (max-width: 480px){
+	section {
+    height: 550px;
+}
+#dlwjs, #ekdma {
+            width: 30px;
+            height: 30px;
+        }
+
+	.pad {
+    padding-bottom: 35px;
+}
+#fh {
+	    font-size: 25px;
+	    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+	    white-space: normal; /* 기본 줄바꿈 허용 */
+	    overflow-wrap: break-word; /* 긴 단어가 있으면 자동 줄바꿈 */
+	    margin: 0;margin-top: 20px;
+	}
+	#qj {
+	    font-size: 18px;
+	    font-weight: bold;
+	    padding: 8px 12px;
+	    border-radius: 12px;
+	}
+#ehd {
+    display: flex;
+    justify-content: space-between; /* 아이템 사이에 동일한 간격 */
+    gap: 10px;
+    padding: 0 20px; /* 좌우 여백 추가 */
+    box-sizing: border-box;
+    flex-wrap: wrap; /* 작은 화면에서 줄바꿈 허용 */
+    margin-top: 0px;
+}
+
+.item {
+    flex: 1; /* 균등 분배 */
+    max-width: 33.33%; /* 세 아이템이 한 줄에 들어오도록 제한 */
+    text-align: center;
+    margin:0;
+}
+.e {
+    width: 100px;
+    height: 100px;
+}
+.e img {
+    width: 50px;
+    height: 50px;
+    max-width: 150px; /* 이미지 크기 제한 */
+    margin: 0 auto;
+}
+.item p {
+    margin-top: 12px;
+    font-size: 15px;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.2;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+    white-space: normal; /* 기본 줄바꿈 허용 */
+    overflow-wrap: break-word; /* 긴 단어가 있으면 자동 줄바꿈 */
+}	
+	
+}
