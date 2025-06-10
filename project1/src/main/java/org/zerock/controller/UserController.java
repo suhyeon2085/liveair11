@@ -32,11 +32,14 @@ public class UserController {
 	//아이디와 비밀번호 저장 DAO 가져오기 
 	private UserDAO userDAO;
 		
-	//main페이지
+	//main페이지 	//main페이지 로그인 여부 판단해서 "div"문단 삭제하기 
 	@RequestMapping("/")
-	public String mainPage()
-	{ return "LiveAirMain"; }
-	
+	public String mainPage(HttpSession session, Model model) {
+	    MemberDTO user = (MemberDTO) session.getAttribute("user");
+	    model.addAttribute("isLogin", user != null);  // 로그인 여부 JSP에 전달
+	    return "LiveAirMain";
+	}
+
 	//login페이지 이동, 아직 회원정보가 없으므로 매개변수x, login페이지로 이동하므로 void 사용
 	@RequestMapping("/login")
 	public void loginPage() {}
