@@ -47,7 +47,6 @@ public class UserDAOImpl implements UserDAO {
             pstmt.setString(3, user.getName());
             pstmt.setString(4, user.getAddress());
             pstmt.setString(5, user.getPhone());
-            pstmt.setString(6, user.getEmail());
 
             pstmt.executeUpdate();
 
@@ -133,6 +132,10 @@ public class UserDAOImpl implements UserDAO {
     
     public int join(MemberDTO dto)
     {
+    	System.out.println(dto.getId());
+    	System.out.println(dto.getPassword());
+    	System.out.println(dto.getName());
+    	System.out.println(dto.getPhone());
     	int result = 0;
     	try {
 			result = userMapper.join(dto);

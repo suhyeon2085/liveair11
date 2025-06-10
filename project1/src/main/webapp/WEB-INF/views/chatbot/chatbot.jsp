@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>chatbot 문의</title>
 <style type="text/css">
-	* { text-align: center; margin-bottom: 1%; height : 100%; }
+	* { text-align: center; margin-bottom: 1%; height : 100%; font-family: 'Pretendard', sans-serif; }
 	body {
 		margin: 0;
 		padding: 0;
@@ -24,13 +24,38 @@
 	    border-radius: 10px;
 	    height : 100%;
 	}
+	#a { animation-delay : 1s; }
+	#b { animation-delay : 1.5s; }
+	#chatStart { animation-delay : 2s; }
 	div { border-radius: 20px; width: 40%; margin-left: auto; margin-right: auto; height: 20px;}
-	.choice { border-color: #53a3d9; border-style: solid; border-width: 1px; margin-left: 0; width: 50%; padding: 3%; }
-	.client { border: 1px solid black; margin-left: 0; width: 60%; padding: 3%;}
-	.user { background-color: #53a3d9; margin-right: 0; width: 50%; padding: 3%;}
+	.choice { border-color: #53a3d9; border-style: solid; border-width: 1px; margin-left: 0; width: 50%; padding: 3%; animation-name : moveLeft; animation-duration : 1s; }
+	.client { border: 1px solid black; margin-left: 0; width: 60%; padding: 3%; animation-name : moveLeft; animation-duration : 1s; }
+	.user { background-color: #53a3d9; margin-right: 0; width: 50%; padding: 3%; animation-name : moveRight; animation-duration : 1s; }
 	
-	@keyframes box-ani {
-		from 
+	@keyframes moveLeft {
+		0% {
+			-webkit-transform: translateX(-20px);
+			transform: translateX(-20px);
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translateX(0);
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+	
+	@keyframes moveRight {
+		0% {
+			-webkit-transform: translateX(20px);
+			transform: translateX(20px);
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translateX(0);
+			transform: translateX(0);
+			opacity: 1;
+		}
 	}
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -335,8 +360,8 @@
 <body>
 <div id="chat">
 
-	<div class="client">챗봇 상담 페이지입니다</div>
-	<div class="client">상담을 시작할게요</div>
+	<div class="client" id="a">챗봇 상담 페이지입니다</div>
+	<div class="client" id="b">상담을 시작할게요</div>
 	<div class="choice" id="chatStart">상담을 시작해줘</div>
 
 </div>

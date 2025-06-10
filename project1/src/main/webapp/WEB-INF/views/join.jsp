@@ -115,7 +115,7 @@
 <body>
 
 <!-- 회원가입 폼 -->
-<form id="signupForm" action="login" method="post">
+<form id="signupForm" action="joinToLogin" method="post">
   <div id="tkd">
     <div id="log">
       <p id="p">◀ 회원가입</p>

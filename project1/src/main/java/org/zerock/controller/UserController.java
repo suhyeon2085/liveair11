@@ -91,7 +91,7 @@ public class UserController {
 	{
 		int result = 0;
 		result = userDAO.join(dto);
-		
+		log.info("컨트롤러 내에서 result : " + result);
 		if (result == 1)
 		{
 			return "/login";
