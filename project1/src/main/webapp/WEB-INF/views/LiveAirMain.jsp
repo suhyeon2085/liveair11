@@ -184,10 +184,20 @@
 
 <header id="header">
     <div class="single-item">
-        <div><img src="<%= request.getContextPath() %>/resources/img/air1.jpg" alt="슬라이드1"></div>
-        <div><img src="<%= request.getContextPath() %>/resources/img/air2.jpg" alt="슬라이드2"></div>
-        <div><img src="<%= request.getContextPath() %>/resources/img/air3.jpg" alt="슬라이드3"></div>
-    </div>
+    <!-- 기본 슬라이드 이미지 3장 -->
+    <div><img src="<%= request.getContextPath() %>/resources/img/air1.jpg" alt="슬라이드1"></div>
+    <div><img src="<%= request.getContextPath() %>/resources/img/air2.jpg" alt="슬라이드2"></div>
+    <div><img src="<%= request.getContextPath() %>/resources/img/air3.jpg" alt="슬라이드3"></div>
+
+    <!-- 추가 업로드된 슬라이드 이미지 반복 출력 -->
+    <c:forEach var="img" items="${sliderImages}">
+        <div>
+            <img src="${pageContext.request.contextPath}/slider/image?id=${img.id}&t=${img.timestamp}" alt="추가 슬라이드 이미지" />
+        </div>
+    </c:forEach>
+</div>
+    
+    
 
     <div id="a">
         <div id="logo">

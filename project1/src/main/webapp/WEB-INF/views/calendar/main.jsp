@@ -32,13 +32,11 @@
     <h2 class="mb-4">메인 슬라이더</h2>
 
     <!-- 슬라이더 영역 -->
-    <div class="slick-slider">
-        <c:forEach var="img" items="${sliderImages}">
-            <div>
-                <img src="${pageContext.request.contextPath}/upload/${img.fileName}" alt="슬라이드 이미지" class="img-fluid" />
-            </div>
-        </c:forEach>
-    </div>
+    <div class="single-item">
+  <c:forEach var="img" items="${sliderImages}">
+      <div><img src="${pageContext.request.contextPath}/upload/${img.fileName}" alt="슬라이드 이미지" /></div>
+  </c:forEach>
+</div>
 
     <p>슬라이더 아래에 다른 콘텐츠를 추가할 수 있어요.</p>
 </div>
@@ -55,7 +53,7 @@
 <!-- 슬라이더 초기화 -->
 <script>
     $(document).ready(function(){
-        $('.slick-slider').slick({
+    	$('.single-item').slick({
             autoplay: true,
             autoplaySpeed: 3000,
             dots: true,

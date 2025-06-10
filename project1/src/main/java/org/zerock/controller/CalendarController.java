@@ -46,7 +46,6 @@ public class CalendarController {
     // 여기서부터 추가
     @GetMapping("/calendar/main")
     public void showMainPage(Model model) {
-        // sliderImages 리스트를 model에 담아서 JSP로 전달
-        model.addAttribute("sliderImages", SliderImageService.getAllSliderImages());
+        model.addAttribute("sliderImages", sliderImageService.getAllSliderImages());
     }
 }

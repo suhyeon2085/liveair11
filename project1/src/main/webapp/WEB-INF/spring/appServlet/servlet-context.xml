@@ -28,5 +28,7 @@
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
 	
+	
+	
 	<resources mapping="/img/**" location="/resources/img/" />
 </beans:beans>

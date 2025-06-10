@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.zerock.mapper.SliderImageMapper">
 
-    <select id="getAllSliderImages" resultType="org.zerock.domain.SliderImageDTO">
-        SELECT * FROM slider_images ORDER BY id ASC
-    </select>
+  <resultMap id="SliderImageResult" type="org.zerock.domain.SliderImageDTO">
+    <id property="id" column="id" />
+    <result property="fileName" column="file_name" />
+    <result property="data" column="data" />
+    <result property="contentType" column="content_type" />
+  </resultMap>
 
-    <insert id="insertSliderImage">
-        INSERT INTO slider_images (file_name) VALUES (#{file_name})
-    </insert>
+  <select id="getAllSliderImages" resultMap="SliderImageResult">
+    SELECT * FROM slider_images ORDER BY id ASC
+  </select>
 
-    <select id="getSliderImageById" parameterType="int" resultType="org.zerock.domain.SliderImageDTO">
-        SELECT * FROM slider_images WHERE id = #{id}
-    </select>
+  <select id="getSliderImageById" parameterType="long" resultMap="SliderImageResult">
+    SELECT * FROM slider_images WHERE id = #{id}
+  </select>
 
-    <delete id="deleteSliderImage" parameterType="int">
-        DELETE FROM slider_images WHERE id = #{id}
-    </delete>
+<insert id="insertSliderImage" parameterType="org.zerock.domain.SliderImageDTO" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO slider_images (file_name, data, content_type, timestamp)
+    VALUES (#{fileName}, #{data}, #{contentType}, #{timestamp})
+</insert>
 
-    <update id="updateSliderImage">
-        UPDATE slider_images SET file_name = #{file_name} WHERE id = #{id}
-    </update>
+ <update id="updateSliderImage" parameterType="org.zerock.domain.SliderImageDTO">
+  UPDATE slider_images
+  SET file_name = #{fileName},
+      data = #{data},
+      content_type = #{contentType},
+      timestamp = #{timestamp}
+  WHERE id = #{id}
+</update>
+
+  <delete id="deleteSliderImage" parameterType="long">
+    DELETE FROM slider_images WHERE id = #{id}
+  </delete>
 
 </mapper>

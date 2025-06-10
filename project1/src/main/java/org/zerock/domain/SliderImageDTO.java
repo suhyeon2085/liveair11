@@ -1,22 +1,16 @@
 package org.zerock.domain;
 
+import lombok.Data;
+
+@Data
 public class SliderImageDTO {
-    private int id;
+    private Long id;
     private String fileName;
-	public void setFile_name1(String newFileName) {
-		// TODO Auto-generated method stub
-		
-	}
-	public void setId1(int id2) {
-		// TODO Auto-generated method stub
-		
-	}
-	public void setFile_name(String newFileName) {
-		// TODO Auto-generated method stub
-		
+    private String contentType;
+    private byte[] data;   // BLOB으로 저장할 이미지 데이터
+    private long timestamp;
 
-
-	}
-
-    // Getter/Setter
+    // 확장 필드 예시 (필요하면 추가)
+    // private String imageType;
+    // private String extension;
 }
