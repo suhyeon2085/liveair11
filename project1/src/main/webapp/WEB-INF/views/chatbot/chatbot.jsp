@@ -6,9 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>chatbot 문의</title>
+<link rel="stylesheet" type="text/css" href="resources/css/header.css">
+<link rel="stylesheet" type="text/css" href="resources/css/footer.css">
 <style type="text/css">
-	* { text-align: center; margin-bottom: 1%; height : 100%; }
+	* { font-family: 'Pretendard', sans-serif; }
 	body {
 		margin: 0;
 		padding: 0;
@@ -17,20 +20,99 @@
 		align-items: center;
 		justify-content: center;
 		background-color: #f9f9f9;
+		height : 90%;
+		overflow-x: hidden;
 	}
 	#chat { padding : 30px;
 		background-color: #ffffff;
 	    box-shadow: 0 0 15px rgba(0,0,0,0.1);
 	    border-radius: 10px;
 	    height : 100%;
+	    width: 40%;
+	    overflow: auto;
+	    text-align: center;
+	    margin: 50px auto;
+	    min-height: 50vh;
+	    max-height: 70vh;
+	    
 	}
-	div { border-radius: 20px; width: 40%; margin-left: auto; margin-right: auto; height: 20px;}
-	.choice { border-color: #53a3d9; border-style: solid; border-width: 1px; margin-left: 0; width: 50%; padding: 3%; }
-	.client { border: 1px solid black; margin-left: 0; width: 60%; padding: 3%;}
-	.user { background-color: #53a3d9; margin-right: 0; width: 50%; padding: 3%;}
+	.choice, .client, .user { border-radius: 20px;  margin-left: auto; margin-right: auto; height: 20px; margin-bottom: 1%;}
+	.choice { border-color: #53a3d9; border-style: solid; border-width: 1px; margin-left: 0; width: 50%; padding: 3%; animation-name : moveLeft; animation-duration : 1s; }
+	.client { border: 1px solid black; margin-left: 0; width: 60%; padding: 3%; animation-name : moveLeft; animation-duration : 1s; }
+	.user { background-color: #53a3d9; margin-right: 0; width: 50%; padding: 3%; animation-name : moveRight; animation-duration : 1s; }
+	select { border-style: none; }
+	a { color: rgb(65, 172, 215); text-decoration: none; }
 	
-	@keyframes box-ani {
-		from 
+	@keyframes moveLeft {
+		0% {
+			-webkit-transform: translateX(-20px);
+			transform: translateX(-20px);
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translateX(0);
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}	
+	@keyframes moveLeft {
+		0% {
+			-webkit-transform: translateX(-20px);
+			transform: translateX(-20px);
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translateX(0);
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+	
+	@keyframes moveRight {
+		0% {
+			-webkit-transform: translateX(20px);
+			transform: translateX(20px);
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translateX(0);
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+	@media screen and (max-width: 1080px){
+		#chat{
+			width: 75%;
+			height: 60vh;
+		}
+	}
+	@media screen and (max-width: 480px){
+		#chat{
+			width: 100%;
+			height: 60vh;
+			margin:0;
+			border-radius: 0px;
+			padding : 15px;
+			font-size: 15px;
+			word-break: keep-all; /* 단어 단위로 줄바꿈 */
+		    white-space: normal; /* 기본 줄바꿈 허용 */
+		    overflow-wrap: break-word; /* 긴 단어가 있으면 자동 줄바꿈 */
+    		box-sizing: border-box;
+		}
+		.choice, .user{
+			width: 50%;
+			height: auto;
+		}
+		.client{
+			width: 50%;
+			height: auto;
+		}
+		select{
+			word-break: keep-all; /* 단어 단위로 줄바꿈 */
+		    white-space: normal; /* 기본 줄바꿈 허용 */
+		    overflow-wrap: break-word; /* 긴 단어가 있으면 자동 줄바꿈 */
+		    width: 50%
+		}
 	}
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -96,7 +178,7 @@
 	$("document").ready(function() {
 		var chat = $("#chat");
 		let str = "";
-
+		
 		$("#chatStart").on("click", function() {
 			createUserDiv("상담을 시작해줘");
 			var chatPlayer = 0;
@@ -111,16 +193,21 @@
 				$(".question1").on("click", function() {
 					createUserDiv(questionDic['Q1']);
 					viewModelSelect();
-	
+					scrollDown();
+
 					$("#model").change(function() {
 						createUserDiv(modelDic[$("#model").val()]);
-						viewTypeSelect();
+						viewTypeSelect();						
+						scrollDown();
+
 						$("#type").change(function() {
 							createUserDiv(typeDic[$("#type").val()]);
 							expectPriceResult();
 							classRemover();
 							chatDisplay(chatPlayer);							
-							chatFlow();						
+							chatFlow();		
+							scrollDown();
+
 						})	
 					})				
 				})
@@ -131,6 +218,7 @@
 					classRemover();
 					chatDisplay(chatPlayer);							
 					chatFlow();
+					scrollDown();
 
 				})
 				
@@ -138,7 +226,8 @@
 					createUserDiv(questionDic['Q3']);
 					createClientDiv("해당 서비스는 로그인이 필요합니다");
 					movePage("조회페이지로 이동", "/check");
-					
+					scrollDown();
+				
 					classRemover();
 					chatDisplay(chatPlayer);							
 					chatFlow();
@@ -148,26 +237,20 @@
 				$(".question4").on("click", function() {
 					createUserDiv(questionDic['Q4']);
 					CSConnect();
+					scrollDown();
+
 				})
 				$(".question5").on("click", function() {
 					createUserDiv(questionDic['Q5']);
 					createClientDiv("상담이 종료되었습니다.");
 					chatFlow = false;
+					scrollDown();
+
 				})				
 			}
 		})
 
 	})
-	/* 이건 테스트만 하고 안씀 일단 참고용으로 놔둠 */
-	function loopChatbot()
-	{
-		var div1 = document.createElement("div");
-		var comment1 = document.createTextNode("A/S 가격을 예상하고 싶어");
-		div1.appendChild(comment1);
-		
-		div1.className = 'choice';
-		document.getElementById("chat").appendChild(div1);
-	}
 	
 	/* 채팅 선택창을 만들어줌 */
 	function chatDisplay(chatPlayer) {
@@ -180,6 +263,7 @@
 		}
 		
 		var temp = 1;
+		
 		for (var key in questionDic)
 		{
 			var div = document.createElement("div");
@@ -189,7 +273,6 @@
 			document.getElementById("chat").appendChild(div);
 			temp++;
 		}
-		
 		scrollDown();
 	}
 	
@@ -301,25 +384,16 @@
 	
 	/* 자동 스크롤을 하고 싶은데 고민중... */
 	function scrollDown() {
-		const scrollByAmount = 500;
-		const interval = 10;
-		
-		function scrollStep() {
-			window.scrollBy(0, scrollByAmount);
-			if (window.pageYOffset < document.body.scrollHeight - window.innerHeight) {
-		
-		    setTimeout(scrollStep, interval);
-			}
-		}
-		scrollStep();
+		chat.scrollTop = chat.scrollHeight;
+
 	}
 	
 	function createClientDiv(comment) {
-		var div = document.createElement("div");
-		div.className = 'client';
-		var temp = document.createTextNode(comment);
-		div.appendChild(temp);
-		document.getElementById("chat").appendChild(div);
+			var div = document.createElement("div");
+			div.className = 'client';
+			var temp = document.createTextNode(comment);
+			div.appendChild(temp);
+			document.getElementById("chat").appendChild(div);
 	}
 	
 	function createUserDiv(comment) {
@@ -333,6 +407,7 @@
 </script>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <div id="chat">
 
 	<div class="client">챗봇 상담 페이지입니다</div>
@@ -340,5 +415,6 @@
 	<div class="choice" id="chatStart">상담을 시작해줘</div>
 
 </div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
