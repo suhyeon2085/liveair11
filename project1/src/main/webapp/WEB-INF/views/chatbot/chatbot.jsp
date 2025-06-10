@@ -6,9 +6,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>chatbot 문의</title>
+<link rel="stylesheet" type="text/css" href="resources/css/header.css">
+<link rel="stylesheet" type="text/css" href="resources/css/footer.css">
 <style type="text/css">
+
 	* { text-align: center; margin-bottom: 1%; height : 100%; font-family: 'Pretendard', sans-serif; }
+
+	* { font-family: 'Pretendard', sans-serif; }
+
 	body {
 		margin: 0;
 		padding: 0;
@@ -18,19 +25,42 @@
 		justify-content: center;
 		background-color: #f9f9f9;
 		height : 90%;
+
+
+		overflow-x: hidden;
+
 	}
 	#chat { padding : 30px;
 		background-color: #ffffff;
 	    box-shadow: 0 0 15px rgba(0,0,0,0.1);
 	    border-radius: 10px;
 	    height : 100%;
+
 	    overflow: auto;
+
+	    width: 40%;
+	    overflow: auto;
+	    text-align: center;
+	    margin: 50px auto;
+	    min-height: 50vh;
+	    max-height: 70vh;
+	    
+
 	}
+
 	div { border-radius: 20px; width: 40%; margin-left: auto; margin-right: auto; height: 20px;}
 	.choice { border-color: #53a3d9; border-style: solid; border-width: 1px; margin-left: 0; width: 50%; padding: 3%; animation-name : moveLeft; animation-duration : 1s; }
 	.client { border: 1px solid black; margin-left: 0; width: 60%; padding: 3%; animation-name : moveLeft; animation-duration : 1s; }
 	.user { background-color: #53a3d9; margin-right: 0; width: 50%; padding: 3%; animation-name : moveRight; animation-duration : 1s; }
 	select { border-style: none; }
+
+	.choice, .client, .user { border-radius: 20px;  margin-left: auto; margin-right: auto; height: 20px; margin-bottom: 1%;}
+	.choice { border-color: #53a3d9; border-style: solid; border-width: 1px; margin-left: 0; width: 50%; padding: 3%; animation-name : moveLeft; animation-duration : 1s; }
+	.client { border: 1px solid black; margin-left: 0; width: 60%; padding: 3%; animation-name : moveLeft; animation-duration : 1s; }
+	.user { background-color: #53a3d9; margin-right: 0; width: 50%; padding: 3%; animation-name : moveRight; animation-duration : 1s; }
+	select { border-style: none; }
+	a { color: rgb(65, 172, 215); text-decoration: none; }
+
 	
 	@keyframes moveLeft {
 		0% {
@@ -68,6 +98,42 @@
 			transform: translateX(0);
 			opacity: 1;
 		}
+
+	}
+	@media screen and (max-width: 1080px){
+		#chat{
+			width: 75%;
+			height: 60vh;
+		}
+	}
+	@media screen and (max-width: 480px){
+		#chat{
+			width: 100%;
+			height: 60vh;
+			margin:0;
+			border-radius: 0px;
+			padding : 15px;
+			font-size: 15px;
+			word-break: keep-all; /* 단어 단위로 줄바꿈 */
+		    white-space: normal; /* 기본 줄바꿈 허용 */
+		    overflow-wrap: break-word; /* 긴 단어가 있으면 자동 줄바꿈 */
+    		box-sizing: border-box;
+		}
+		.choice, .user{
+			width: 50%;
+			height: auto;
+		}
+		.client{
+			width: 50%;
+			height: auto;
+		}
+		select{
+			word-break: keep-all; /* 단어 단위로 줄바꿈 */
+		    white-space: normal; /* 기본 줄바꿈 허용 */
+		    overflow-wrap: break-word; /* 긴 단어가 있으면 자동 줄바꿈 */
+		    width: 50%
+		}
+
 	}
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -362,6 +428,7 @@
 </script>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <div id="chat">
 
 	<div class="client">챗봇 상담 페이지입니다</div>
@@ -369,5 +436,6 @@
 	<div class="choice" id="chatStart">상담을 시작해줘</div>
 
 </div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
