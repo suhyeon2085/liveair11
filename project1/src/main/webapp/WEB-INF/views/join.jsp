@@ -25,45 +25,44 @@
     #log {
       background-color: white;
       padding: 50px;
-      width: 700px;
-      height: 1100px;
+      width: 662px;
+      height: 830px;
       border-radius: 30px;
       box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
     }
 
     #p {
-      font-size: 35px;
+      font-size: 30px;
       font-weight: bold;
       text-align: left;
-      margin-bottom: 50px;
+      margin-bottom: 15px;
     }
 
     .log-content {
       text-align: center;
-      padding: 30px;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 1px;
       text-align: left;
       margin-left: calc(50% - 150px);
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 6px;
-      font-size: 18px;
+      margin-top: 2px;
+      font-size: 15px;
       font-weight: bold;
       color: rgb(105, 104, 104);
     }
 
     .form-group input {
-      width: 300px;
-      height: 40px;
+      width: 270px;
+      height: 30px;
       font-size: 16px;
       border: none;
       border-bottom: 2px solid #999;
-      padding: 25px;
+      padding: 18px;
       outline: none;
     }
 
@@ -100,7 +99,7 @@
     }
 
     #lo {
-      width: 150px;
+      width: 130px;
       margin-bottom: 30px;
     }
 
@@ -115,12 +114,12 @@
 <body>
 
 <!-- 회원가입 폼 -->
-<form id="signupForm" action="login" method="post">
+<form id="signupForm" action="joinToLogin" method="post">
   <div id="tkd">
     <div id="log">
       <p id="p">◀ 회원가입</p>
       <div class="log-content">
-        <img src="<c:url value='/resources/images/pass.png' />" alt="회원가입로고" id="lo" />
+        <img src="<c:url value='/resources/img/pass.png' />" alt="회원가입로고" id="lo" />
 
         <div class="form-group">
           <label for="username">아이디를 입력해주세요</label>
@@ -132,7 +131,7 @@
           <label for="passwordInput">비밀번호</label>
           <div class="input-container">
             <input type="password" name="password" id="passwordInput" placeholder="비밀번호 입력" />
-            <span class="toggle-eye" onclick="togglePassword()">👁️</span>
+            <span class="toggle-eye" onclick="togglePassword()">👀</span>
           </div>
           <div id="passwordError" class="error-msg"></div>
         </div>
@@ -155,11 +154,6 @@
           <div id="phoneError" class="error-msg"></div>
         </div>
 
-        <div class="form-group">
-          <label for="email">이메일 (선택사항)</label>
-          <input type="text" name="email" id="email" placeholder="이메일 입력 (선택)" />
-        </div>
-
         <button type="button" id="btn" onclick="validateForm()">확인</button>
       </div>
     </div>
@@ -175,7 +169,7 @@
       icon.textContent = "🔒";
     } else {
       input.type = "password";
-      icon.textContent = "👁️";
+      icon.textContent = "👀";
     }
   }
 
