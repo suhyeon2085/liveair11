@@ -18,10 +18,8 @@
 	    		<!-- 일반 사용자 로그인 -->
 	<div id="back">
 	    <c:choose>
-	
 	        <c:when test="${empty sessionScope.user and empty sessionScope.admin}">
-	            <a href="${pageContext.request.contextPath}/login"><button type="button">일반</button></a>
-	            <a href="${pageContext.request.contextPath}/login"><button type="button">관리자</button></a>
+	            
 	            <a href="${pageContext.request.contextPath}/join"><button type="button">회원가입</button></a>
 	        </c:when>
 	

@@ -17,30 +17,34 @@
         text-decoration: none;
     }
     
-    #back LogoWrap {
+    #back {
     text-decoration: none;  /* a 태그 밑줄 제거 */
    }
 
-    #back LogoWrap button {
-        font-size: 17px;
-        font-weight: bold;
-        padding: 10px 10px;
-        margin: 0 5px;
-        color: black;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-family: 'Pretendard', sans-serif;
-        background-color: #f0f0f0;
-        transition: background-color 0.3s ease;
-    }
-
+	#back a button, .logoutBTN{
+            font-size: 17px;
+            font-weight: bold;
+            padding: 10px 10px;
+            margin: 0 5px;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s ease;
+        }
+        
     #back LogoWrap button:hover {
         background-color: #dcdcdc;
     }
     
     @media screen and (max-width: 480px){
     	#LogoWrap{
-    		gap: 20px;
+    		gap: 30px;
     	}
+
+    	#back LogoWrap button, .logoutBTN {
+	        font-size: 15px;
+	    }
     }
