@@ -31,6 +31,7 @@
 	.client { border: 1px solid black; margin-left: 0; width: 60%; padding: 3%; animation-name : moveLeft; animation-duration : 1s; }
 	.user { background-color: #53a3d9; margin-right: 0; width: 50%; padding: 3%; animation-name : moveRight; animation-duration : 1s; }
 	select { border-style: none; }
+	a { color: rgb(65, 172, 215); text-decoration: none; }
 	
 	@keyframes moveLeft {
 		0% {
