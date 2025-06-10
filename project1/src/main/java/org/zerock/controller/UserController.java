@@ -60,7 +60,7 @@ public class UserController {
 	        session.setAttribute("user", user);
 
 	        // temp == 1이면 관리자, calendar.jsp로 이동
-	        if (user.getTemp() == 1) {
+	        if (user.getTemp() == 1) {  
 	            return "redirect:/calendar";  // 관리자 전용 캘린더 페이지로 리디렉트
 	        }
 
