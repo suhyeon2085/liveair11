@@ -58,9 +58,15 @@ public class UserController {
 	    
 	    if (user != null) {
 	        session.setAttribute("user", user);
-	        return "redirect:/";  // 메인 페이지로 리디렉트
+
+	        // temp == 1이면 관리자, calendar.jsp로 이동
+	        if (user.getTemp() == 1) {
+	            return "redirect:/calendar";  // 관리자 전용 캘린더 페이지로 리디렉트
+	        }
+
+	        return "redirect:/";  // 일반 사용자 메인 페이지로
 	    } else {
-	        return "redirect:/login?error=true";  // 로그인 실패 시 다시 로그인 페이지로
+	        return "redirect:/login?error=true";
 	    }
 	}
 	
