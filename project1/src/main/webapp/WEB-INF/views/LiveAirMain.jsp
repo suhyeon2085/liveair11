@@ -175,7 +175,7 @@
             padding-left: 0;
         }
     </style>
-</head>
+</head>  
 <body>
 
 <c:if test="${param.cancel eq 'success'}">
@@ -209,8 +209,7 @@
         <div id="back">
             <c:choose>
                 <c:when test="${empty sessionScope.user and empty sessionScope.admin}">
-                    <a href="${pageContext.request.contextPath}/login"><button type="button">일반</button></a>
-                    <a href="${pageContext.request.contextPath}/login"><button type="button">관리자</button></a>
+                    <a href="${pageContext.request.contextPath}/login"><button type="button">로그인</button></a>
                     <a href="${pageContext.request.contextPath}/join"><button type="button">회원가입</button></a>
                 </c:when>
                 <c:when test="${sessionScope.admin eq true}">
@@ -237,11 +236,13 @@
 </header>
 
 <section>
+<!-- 로그인이 완료됐다면 div pad는 없어지기  -->
+<c:if test="${!isLogin}">
     <div class="pad">
         <p id="fh">로그인하시고 바로 예약해보세요</p>
         <button type="button" id="qj" onclick="location.href='<%= request.getContextPath() %>/login'">로그인</button>
     </div>
-
+</c:if>
     <div id="ehd">
         <div class="item">
             <a href="${pageContext.request.contextPath}/userCalendar" style="text-decoration:none; color:inherit;">

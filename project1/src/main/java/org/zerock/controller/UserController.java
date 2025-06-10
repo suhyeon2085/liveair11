@@ -24,7 +24,7 @@ import org.zerock.persistence.UserDAO;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@Controller
+@Controller 
 @Log4j
 @AllArgsConstructor
 public class UserController {
@@ -32,11 +32,14 @@ public class UserController {
 	//아이디와 비밀번호 저장 DAO 가져오기 
 	private UserDAO userDAO;
 		
-	//main페이지
+	//main페이지 	//main페이지 로그인 여부 판단해서 "div"문단 삭제하기 
 	@RequestMapping("/")
-	public String mainPage()
-	{ return "LiveAirMain"; }
-	
+	public String mainPage(HttpSession session, Model model) {
+	    MemberDTO user = (MemberDTO) session.getAttribute("user");
+	    model.addAttribute("isLogin", user != null);  // 로그인 여부 JSP에 전달
+	    return "LiveAirMain";
+	}
+
 	//login페이지 이동, 아직 회원정보가 없으므로 매개변수x, login페이지로 이동하므로 void 사용
 	@RequestMapping("/login")
 	public void loginPage() {}
@@ -47,12 +50,18 @@ public class UserController {
 	
 	//login버튼 누르면 이쪽으로 와서 계정 검증 후 dto를 가지고 있음
 	@PostMapping("/main")
-	public String loginProcess(@RequestParam("id") String id, @RequestParam("password") String pw, HttpSession session)
-	{
-		MemberDTO user = userDAO.loginCheck(id, pw);
-		session.setAttribute("user", user);
-
-		return "/LiveAirMain";
+	public String loginProcess(@RequestParam("id") String id, 
+	                           @RequestParam("password") String pw, 
+	                           HttpSession session) {
+	    
+	    MemberDTO user = userDAO.loginCheck(id, pw);
+	    
+	    if (user != null) {
+	        session.setAttribute("user", user);
+	        return "redirect:/";  // 메인 페이지로 리디렉트
+	    } else {
+	        return "redirect:/login?error=true";  // 로그인 실패 시 다시 로그인 페이지로
+	    }
 	}
 	
 	//메인화면에서 바로 조회화면으로 이동
@@ -70,7 +79,7 @@ public class UserController {
 	        // 예약 정보 가져오기
 	        ReservationDTO reserve = userDAO.reserveCheck(dto.getId());
 
-	        // ✅ Model에 두 개의 객체를 담기
+	        // Model에 두 개의 객체를 담기
 	        model.addAttribute("reserve", reserve);
 	        model.addAttribute("member", dto);  // 회원 정보도 같이 전달
 
@@ -91,7 +100,7 @@ public class UserController {
 	{
 		int result = 0;
 		result = userDAO.join(dto);
-		
+		log.info("컨트롤러 내에서 result : " + result);
 		if (result == 1)
 		{
 			return "/login";

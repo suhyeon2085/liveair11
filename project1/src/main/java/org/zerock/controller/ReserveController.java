@@ -131,8 +131,10 @@ public class ReserveController {
 	public String delete(@RequestParam("num") int num, RedirectAttributes rttr) {
 		if(service.delete(num)) {
 			rttr.addFlashAttribute("result", "success");
+			
+			return "redirect:/?cancel=success";
 		}
-		return "/LiveAirMain";
+		return "redirect:/";
 	}
 	
 }

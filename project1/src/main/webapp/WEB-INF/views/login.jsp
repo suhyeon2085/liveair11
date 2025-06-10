@@ -2,11 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head><!-- 안녕 -->
+<head>
     <meta charset="UTF-8">
     <title>로그인</title>
     <style>  
-        body {
+        body, form {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -60,7 +60,7 @@
             right: 10px;
             transform: translateY(-50%);
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px;
             color: #555;
         }
         label {
@@ -73,8 +73,9 @@
             background-color: rgb(253, 242, 228);
             color: rgb(0, 0, 0);
             border: none;
-            padding: 12px 24px;
-            margin: 18px;
+            padding: 12px 30px;
+            margin: 20px;
+            margin-bottom: 30px;
             border-radius: 8px;
             font-size: 20px;
             font-weight: bold;
@@ -85,7 +86,16 @@
         }
         .log-content {
             text-align: center;
-            padding: 50px;
+            margin-top: 0;
+        }
+         .social-login a {
+            text-decoration: none;
+            color: black;
+            
+        }
+        .social-login {
+            text-align: center;
+            margin-top: 10px;
         }
     </style>
     <script>
@@ -97,7 +107,7 @@
                 icon.textContent = "🔒";
             } else {
                 input.type = "password";
-                icon.textContent = "👁️";
+                icon.textContent = "👀";
             }
         }
     </script>
@@ -108,32 +118,32 @@
             <div id="log">
                 <p id="p">◀ 로그인</p>
                 <div class="log-content">
-                    <img src="<c:url value='/resources/images/lg.png' />" style="width: 150px;" id="lo" alt="로고 이미지" /><br>
+                    <img src="<c:url value='/resources/img/lg.png' />" style="width: 150px;" id="lo" alt="로고 이미지" /><br>
                     <label>아이디를 입력해주세요</label><br>
                     <input type="text" name="id" placeholder="아이디 입력"><br>
                     <label>비밀번호</label><br>
                     <div class="input-container">
                         <input type="password" name="password" id="passwordInput" placeholder="비밀번호 입력">
-                        <span class="toggle-eye" onclick="togglePassword()">👁️</span>
+                        <span class="toggle-eye" onclick="togglePassword()">👀</span>
                     </div>
                     <button type="submit" id="btn">로그인</button>
-                    <c:if test="${param.error == 'true' }"> <!-- 아디와 비밀번호가 존재하지 않는다면 실행하는 코드 -->
+                    <c:if test="${param.error == 'true' }">
                         <p style="color: red;">아이디 또는 비밀번호가 올바르지 않습니다.</p>
                     </c:if>
-                    <p style="font-size: 20px;">아이디찾기 &nbsp;&nbsp;|&nbsp;&nbsp;비밀번호 재설정&nbsp;&nbsp;|&nbsp;&nbsp;회원가입</p>
+                    <p style="font-size: 20px;">|&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/join" style="text-decoration: none; color: black;">회원가입 하러가기</a>&nbsp;&nbsp;|</p>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" id="btn">🔽 간편 로그인 하기 🔽</button><br>
+                    <a href="https://accounts.kakao.com/login/?continue=https%3A%2F%2Fcs.kakao.com%2Fhelps%3Fcategory%3D25#login">
+                        <img src="<c:url value='/resources/img/kakao.png' />" style="width: 50px;" alt="카카오톡 로그인" />
+                    </a>
+                    <a href="https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com/">
+                        <img src="<c:url value='/resources/img/naver.png' />" style="width: 57px;" alt="네이버 로그인" />
+                    </a>
                 </div>
             </div>
         </div>
     </form>
-    <hr style="color: black;">
-    <div class="log-content">
-        <button type="button" id="btn">간편 로그인 하기</button><br>
-        <a href="https://accounts.kakao.com/login/?continue=https%3A%2F%2Fcs.kakao.com%2Fhelps%3Fcategory%3D25#login">
-            <img src="카카오톡.png" style="width: 50px;" alt="카카오톡 로그인">
-        </a>
-        <a href="https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com/">
-            <img src="네이버.png" style="width: 55px;" alt="네이버 로그인">
-        </a>
-    </div>
 </body>
 </html>
