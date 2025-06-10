@@ -35,20 +35,21 @@
 
 	<div id="banner">
         <div class="single-item">
-	        <div><img src="<%= request.getContextPath() %>/resources/img/air1.jpg" alt="슬라이드1"></div>
-	        <div><img src="<%= request.getContextPath() %>/resources/img/air2.jpg" alt="슬라이드2"></div>
-	        <div><img src="<%= request.getContextPath() %>/resources/img/air3.jpg" alt="슬라이드3"></div>
-	    </div>
-        <!-- 화살표 버튼 위치는 여기로 옮기기 -->
-        <div id="dlwjs"></div>
-        <div id="ekdma"></div> 
-        
-          <!-- 추가 업로드된 슬라이드 이미지 반복 출력 -->
+	        
+	        
+	          <!-- 추가 업로드된 슬라이드 이미지 반복 출력 -->
     <c:forEach var="img" items="${sliderImages}">
         <div>
             <img src="${pageContext.request.contextPath}/slider/image?id=${img.id}&t=${img.timestamp}" alt="추가 슬라이드 이미지" />
         </div>
     </c:forEach>
+	        
+	    </div>
+        <!-- 화살표 버튼 위치는 여기로 옮기기 -->
+        <div id="dlwjs"></div>
+        <div id="ekdma"></div> 
+        
+        
         
     </div>
 
