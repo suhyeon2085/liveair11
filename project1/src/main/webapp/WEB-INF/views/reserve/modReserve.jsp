@@ -160,7 +160,32 @@
                 $("#errMsg").html("");
             }
         })
+        
+     // 폼 제출 시 유효성 검사
+        $("form").on("submit", function (e) {
+            let model = $("#sltModel").val();
+            let loc = $("input[name='loc']:checked").val();
+            let detail = $("#detail").val().trim();
+            let textLength = detail.length;
 
+            if (!model) {
+                alert("제품을 선택해주세요.");
+                e.preventDefault();
+                return;
+            }
+
+            if (!loc) {
+                alert("실외기 위치를 선택해주세요.");
+                e.preventDefault();
+                return;
+            }
+
+            if (textLength < 10) {
+                alert("상세 증상을 10자 이상 입력해주세요.");
+                e.preventDefault();
+                return;
+            }
+        });
     })
 </script>
 </body>
