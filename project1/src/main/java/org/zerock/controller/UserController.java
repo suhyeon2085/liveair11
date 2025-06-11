@@ -84,6 +84,16 @@ public class UserController {
 
 	        // 예약 정보 가져오기
 	        ReservationDTO reserve = userDAO.reserveCheck(dto.getId());
+	        
+	     // 예약이 없는 경우 alert 출력 후 메인 페이지로 이동
+	        if (reserve == null) {
+	            response.setContentType("text/html; charset=UTF-8");
+	            PrintWriter out = response.getWriter();
+	            out.println("<script>alert('예약 후 이용해 주세요.'); location.href='/';</script>");
+	            out.flush();
+	            return null;
+	        }
+
 
 	        // Model에 두 개의 객체를 담기
 	        model.addAttribute("reserve", reserve);
