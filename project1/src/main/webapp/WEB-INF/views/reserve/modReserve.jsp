@@ -17,7 +17,8 @@
     <div id="wrap">
         <h1>출장 서비스 예약</h1>
         <div id="notice">
-            <span class="blue">!</span> 출장 서비스 예약은 <span class="blue">한 ID당 한 건씩</span>만 예약 가능합니다.
+            <li>🔵 출장 서비스 예약은 <span class="blue">한 ID당 한 건씩</span>만 예약 가능합니다.</li>
+            <li>🔵 <span class="blue">제품이 2대 이상</span>인 경우 고객센터로 문의하시면, 여러 제품을 <span class="blue">한 번에 접수</span>하실 수 있도록 상담사가 도와드리겠습니다.</li>
         </div>
         <!-- 제품/증상 정보 입력 -->
         <form action="/update" method="post">
