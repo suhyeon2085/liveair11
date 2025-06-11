@@ -88,10 +88,9 @@
             text-align: center;
             margin-top: 0;
         }
-         .social-login a {
+         .social-login a, #goMain {
             text-decoration: none;
             color: black;
-            
         }
         .social-login {
             text-align: center;
@@ -116,7 +115,7 @@
     <form action="/main" method="post">
         <div id="main">
             <div id="log">
-                <p id="p">◀ 로그인</p>
+                <a id="goMain" href="/"><p id="p">◀ 로그인</p></a>
                 <div class="log-content">
                     <img src="<c:url value='/resources/img/lg.png' />" style="width: 150px;" id="lo" alt="로고 이미지" /><br>
                     <label>아이디를 입력해주세요</label><br>

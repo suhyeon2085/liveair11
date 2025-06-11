@@ -109,6 +109,10 @@
       margin-top: 4px;
       height: 16px;
     }
+    #goMain {
+     text-decoration: none;
+     color: black;
+    }
   </style>
 </head>
 <body>
@@ -117,7 +121,7 @@
 <form id="signupForm" action="joinToLogin" method="post">
   <div id="tkd">
     <div id="log">
-      <p id="p">◀ 회원가입</p>
+      <a id="goMain" href="/"><p id="p">◀ 회원가입</p></a>
       <div class="log-content">
         <img src="<c:url value='/resources/img/pass.png' />" alt="회원가입로고" id="lo" />
 
