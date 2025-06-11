@@ -374,6 +374,14 @@
       {
          temp[i].classList.remove('question1', 'question2', 'question3', 'question4', 'question5');
       }
+		var model = document.getElementById("model");
+		model.removeAttribute("id");
+		
+		var type = document.getElementById("type");
+		type.removeAttribute("id");
+		
+		var answer = document.getElementById("answer");
+		answer.removeAttribute("id");
    }
    
    function CSConnect() {
